@@ -45,7 +45,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic service = new Service(client);
 
-            var result = await service.legislators.geo(lat: 44.926868, lon: -93.214049);
+            var result = await service.legislators.geo(lat: 44.926868, _long: -93.214049);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count() > 0);
         }
@@ -60,6 +60,8 @@ namespace DynamicRestProxy.UnitTests
 
             var result = await service.bills(state: "mn", chamber: "upper", status: "passed_upper");
             Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Count > 0);
+            Assert.IsTrue(result[0].chamber == "upper");
         }
     }
 }

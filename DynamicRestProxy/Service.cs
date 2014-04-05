@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using System.Dynamic;
 
@@ -12,17 +9,10 @@ namespace DynamicRestProxy
     public class Service : DynamicObject
     {
         private RestClient _client;
-        private Dictionary<string, DynamicUriPart> _properties = new Dictionary<string, DynamicUriPart>();
 
         public Service(RestClient client)
         {
             _client = client;
-        }
-
-        private async Task<dynamic> ExecuteAsync(RestRequest request)
-        {
-            var response = await _client.ExecuteGetTaskAsync(request);
-            return response.Content.DeserializeDynamic();
         }
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
@@ -46,19 +36,18 @@ namespace DynamicRestProxy
             // now go through the named arguments and add as url parameters
             for (int i = unnamedArgCount; i < binder.CallInfo.ArgumentNames.Count; i++)
             {
-                request.AddParameter(binder.CallInfo.ArgumentNames[i], args[i]);
+                request.AddParameter(binder.CallInfo.ArgumentNames[i].TrimStart('_'), args[i]);
             }
-            var s = request.ToString();
-            result = ExecuteAsync(request);
+
+            // and set the result to the async task that will execute the request and create the dynamic object
+            result = _client.ExecuteDynamicGetTaskAsync(request);
             return true;
         }
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            if (!_properties.ContainsKey(binder.Name))
-                _properties.Add(binder.Name, new DynamicUriPart(binder.Name));
+            result = new DynamicUriPart(binder.Name);
 
-            result = _properties[binder.Name];
             return true;
         }
     }
