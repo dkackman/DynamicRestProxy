@@ -17,7 +17,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", APIKEY.Key);
 
-            dynamic service = new Service(client);
+            dynamic service = new DynamicRestClient(client);
 
             var result = await service.metadata("mn");
             Assert.IsNotNull(result);
@@ -30,7 +30,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", APIKEY.Key);
 
-            dynamic service = new Service(client);
+            dynamic service = new DynamicRestClient(client);
 
             var result = await service.bills("mn", "2013s1", "SF 1");
             Assert.IsNotNull(result);
@@ -43,7 +43,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", APIKEY.Key);
 
-            dynamic service = new Service(client);
+            dynamic service = new DynamicRestClient(client);
 
             var result = await service.legislators.geo(lat: 44.926868, _long: -93.214049);
             Assert.IsNotNull(result);
@@ -56,7 +56,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", APIKEY.Key);
 
-            dynamic service = new Service(client);
+            dynamic service = new DynamicRestClient(client);
 
             var result = await service.bills(state: "mn", chamber: "upper", status: "passed_upper");
             Assert.IsNotNull(result);

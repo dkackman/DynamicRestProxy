@@ -12,7 +12,7 @@ namespace DynamicRestProxy.UnitTests
         {
             try
             {
-                using (var file = File.OpenRead(@"D:\temp\sunlight.key.txt"))
+                using (var file = File.OpenRead(@"c:\temp\sunlight.key.txt"))
                 using (var reader = new StreamReader(file))
                     _key = reader.ReadLine();
             }
