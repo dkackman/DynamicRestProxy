@@ -50,6 +50,7 @@
     <Compile Include="DynamicUriPart.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="DynamicRestClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
