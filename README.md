@@ -33,3 +33,5 @@ http://openstates.org/api/v1/legislators/geo/?lat=44.926868&long=-93.214049
             var result = await service.legislators.geo(lat: 44.926868, _long: -93.214049);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
+
+The end result is intended to be a coventions based way to interact with REST services, quickly and in a natural manner. It is currently rudimentarh and only supports the GET verb.
