@@ -19,7 +19,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic service = new DynamicRestClient(client);
 
-            var result = await service.metadata("mn");
+            dynamic result = await service.metadata("mn");
             Assert.IsNotNull(result);
             Assert.IsTrue(result.name == "Minnesota");
         }
@@ -47,7 +47,7 @@ namespace DynamicRestProxy.UnitTests
 
             var result = await service.legislators.geo(lat: 44.926868, _long: -93.214049);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count() > 0);
+            Assert.IsTrue(result.Count > 0);
         }
 
         [TestMethod]

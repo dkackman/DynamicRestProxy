@@ -4,7 +4,7 @@ namespace DynamicRestProxy.UnitTests
 {
     static class APIKEY
     {
-        //#error either place you key in the file loaded below or return it directly here
+        //#error either load you key from a file outside of the source try like below or return it directly here
         //#warning http://sunlightfoundation.com/api/accounts/register/
         private static readonly string _key;
 
@@ -12,7 +12,7 @@ namespace DynamicRestProxy.UnitTests
         {
             try
             {
-                using (var file = File.OpenRead(@"c:\temp\sunlight.key.txt"))
+                using (var file = File.OpenRead(@"d:\temp\sunlight.key.txt"))
                 using (var reader = new StreamReader(file))
                     _key = reader.ReadLine();
             }

@@ -6,7 +6,7 @@ using RestSharp;
 
 namespace DynamicRestProxy
 {
-    public class DynamicRestClient : DynamicObject
+    public class DynamicRestClient : DynamicObject, IDynanmicEndPoint
     {
         private RestClient _client;
         private char _keywordEscapeCharacter;
@@ -19,7 +19,7 @@ namespace DynamicRestProxy
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            var request = Factory.CreateRequest(binder, args, _keywordEscapeCharacter);
+            var request = RequestFactory.CreateRequest(binder, args, _keywordEscapeCharacter);
 
             // set the result to the async task that will execute the request and create the dynamic object
             result = _client.ExecuteDynamicGetTaskAsync(request);
@@ -28,9 +28,14 @@ namespace DynamicRestProxy
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            result = new DynamicUriPart(_client, binder.Name);
+            result = new DynamicUriPart(_client, this, binder.Name);
 
             return true;
+        }
+
+        public RestRequest CreateChildRequest(int index)
+        {
+            return RequestFactory.CreateReverseRequestTemplate("", index + 1);
         }
     }
 }
