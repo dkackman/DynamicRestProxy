@@ -38,6 +38,19 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        public async Task GetMethodSegmentWithArgs()
+        {
+            var client = new RestClient("http://openstates.org/api/v1");
+            client.AddDefaultHeader("X-APIKEY", APIKEY.Key);
+
+            dynamic service = new DynamicRestClient(client);
+
+            var result = await service.bills.mn("2013s1", "SF 1");
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.id == "MNB00017167");
+        }
+
+        [TestMethod]
         public async Task GetMethod2PathAsProperty2Params()
         {
             var client = new RestClient("http://openstates.org/api/v1");

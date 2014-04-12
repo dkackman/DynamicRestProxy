@@ -16,8 +16,7 @@ namespace DynamicRestProxy
         public static async Task<dynamic> ExecuteDynamicGetTaskAsync(this RestClient client, RestRequest request)
         {
             var response = await client.ExecuteGetTaskAsync(request);
-            return JsonConvert.DeserializeObject(response.Content);
+            return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(response.Content));
         }
-
     }
 }
