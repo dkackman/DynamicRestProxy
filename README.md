@@ -3,7 +3,7 @@ DynamicRestProxy
 
 A rest client using the .NET Dynamic Language Runtime
 
-This is a set of classes that wrap the [RestSharp RestCliet]{http://restsharp.org/} with a [DyanmicObject]{http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx}. The wrapper translates dyanmic method invlocations and call paths into REST requests. All requests are asynynchronous and return dyanmic objects.
+This is a set of classes that wrap the [RestSharp RestClient](http://restsharp.org/) with a [DyamicObject](http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx). The wrapper translates dyanmic method invlocations and call paths into REST requests. All requests are asynynchronous and return dyanmic objects.
 
 The intent is to make it easier to access REST API's from C# without needing to create strongly typed API wrappers and numerous static POCO types for basic DTO responses.
 
