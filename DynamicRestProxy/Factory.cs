@@ -40,14 +40,21 @@ namespace DynamicRestProxy
 
             // the binder endpoint isn't a dynamicurlsegment so is at index + 1 of this segment
             request.AddUrlSegment(segments.ToString(), binder.Name.TrimStart(keywordEscapeCharacter));
+
+            // fill in the url segments for this object and its parents
             segment.AddSegment(request);
 
+            // fill in the url segments passed as unnamed arguments to the dynamic invocation
             for (int i = segments; i < count; i++)
             {
                 request.AddUrlSegment((i + 1).ToString(), args[i - segments].ToString());
             }
 
-            request.AddParameters(0, binder.CallInfo.ArgumentNames, args, keywordEscapeCharacter);
+            // now add all named arguments as parameters
+            for (int i = 0; i < binder.CallInfo.ArgumentNames.Count; i++)
+            {
+                request.AddParameter(binder.CallInfo.ArgumentNames[i].TrimStart(keywordEscapeCharacter), args[i + unnamedArgCount]);
+            }
 
             return request;
         }

@@ -57,6 +57,7 @@
     <Compile Include="APIKEY.cs" />
     <Compile Include="BasicTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BingMapsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
