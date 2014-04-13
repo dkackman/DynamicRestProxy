@@ -7,9 +7,9 @@ using RestSharp;
 
 namespace DynamicRestProxy
 {
-    static class RequestFactory
+    static class ProxyExtensions
     {
-        public static void AddParameters(this RestRequest request, int start, ReadOnlyCollection<string> argumentNames, object[] args, char keywordEscapeCharacter = '_')
+        static void AddParameters(this RestRequest request, int start, ReadOnlyCollection<string> argumentNames, object[] args, char keywordEscapeCharacter = '_')
         {
             for (int i = start; i < argumentNames.Count; i++)
             {
@@ -17,42 +17,37 @@ namespace DynamicRestProxy
             }
         }
 
-        public static RestRequest CreateReverseRequestTemplate(string name, int segmentCount)
+        static string CreateUrlSegmentTemplate(int count)
         {
-            StringBuilder builder = new StringBuilder(name);
-            for (int i = segmentCount - 1; i >= 0; i--)
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < count; i++)
             {
                 builder.Append("/{").Append(i).Append("}");
             }
             Debug.WriteLine(builder.ToString());
-            return new RestRequest(builder.ToString());
+            return builder.ToString();
         }
 
-        public static RestRequest CreateRequestTemplate(string name, int segmentCount)
-        {
-            StringBuilder builder = new StringBuilder(name);
-            for (int i = 0; i < segmentCount; i++)
-            {
-                builder.Append("/{").Append(i).Append("}");
-            }
-            Debug.WriteLine(builder.ToString());
-            return new RestRequest(builder.ToString());
-        }
-
-        public static RestRequest CreateRequest(InvokeMemberBinder binder, object[] args, char keywordEscapeCharacter = '_')
+        public static RestRequest CreateRequest(this RestProxy segment, InvokeMemberBinder binder, object[] args, char keywordEscapeCharacter = '_')
         {
             int unnamedArgCount = binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
+            // total number of segments are all of the parent segments plus the number of unnamed arguments
+            int segments = segment.SegmentCount;
+            int count = segments + unnamedArgCount;
+            string template = CreateUrlSegmentTemplate(count + 1); // plus one is for the binder endpoint;
 
-            // build up the segment template - unnamed arguments (the first in the array) are treaed as segments
-            var request = CreateRequestTemplate(binder.Name, unnamedArgCount);
+            var request = new RestRequest(template);
 
-            // replace each index with the appropriate arg to build up the endpoint path
-            for (int i = 0; i < unnamedArgCount; i++)
+            // the binder endpoint isn't a dynamicurlsegment so is at index + 1 of this segment
+            request.AddUrlSegment(segments.ToString(), binder.Name.TrimStart(keywordEscapeCharacter));
+            segment.AddSegment(request);
+
+            for (int i = segments; i < count; i++)
             {
-                request.AddUrlSegment(i.ToString(), args[i].ToString());
+                request.AddUrlSegment((i + 1).ToString(), args[i - segments].ToString());
             }
 
-            request.AddParameters(unnamedArgCount, binder.CallInfo.ArgumentNames, args, keywordEscapeCharacter);
+            request.AddParameters(0, binder.CallInfo.ArgumentNames, args, keywordEscapeCharacter);
 
             return request;
         }

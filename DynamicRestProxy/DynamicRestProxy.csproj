@@ -47,9 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicUriPart.cs" />
+    <Compile Include="RestProxy.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="DynamicRestClient.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
