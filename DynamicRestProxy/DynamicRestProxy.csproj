@@ -48,8 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RestProxy.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Factory.cs" />
+    <Compile Include="RestClientExtensions.cs" />
+    <Compile Include="ProxyExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

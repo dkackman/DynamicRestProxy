@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace DynamicRestProxy
 {
-    static class Extensions
+    static class RestClientExtensions
     {
         public static async Task<dynamic> ExecuteDynamicGetTaskAsync(this RestClient client, RestRequest request)
         {
