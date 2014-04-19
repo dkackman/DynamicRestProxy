@@ -1,9 +1,10 @@
 ﻿using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Dynamic;
 
 using RestSharp;
-
+using Newtonsoft.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DynamicRestProxy.UnitTests
@@ -98,6 +99,26 @@ namespace DynamicRestProxy.UnitTests
 
             Assert.IsNotNull(list);
             Assert.AreEqual((string)list.kind, "calendar#calendarList");
+        }
+
+        [TestMethod]
+        //  [Ignore] // - this test requires user interaction
+        public async Task CreateCalendar()
+        {
+            await Authenticate();
+            Assert.IsNotNull(_token);
+
+            var api = new RestClient("https://www.googleapis.com/calendar/v3");
+            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic apiProxy = new RestProxy(api);
+
+            dynamic calendar = new ExpandoObject();
+            calendar.summary = "unit_testing";
+
+            var list = await apiProxy.calendars.post(calendar);
+
+            Assert.IsNotNull(list);
+            Assert.AreEqual((string)list.summary, "unit_testing");
         }
     }
 }

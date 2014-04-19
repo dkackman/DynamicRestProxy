@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Dynamic;
 
 using RestSharp;
@@ -28,10 +29,20 @@ namespace DynamicRestProxy
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            var builder = new RequestBuilder(this);
-            var request = builder.BuildRequest(binder, args);
-            var invocation = new RestInvocation(binder.Verb());
-            result = invocation.InvokeAsync(_client, request);
+            if (binder.Name == "segment")
+            {
+                if (args.Length != 1)
+                    throw new InvalidOperationException("The escape sequence 'segment' must have exactly 1 unnamed paramter");
+
+                result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
+            }
+            else
+            {
+                var builder = new RequestBuilder(this);
+                var request = builder.BuildRequest(binder, args);
+                var invocation = new RestInvocation(binder.Verb());
+                result = invocation.InvokeAsync(_client, request);
+            }
 
             return true;
         }

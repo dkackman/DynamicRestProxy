@@ -4,6 +4,8 @@ using System.Dynamic;
 
 using RestSharp;
 
+using Newtonsoft.Json;
+
 namespace DynamicRestProxy
 {
     class RequestBuilder
@@ -41,6 +43,9 @@ namespace DynamicRestProxy
 
             // now add all named arguments as parameters
             SetParameters(request, binder.CallInfo, args, unnamedArgCount);
+
+            //request.RequestFormat = DataFormat.Json;
+            //request.AddBody(args[0]);
 
             return request;
         }

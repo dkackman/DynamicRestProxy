@@ -48,14 +48,14 @@ namespace DynamicRestProxy.UnitTests
         public async Task GetFormattedAddressFromCoordinate()
         {
             dynamic service = CreateProxy();
-            var result = await service.Locations("44.9108238220215,-93.1702041625977", includeEntityTypes:"Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion");
+            var result = await service.Locations.segment("44.9108238220215,-93.1702041625977").get(includeEntityTypes:"Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion");
 
             Assert.AreEqual((int)result.statusCode, 200);
             Assert.IsTrue(result.resourceSets.Count > 0);
             Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
 
             var address = result.resourceSets[0].resources[0].address.formattedAddress;
-            Assert.AreEqual(address.ToString(), "1012 Davern St, St Paul, MN 55116");
+            Assert.AreEqual((string)address, "1012 Davern St, St Paul, MN 55116");
         }
     }
 }
