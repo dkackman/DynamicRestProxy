@@ -1,4 +1,5 @@
-﻿using System.Dynamic;
+﻿using System.Text;
+using System.Dynamic;
 
 using RestSharp;
 
@@ -26,10 +27,21 @@ namespace DynamicRestProxy
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            var request = this.CreateRequest(binder, args, _keywordEscapeCharacter);
+            RestRequest request = null;
+            if (binder.IsVerb())
+            {
+                request = CreateRequest(binder, args);
 
-            // set the result to the async task that will execute the request and create the dynamic object
-            result = _client.ExecuteDynamicGetTaskAsync(request);
+                // set the result to the async task that will execute the request and create the dynamic object
+                result = _client.ExecuteDynamicPostTaskAsync(request);
+            }
+            else
+            {
+                request = CreateRequest(binder, args);
+
+                // set the result to the async task that will execute the request and create the dynamic object
+                result = _client.ExecuteDynamicGetTaskAsync(request);
+            }
 
             return true;
         }
@@ -45,26 +57,73 @@ namespace DynamicRestProxy
         {
             get
             {
-                return _parent != null ? _parent.Index + 1 : 0;
-            }
-        }
-
-        internal int SegmentCount
-        {
-            get
-            {
-                return Index + 1;
+                return _parent != null ? _parent.Index + 1 : -1; // the root is the main url - does not represent a url segment
             }
         }
 
         internal void AddSegment(RestRequest request)
         {
-            if (_parent != null)
+            if (_parent != null && _parent.Index != -1) // don't add a segemnt for the root element
             {
                 _parent.AddSegment(request);
             }
 
             request.AddUrlSegment(Index.ToString(), _name.TrimStart(_keywordEscapeCharacter));
         }
+
+        private static string CreateUrlSegmentTemplate(int count)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                builder.Append("/{").Append(i).Append("}");
+            }
+            return builder.ToString();
+        }
+
+        private RestRequest CreateRequest(InvokeMemberBinder binder, object[] args)
+        {
+            //unnamed arguments are treated as url segments; named arguments are parameters
+            int unnamedArgCount = binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
+            // total number of segments are all of the parent segments plus the number of unnamed arguments
+            int parentCount = Index + 1;
+            int count = parentCount + unnamedArgCount;
+            string template = CreateUrlSegmentTemplate(count + binder.UrlSegmentOffset()); 
+
+            var request = new RestRequest(template);
+
+            // the binder endpoint isn't a verb (post etc) it represents a segment of the url - add it
+            if (!binder.IsVerb())
+                request.AddUrlSegment(parentCount.ToString(), binder.Name.TrimStart(_keywordEscapeCharacter));
+
+            // fill in the url segments 
+            SetSegments(request, parentCount, count, args);
+
+            // now add all named arguments as parameters
+            SetParameters(request, binder.CallInfo, args, unnamedArgCount);
+
+            return request;
+        }
+
+        private void SetSegments(RestRequest request, int start, int count, object[] args)
+        {
+            // fill in the url segments for this object and its parents
+            AddSegment(request);
+
+            // fill in the url segments passed as unnamed arguments to the dynamic invocation
+            for (int i = start; i < count; i++)
+            {
+                request.AddUrlSegment((i + 1).ToString(), args[i - start].ToString());
+            }
+        }
+
+        private void SetParameters(RestRequest request, CallInfo call, object[] args, int offset)
+        {
+            for (int i = 0; i < call.ArgumentNames.Count; i++)
+            {
+                request.AddParameter(call.ArgumentNames[i].TrimStart(_keywordEscapeCharacter), args[i + offset]);
+            }
+        }
+
     }
 }

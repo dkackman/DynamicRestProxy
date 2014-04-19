@@ -3,8 +3,15 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 
+using Newtonsoft.Json;
+
 namespace DynamicRestProxy.UnitTests
 {
+    /// <summary>
+    /// This is a quick and dirty way to store service credentials in a place
+    /// that is easy to acces but stored outside of the source tree so that they
+    /// do not get checked into github
+    /// </summary>
     static class APIKEY
     {
         //#error either load you key from a file outside of the source try like below or return it directly here
@@ -15,6 +22,7 @@ namespace DynamicRestProxy.UnitTests
         {
             AddKey("sunlight", @"d:\temp\sunlight.key.txt");
             AddKey("bing", @"d:\temp\bing.key.txt");
+            AddKey("google", @"d:\temp\google.key.json");
         }
 
         static void AddKey(string key, string keyPath)
@@ -23,7 +31,7 @@ namespace DynamicRestProxy.UnitTests
             {
                 using (var file = File.OpenRead(keyPath))
                 using (var reader = new StreamReader(file))
-                    _keys.Add(key, reader.ReadLine());
+                    _keys.Add(key, reader.ReadToEnd());
             }
             catch (Exception e)
             {
@@ -34,6 +42,11 @@ namespace DynamicRestProxy.UnitTests
         public static string Key(string api)
         {
             return _keys[api];
+        }
+
+        public static dynamic JsonKey(string api)
+        {
+            return JsonConvert.DeserializeObject<dynamic>(APIKEY.Key(api));
         }
     }
 }
