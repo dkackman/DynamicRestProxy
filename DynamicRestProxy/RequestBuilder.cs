@@ -29,13 +29,15 @@ namespace DynamicRestProxy
             var request = new RestRequest(template);
 
             // if the binder endpoint isn't a verb (post, get etc) it represents a segment of the url - add it
+            int verbOffset = 1;
             if (!binder.IsVerb())
             {
+                verbOffset = 0;
                 request.AddUrlSegment(parentCount.ToString(), binder.Name.TrimStart(_proxy.KeywordEscapeCharacter));
             }
 
             // fill in the url segments 
-            SetSegments(request, parentCount - binder.UrlSegmentOffset(), count - binder.UrlSegmentOffset(), args);
+            SetSegments(request, parentCount - verbOffset, count - verbOffset, args);
 
             // now add all named arguments as parameters
             SetParameters(request, binder.CallInfo, args, unnamedArgCount);

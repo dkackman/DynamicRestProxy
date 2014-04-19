@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 using RestSharp;
 
@@ -11,20 +11,33 @@ namespace DynamicRestProxy.UnitTests
     [TestClass]
     public class GoogleTests
     {
-        private static dynamic GetGoogleKey()
+        private static string _token;
+
+        private async Task Authenticate()
         {
-            return APIKEY.JsonKey("google").installed;
+            if (!string.IsNullOrEmpty(_token))
+                return;
+
+            if (CredentialStore.Exists("google.auth.json"))
+            {
+                var access = CredentialStore.Retreive("google.auth.json");
+                _token = access.access_token;
+            }
+            else
+            {
+                var access = await GetNewAccessToken();
+                CredentialStore.Store("google.auth.json", access);
+                _token = access.access_token;
+            }
         }
 
-        [TestMethod]
-        [Ignore] // - this test requires user interaction
-        public async Task DeviceAuthentication()
+        private async Task<dynamic> GetNewAccessToken()
         {
-            dynamic key = GetGoogleKey();
+            dynamic key = CredentialStore.JsonKey("google").installed;
 
             var client = new RestClient("https://accounts.google.com");
             dynamic proxy = new RestProxy(client);
-            var response = await proxy.o.oauth2.device.code.post(client_id: key.client_id, scope: "email profile");
+            var response = await proxy.o.oauth2.device.code.post(client_id: key.client_id, scope: "email profile https://www.googleapis.com/auth/calendar");
             Assert.IsNotNull(response);
 
             Debug.WriteLine((string)response.user_code);
@@ -42,25 +55,49 @@ namespace DynamicRestProxy.UnitTests
             int interval = response.interval;
             int time = interval;
 
+            dynamic tokenResonse = null; 
             // we are using the device flow so enter the code in the browser - poll google for success
-            string token = null;
-            while (time < expiration && string.IsNullOrEmpty(token))
+            while (time < expiration && tokenResonse == null)
             {
                 Thread.Sleep(interval * 1000);
-                var tokenResonse = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, code:response.device_code, grant_type:"http://oauth.net/grant_type/device/1.0");
-                token = tokenResonse.access_token;
+                tokenResonse = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, code: response.device_code, grant_type: "http://oauth.net/grant_type/device/1.0");
                 time += interval;
             }
 
-            Assert.IsNotNull(token);
+            Assert.IsNotNull(tokenResonse);
+            return tokenResonse;
+        }
+
+        [TestMethod]
+      //  [Ignore] // - this test requires user interaction
+        public async Task GetUserProfile()
+        {
+            await Authenticate();
+            Assert.IsNotNull(_token);
 
             var api = new RestClient("https://www.googleapis.com");
-            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(token);
+            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
             dynamic apiProxy = new RestProxy(api);
             var profile = await apiProxy.oauth2.v1.userinfo();
 
             Assert.IsNotNull(profile);
             Assert.AreEqual((string)profile.family_name, "Kackman");
+        }
+
+        [TestMethod]
+        //  [Ignore] // - this test requires user interaction
+        public async Task GetCalendarList()
+        {
+            await Authenticate();
+            Assert.IsNotNull(_token);
+
+            var api = new RestClient("https://www.googleapis.com/calendar/v3");
+            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic apiProxy = new RestProxy(api);
+            var list = await apiProxy.users.me.calendarList();
+
+            Assert.IsNotNull(list);
+            Assert.AreEqual((string)list.kind, "calendar#calendarList");
         }
     }
 }

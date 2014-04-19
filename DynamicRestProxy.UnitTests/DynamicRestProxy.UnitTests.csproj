@@ -60,7 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="APIKEY.cs" />
+    <Compile Include="CredentialStore.cs" />
     <Compile Include="BasicTests.cs" />
     <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

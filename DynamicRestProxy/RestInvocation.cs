@@ -19,15 +19,14 @@ namespace DynamicRestProxy
         {
             Debug.Assert(client != null);
 
-            // request = CreateRequest(binder, args);
+            // set the result to the async task that will execute the request and create the dynamic object
+            // based on the supplied verb
             if (Verb == "post")
             {
-                // set the result to the async task that will execute the request and create the dynamic object
                 return await client.ExecuteDynamicPostTaskAsync(request);
             }
             else if (Verb == "get")
             {
-                // set the result to the async task that will execute the request and create the dynamic object
                 return await client.ExecuteDynamicGetTaskAsync(request);
             }
 

@@ -24,9 +24,5 @@ namespace DynamicRestProxy
         {
             return binder.IsVerb() ? 0 : 1; // if its a verb it doesn't make a url segment
         }
-        public static int UrlSegmentOffset(this InvokeMemberBinder binder)
-        {
-            return binder.IsVerb() ? 1 : 0; // plus one is for the binder endpoint - verb binders don't count
-        }
     }
 }
