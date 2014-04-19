@@ -24,7 +24,7 @@ http://openstates.org/api/v1/metadata/mn/
             Assert.IsTrue(result.name == "Minnesota");
             
             
-Or to access an endpoint with URL parameters:
+Access an endpoint with URL parameters:
 http://openstates.org/api/v1/legislators/geo/?lat=44.926868&long=-93.214049
 
             var client = new RestClient("http://openstates.org/api/v1");
@@ -36,7 +36,7 @@ http://openstates.org/api/v1/legislators/geo/?lat=44.926868&long=-93.214049
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
             
-Or to access a Bing Maps Geocode endpoint:
+A Bing Maps Geocode endpoint:
 
             var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
             client.AddDefaultParameter("key", CredentialStore.Key("bing"));
@@ -55,4 +55,4 @@ Or to access a Bing Maps Geocode endpoint:
             
 The end result is intended to be a coventions based way to interact with REST services, quickly and in a natural manner. 
 
-Is currentlya work in progress. Supports the GET, POST, and DELETE verbs.
+Is currently a work in progress. Supports the GET, POST, and DELETE verbs.
