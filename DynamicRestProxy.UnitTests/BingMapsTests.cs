@@ -33,7 +33,7 @@ namespace DynamicRestProxy.UnitTests
         public async Task CoordinateFromPostalCode()
         {
             dynamic service = CreateProxy();
-            var result = await service.Locations(postalCode: "55116", countryRegion: "US");
+            var result = await service.Locations.get(postalCode: "55116", countryRegion: "US");
 
             Assert.AreEqual((int)result.statusCode, 200);
             Assert.IsTrue(result.resourceSets.Count > 0);

@@ -19,47 +19,29 @@ namespace DynamicRestProxy
 
         public RestRequest BuildRequest(InvokeMemberBinder binder, object[] args)
         {
-            // TODO - refactor this -- too much index management
+            Debug.Assert(binder.IsVerb());
 
-            //unnamed arguments are treated as url segments; named arguments are parameters
-            int unnamedArgCount = binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
             // total number of segments are all of the parent segments plus the number of unnamed arguments
-            int parentCount = _proxy.Index + 1;
-            int count = parentCount + unnamedArgCount;
-            string template = CreateUrlSegmentTemplate(count + binder.UrlSegmentCount());
+            int segmentCount = _proxy.Index + 1;
+            string template = CreateUrlSegmentTemplate(segmentCount);
 
             var request = new RestRequest(template);
+            request.RequestFormat = DataFormat.Json;
 
             // if the binder endpoint isn't a verb (post, get etc) it represents a segment of the url - add it
-            int verbOffset = 1;
-            if (!binder.IsVerb())
-            {
-                verbOffset = 0;
-                request.AddUrlSegment(parentCount.ToString(), binder.Name.TrimStart(_proxy.KeywordEscapeCharacter));
-            }
+            request.AddUrlSegment(segmentCount.ToString(), binder.Name.TrimStart(_proxy.KeywordEscapeCharacter));
 
             // fill in the url segments 
-            SetSegments(request, parentCount - verbOffset, count - verbOffset, args);
-
-            // now add all named arguments as parameters
-            SetParameters(request, binder.CallInfo, args, unnamedArgCount);
-
-            //request.RequestFormat = DataFormat.Json;
-            //request.AddBody(args[0]);
-
-            return request;
-        }
-
-        private void SetSegments(RestRequest request, int start, int count, object[] args)
-        {
-            // fill in the url segments for this object and its parents
             _proxy.AddSegment(request);
 
-            // fill in the url segments passed as unnamed arguments to the dynamic invocation
-            for (int i = start; i < count; i++)
-            {
-                request.AddUrlSegment((i + 1).ToString(), args[i - start].ToString());
-            }
+            // now add all named arguments as parameters
+            int unnamedArgCount = binder.UnnamedArgCount();
+            SetParameters(request, binder.CallInfo, args, unnamedArgCount);
+
+            if (unnamedArgCount == 1)
+                request.AddBody(args[0]);
+
+            return request;
         }
 
         private void SetParameters(RestRequest request, CallInfo call, object[] args, int offset)

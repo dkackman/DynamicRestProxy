@@ -5,7 +5,7 @@ namespace DynamicRestProxy
 {
     static class BinderExtensions
     {
-        private static string[] _verbs = new string[] { "post", "get" }; //two verbs for now
+        private static string[] _verbs = new string[] { "post", "get", "delete" }; //two verbs for now
         
         public static string Verb(this InvokeMemberBinder binder)
         {
@@ -15,14 +15,14 @@ namespace DynamicRestProxy
             return "get";
         }
 
+        public static int UnnamedArgCount(this InvokeMemberBinder binder)
+        {
+            return binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
+        }
+
         public static bool IsVerb(this InvokeMemberBinder binder)
         {
             return _verbs.Contains(binder.Name);
-        }
-
-        public static int UrlSegmentCount(this InvokeMemberBinder binder)
-        {
-            return binder.IsVerb() ? 0 : 1; // if its a verb it doesn't make a url segment
         }
     }
 }

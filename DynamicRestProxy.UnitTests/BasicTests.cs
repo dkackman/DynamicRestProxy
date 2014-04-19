@@ -19,35 +19,9 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic service = new RestProxy(client);
 
-            dynamic result = await service.metadata.get("mn");
+            dynamic result = await service.metadata.mn.get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.name == "Minnesota");
-        }
-
-        [TestMethod]
-        public async Task GetMethod1PathAsArg()
-        {
-            var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
-
-            dynamic service = new RestProxy(client);
-
-            dynamic result = await service.metadata("mn");
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.name == "Minnesota");
-        }
-
-        [TestMethod]
-        public async Task GetMethod3PathAsArg()
-        {
-            var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
-
-            dynamic service = new RestProxy(client);
-
-            var result = await service.bills("mn", "2013s1", "SF 1");
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.id == "MNB00017167");
         }
 
         [TestMethod]
@@ -58,7 +32,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic service = new RestProxy(client);
 
-            var result = await service.bills.mn("2013s1", "SF 1");
+            var result = await service.bills.mn.segment("2013s1").segment("SF 1").get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.id == "MNB00017167");
         }
@@ -71,7 +45,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic service = new RestProxy(client);
 
-            var result = await service.bills.mn._2013s1("SF 1");
+            var result = await service.bills.mn._2013s1.segment("SF 1").get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.id == "MNB00017167");
         }
@@ -84,7 +58,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic service = new RestProxy(client);
 
-            var result = await service.legislators.geo(lat: 44.926868, _long: -93.214049);
+            var result = await service.legislators.geo.get(lat: 44.926868, _long: -93.214049);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
         }
@@ -97,7 +71,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic service = new RestProxy(client);
 
-            var result = await service.bills(state: "mn", chamber: "upper", status: "passed_upper");
+            var result = await service.bills.get(state: "mn", chamber: "upper", status: "passed_upper");
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Count > 0);
             Assert.IsTrue(result[0].chamber == "upper");

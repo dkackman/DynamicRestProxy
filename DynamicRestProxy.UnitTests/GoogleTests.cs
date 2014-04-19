@@ -1,6 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Dynamic;
 
 using RestSharp;
@@ -56,12 +59,14 @@ namespace DynamicRestProxy.UnitTests
             int interval = response.interval;
             int time = interval;
 
-            dynamic tokenResonse = null; 
+            dynamic tokenResonse = null;
             // we are using the device flow so enter the code in the browser - poll google for success
-            while (time < expiration && tokenResonse == null)
+            while (time < expiration)
             {
                 Thread.Sleep(interval * 1000);
                 tokenResonse = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, code: response.device_code, grant_type: "http://oauth.net/grant_type/device/1.0");
+                if (tokenResonse.access_token != null)
+                    break;
                 time += interval;
             }
 
@@ -70,7 +75,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
-      //  [Ignore] // - this test requires user interaction
+        //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
             await Authenticate();
@@ -79,7 +84,7 @@ namespace DynamicRestProxy.UnitTests
             var api = new RestClient("https://www.googleapis.com");
             api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
             dynamic apiProxy = new RestProxy(api);
-            var profile = await apiProxy.oauth2.v1.userinfo();
+            var profile = await apiProxy.oauth2.v1.userinfo.get();
 
             Assert.IsNotNull(profile);
             Assert.AreEqual((string)profile.family_name, "Kackman");
@@ -95,7 +100,7 @@ namespace DynamicRestProxy.UnitTests
             var api = new RestClient("https://www.googleapis.com/calendar/v3");
             api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
             dynamic apiProxy = new RestProxy(api);
-            var list = await apiProxy.users.me.calendarList();
+            var list = await apiProxy.users.me.calendarList.get();
 
             Assert.IsNotNull(list);
             Assert.AreEqual((string)list.kind, "calendar#calendarList");
@@ -119,6 +124,34 @@ namespace DynamicRestProxy.UnitTests
 
             Assert.IsNotNull(list);
             Assert.AreEqual((string)list.summary, "unit_testing");
+        }
+
+
+        [TestMethod]
+        //  [Ignore] // - this test requires user interaction
+        public async Task DeleteCalendar()
+        {
+            await Authenticate();
+            Assert.IsNotNull(_token);
+
+            var api = new RestClient("https://www.googleapis.com/calendar/v3");
+            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic apiProxy = new RestProxy(api);
+            var list = await apiProxy.users.me.calendarList.get();
+            Assert.IsNotNull(list);
+
+            string id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
+
+            Assert.IsFalse(string.IsNullOrEmpty(id));
+
+            var result = await apiProxy.calendars.segment(id).delete();
+            Assert.IsNull(result);
+
+            list = await apiProxy.users.me.calendarList.get();
+            Assert.IsNotNull(list);
+            id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
+
+            Assert.IsTrue(string.IsNullOrEmpty(id));
         }
     }
 }
