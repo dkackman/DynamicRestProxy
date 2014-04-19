@@ -17,21 +17,25 @@ namespace DynamicRestProxy
 
         public RestRequest BuildRequest(InvokeMemberBinder binder, object[] args)
         {
+            // TODO - refactor this -- too much index management
+
             //unnamed arguments are treated as url segments; named arguments are parameters
             int unnamedArgCount = binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
             // total number of segments are all of the parent segments plus the number of unnamed arguments
             int parentCount = _proxy.Index + 1;
             int count = parentCount + unnamedArgCount;
-            string template = CreateUrlSegmentTemplate(count + binder.UrlSegmentOffset());
+            string template = CreateUrlSegmentTemplate(count + binder.UrlSegmentCount());
 
             var request = new RestRequest(template);
 
             // if the binder endpoint isn't a verb (post, get etc) it represents a segment of the url - add it
             if (!binder.IsVerb())
+            {
                 request.AddUrlSegment(parentCount.ToString(), binder.Name.TrimStart(_proxy.KeywordEscapeCharacter));
+            }
 
             // fill in the url segments 
-            SetSegments(request, parentCount, count, args);
+            SetSegments(request, parentCount - binder.UrlSegmentOffset(), count - binder.UrlSegmentOffset(), args);
 
             // now add all named arguments as parameters
             SetParameters(request, binder.CallInfo, args, unnamedArgCount);

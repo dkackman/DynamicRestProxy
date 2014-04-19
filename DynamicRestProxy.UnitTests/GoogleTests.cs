@@ -29,6 +29,7 @@ namespace DynamicRestProxy.UnitTests
 
             Debug.WriteLine((string)response.user_code);
 
+            // use clip.exe to put the user code on the clipboard
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.Arguments = string.Format("/c echo {0} | clip", response.user_code);

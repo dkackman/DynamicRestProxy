@@ -12,6 +12,19 @@ namespace DynamicRestProxy.UnitTests
     public class BasicTests
     {
         [TestMethod]
+        public async Task ExplicitGetInvoke()
+        {
+            var client = new RestClient("http://openstates.org/api/v1");
+            client.AddDefaultHeader("X-APIKEY", APIKEY.Key("sunlight"));
+
+            dynamic service = new RestProxy(client);
+
+            dynamic result = await service.metadata.get("mn");
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.name == "Minnesota");
+        }
+
+        [TestMethod]
         public async Task GetMethod1PathAsArg()
         {
             var client = new RestClient("http://openstates.org/api/v1");
