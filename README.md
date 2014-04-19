@@ -7,11 +7,13 @@ This is a set of classes that wrap the [RestSharp RestClient](http://restsharp.o
 
 All requests are asynynchronous and return dyanmic objects.
 
-The intent is to make it easier to access REST API's from C# without needing to create strongly typed API wrappers and numerous static POCO types for basic DTO responses.
+The intent is to make it easier to access REST API's from C# without needing to create strongly typed API wrappers and numerous static POCO types for basic DTO responses. 
+
+Is currently a work in progress. Supports the GET, POST, and DELETE verbs.
 
 Some examples:
 
-Get meta-data about Minnesota from SunLight Labs
+Basic GET with no parameters:
 http://openstates.org/api/v1/metadata/mn/
 
             var client = new RestClient("http://openstates.org/api/v1");
@@ -28,7 +30,7 @@ Access an endpoint with URL parameters:
 http://openstates.org/api/v1/legislators/geo/?lat=44.926868&long=-93.214049
 
             var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", APIKEY.Key);
+            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
             dynamic service = new DynamicRestClient(client);
 
@@ -37,6 +39,7 @@ http://openstates.org/api/v1/legislators/geo/?lat=44.926868&long=-93.214049
             Assert.IsTrue(result.Count > 0);
             
 A Bing Maps Geocode endpoint:
+http://dev.virtualearth.net/REST/v1/Locations?postalCode=55116&countryRegion=US&key=...
 
             var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
             client.AddDefaultParameter("key", CredentialStore.Key("bing"));
@@ -52,7 +55,3 @@ A Bing Maps Geocode endpoint:
             var r = result.resourceSets[0].resources[0].point.coordinates;
             Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
             Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
-            
-The end result is intended to be a coventions based way to interact with REST services, quickly and in a natural manner. 
-
-Is currently a work in progress. Supports the GET, POST, and DELETE verbs.
