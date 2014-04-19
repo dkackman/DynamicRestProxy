@@ -1,14 +1,20 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using System.Dynamic;
 
 namespace DynamicRestProxy
 {
     static class BinderExtensions
     {
-        private static string[] _verbs = new string[] { "post", "get" };
+        private static string[] _verbs = new string[] { "post", "get" }; //two verbs for now
         
+        public static string Verb(this InvokeMemberBinder binder)
+        {
+            if (binder.IsVerb())
+                return binder.Name;
+
+            return "get";
+        }
+
         public static bool IsVerb(this InvokeMemberBinder binder)
         {
             return _verbs.Contains(binder.Name);

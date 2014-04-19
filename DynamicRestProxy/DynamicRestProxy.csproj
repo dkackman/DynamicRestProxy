@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinderExtensions.cs" />
+    <Compile Include="RequestBuilder.cs" />
     <Compile Include="RestInvocation.cs" />
     <Compile Include="RestProxy.cs" />
     <Compile Include="RestClientExtensions.cs" />
