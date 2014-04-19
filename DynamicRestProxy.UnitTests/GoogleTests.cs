@@ -1,9 +1,6 @@
-﻿using System;
-using System.Dynamic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Reflection;
 
 using RestSharp;
 
@@ -20,7 +17,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
-       // [Ignore] // - this test requires user interaction
+        [Ignore] // - this test requires user interaction
         public async Task DeviceAuthentication()
         {
             dynamic key = GetGoogleKey();
