@@ -25,14 +25,39 @@ namespace DynamicRestProxy.UnitTests
             if (CredentialStore.Exists("google.auth.json"))
             {
                 var access = CredentialStore.Retreive("google.auth.json");
+
+                if (DateTime.UtcNow >= DateTime.Parse((string)access.expiry))
+                {
+                    access = await RefreshAccessToken(access);
+                    StoreAccess(access);
+                }
+                
                 _token = access.access_token;
             }
             else
             {
                 var access = await GetNewAccessToken();
-                CredentialStore.Store("google.auth.json", access);
+                StoreAccess(access);
                 _token = access.access_token;
             }
+        }
+
+        private static void StoreAccess(dynamic access)
+        {
+            access.expiry = DateTime.UtcNow.Add(TimeSpan.FromSeconds((int)access.expires_in));
+            CredentialStore.Store("google.auth.json", access);
+        }
+
+        private async Task<dynamic> RefreshAccessToken(dynamic access)
+        {
+            dynamic key = CredentialStore.JsonKey("google").installed;
+
+            var client = new RestClient("https://accounts.google.com");
+            dynamic proxy = new RestProxy(client);
+            var response = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
+            Assert.IsNotNull(response);
+
+            return response;
         }
 
         private async Task<dynamic> GetNewAccessToken()
@@ -116,14 +141,14 @@ namespace DynamicRestProxy.UnitTests
             await Authenticate();
             Assert.IsNotNull(_token);
 
-            var api = new RestClient("https://www.googleapis.com/calendar/v3");
-            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic apiProxy = new RestProxy(api);
+            var client = new RestClient("https://www.googleapis.com/calendar/v3");
+            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic proxy = new RestProxy(client);
 
             dynamic calendar = new ExpandoObject();
             calendar.summary = "unit_testing";
 
-            var list = await apiProxy.calendars.post(calendar);
+            var list = await proxy.calendars.post(calendar);
 
             Assert.IsNotNull(list);
             Assert.AreEqual((string)list.summary, "unit_testing");

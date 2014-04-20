@@ -36,7 +36,8 @@ namespace DynamicRestProxy
 
             // 'segment' is a special escape indicator to support url segments that are not valid C# identifiers
             // example: proxy.bills.mn.segment("2013s1").segment("SF 1").get()
-            // if you had a segment named segment you;d do this: proxy.segment("segment").get()
+            // if you had a segment named segment you'd do this: proxy.segment("segment").get()
+            // or if there was a segment that was also an http verb: proxy.segment("get").get()
             if (binder.Name == "segment")
             {
                 if (args.Length != 1)

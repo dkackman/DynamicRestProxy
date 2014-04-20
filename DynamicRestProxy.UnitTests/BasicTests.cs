@@ -18,9 +18,9 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic service = new RestProxy(client);
+            dynamic proxy = new RestProxy(client);
 
-            dynamic result = await service.metadata.mn.get();
+            dynamic result = await proxy.metadata.mn.get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.name == "Minnesota");
         }
@@ -32,9 +32,9 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic service = new RestProxy(client);
+            dynamic proxy = new RestProxy(client);
 
-            var result = await service.bills.mn.segment("2013s1").segment("SF 1").get();
+            var result = await proxy.bills.mn.segment("2013s1").segment("SF 1").get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.id == "MNB00017167");
         }
