@@ -22,7 +22,6 @@ namespace DynamicRestProxy
         internal RestProxy(RestClient client, RestProxy parent, string name, char keywordEscapeCharacter)
         {
             Debug.Assert(client != null);
-            Debug.Assert(parent != null);
 
             _client = client;
             _parent = parent;
@@ -32,11 +31,14 @@ namespace DynamicRestProxy
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
+            Debug.Assert(binder != null);
+            Debug.Assert(args != null);
+
             // 'segment' is a special escape indicator to support url segments that are not valid C# identifiers
             // example: service.bills.mn.segment("2013s1").segment("SF 1").get()
             if (binder.Name == "segment")
             {
-                if (args == null || args.Length != 1)
+                if (args.Length != 1)
                     throw new InvalidOperationException("The escape sequence 'segment' must have exactly 1 unnamed parameter");
 
                 result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
@@ -54,6 +56,8 @@ namespace DynamicRestProxy
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
+            Debug.Assert(binder != null);
+            
             // this gets invoked when a dynamic property is accessed
             // example: proxy.locations will invoke here with a binder named location
             // each dynamic property is treated as a url segment
