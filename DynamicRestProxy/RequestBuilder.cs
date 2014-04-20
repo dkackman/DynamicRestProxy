@@ -34,12 +34,15 @@ namespace DynamicRestProxy
             // fill in the url segments 
             _proxy.AddSegment(request);
 
-            // now add all named arguments as parameters
+            // all named arguments are added as parameters
             int unnamedArgCount = binder.UnnamedArgCount();
             SetParameters(request, binder.CallInfo, args, unnamedArgCount);
 
-            if (unnamedArgCount == 1)
-                request.AddBody(args[0]);
+            // All unnamed args get added to the request body
+            for (int i = 0; i < unnamedArgCount; i++)
+            {
+                request.AddBody(args[i]);
+            }
 
             return request;
         }

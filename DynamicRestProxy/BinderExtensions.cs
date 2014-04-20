@@ -5,7 +5,7 @@ namespace DynamicRestProxy
 {
     static class BinderExtensions
     {
-        private static string[] _verbs = new string[] { "post", "get", "delete" }; //two verbs for now
+        private static string[] _verbs = new string[] { "post", "get", "delete", "put" }; //two verbs for now
         
         public static string Verb(this InvokeMemberBinder binder)
         {

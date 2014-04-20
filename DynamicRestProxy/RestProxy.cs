@@ -29,10 +29,12 @@ namespace DynamicRestProxy
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
+            // 'segment' is a special escape indicator to support url segments that are not valid C# identifiers
+            // example: service.bills.mn.segment("2013s1").segment("SF 1").get()
             if (binder.Name == "segment")
             {
                 if (args.Length != 1)
-                    throw new InvalidOperationException("The escape sequence 'segment' must have exactly 1 unnamed paramter");
+                    throw new InvalidOperationException("The escape sequence 'segment' must have exactly 1 unnamed parameter");
 
                 result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
             }

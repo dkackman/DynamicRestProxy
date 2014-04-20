@@ -107,6 +107,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("ordered")]
         //  [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
@@ -126,8 +127,40 @@ namespace DynamicRestProxy.UnitTests
             Assert.AreEqual((string)list.summary, "unit_testing");
         }
 
+        [TestMethod]
+        [TestCategory("ordered")]
+        //  [Ignore] // - this test requires user interaction
+        public async Task UpdateCalendar()
+        {
+            await Authenticate();
+            Assert.IsNotNull(_token);
+
+            var api = new RestClient("https://www.googleapis.com/calendar/v3");
+            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic apiProxy = new RestProxy(api);
+            var list = await apiProxy.users.me.calendarList.get();
+            Assert.IsNotNull(list);
+
+            string id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
+            Assert.IsFalse(string.IsNullOrEmpty(id));
+
+            var guid = Guid.NewGuid().ToString();
+            dynamic calendar = new ExpandoObject();
+            calendar.summary = "unit_testing";
+            calendar.description = guid;
+
+            var result = await apiProxy.calendars.segment(id).put(calendar);
+            Assert.IsNotNull(result);
+
+            list = await apiProxy.users.me.calendarList.get();
+            Assert.IsNotNull(list);
+            string description = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.description).FirstOrDefault();
+
+            Assert.AreEqual(guid, description);
+        }
 
         [TestMethod]
+        [TestCategory("ordered")]
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {
@@ -141,7 +174,6 @@ namespace DynamicRestProxy.UnitTests
             Assert.IsNotNull(list);
 
             string id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
-
             Assert.IsFalse(string.IsNullOrEmpty(id));
 
             var result = await apiProxy.calendars.segment(id).delete();

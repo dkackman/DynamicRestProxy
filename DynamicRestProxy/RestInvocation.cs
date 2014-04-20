@@ -33,6 +33,10 @@ namespace DynamicRestProxy
             {
                 return await client.DynamicDeleteTaskAsync(request);
             }
+            else if (Verb == "put")
+            {
+                return await client.DynamicPutTaskAsync(request);
+            }
 
             Debug.Assert(false, "unsupported verb");
             throw new InvalidOperationException("unsupported verb: " + Verb);
