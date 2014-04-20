@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Dynamic;
+using System.Diagnostics;
 
 using RestSharp;
 
@@ -12,7 +12,7 @@ namespace DynamicRestProxy
         private RestProxy _parent;
         private string _name;
 
-        internal char KeywordEscapeCharacter { get; set; }
+        internal char KeywordEscapeCharacter { get; private set; }
 
         public RestProxy(RestClient client, char keywordEscapeCharacter = '_')
             : this(client, null, "", keywordEscapeCharacter)
@@ -21,6 +21,9 @@ namespace DynamicRestProxy
 
         internal RestProxy(RestClient client, RestProxy parent, string name, char keywordEscapeCharacter)
         {
+            Debug.Assert(client != null);
+            Debug.Assert(parent != null);
+
             _client = client;
             _parent = parent;
             _name = name;
@@ -51,6 +54,9 @@ namespace DynamicRestProxy
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
+            // this gets invoked when a dynamic property is accessed
+            // example: proxy.locations will invoke here with a binder named location
+            // each dynamic property is treated as a url segment
             result = new RestProxy(_client, this, binder.Name, KeywordEscapeCharacter);
 
             return true;

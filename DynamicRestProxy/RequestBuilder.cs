@@ -4,8 +4,6 @@ using System.Dynamic;
 
 using RestSharp;
 
-using Newtonsoft.Json;
-
 namespace DynamicRestProxy
 {
     class RequestBuilder
@@ -21,38 +19,32 @@ namespace DynamicRestProxy
         {
             Debug.Assert(binder.IsVerb());
 
-            // total number of segments are all of the parent segments plus the number of unnamed arguments
-            int segmentCount = _proxy.Index + 1;
-            string template = CreateUrlSegmentTemplate(segmentCount);
+            // total number of segments is the number or parts of the call chain not including the root
+            // example: proxy.location.geo.get() has two url segments - the verb doesn't count
+            // Index is zero based so add one
+            string template = CreateUrlSegmentTemplate(_proxy.Index + 1);
 
             var request = new RestRequest(template);
-            request.RequestFormat = DataFormat.Json;
+            request.RequestFormat = DataFormat.Json; // we only talk json            
 
-            // if the binder endpoint isn't a verb (post, get etc) it represents a segment of the url - add it
-            request.AddUrlSegment(segmentCount.ToString(), binder.Name.TrimStart(_proxy.KeywordEscapeCharacter));
-
-            // fill in the url segments 
+            // fill in the url segments with the names of each call chain member
             _proxy.AddSegment(request);
 
-            // all named arguments are added as parameters
             int unnamedArgCount = binder.UnnamedArgCount();
-            SetParameters(request, binder.CallInfo, args, unnamedArgCount);
 
-            // All unnamed args get added to the request body
+            // all named arguments are added as parameters
+            for (int i = 0; i < binder.CallInfo.ArgumentNames.Count; i++)
+            {
+                request.AddParameter(binder.CallInfo.ArgumentNames[i].TrimStart(_proxy.KeywordEscapeCharacter), args[i + unnamedArgCount]);
+            }
+
+            // all unnamed args get added to the request body
             for (int i = 0; i < unnamedArgCount; i++)
             {
                 request.AddBody(args[i]);
             }
 
             return request;
-        }
-
-        private void SetParameters(RestRequest request, CallInfo call, object[] args, int offset)
-        {
-            for (int i = 0; i < call.ArgumentNames.Count; i++)
-            {
-                request.AddParameter(call.ArgumentNames[i].TrimStart(_proxy.KeywordEscapeCharacter), args[i + offset]);
-            }
         }
 
         private static string CreateUrlSegmentTemplate(int count)

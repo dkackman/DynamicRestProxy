@@ -8,12 +8,12 @@ namespace DynamicRestProxy
 {
     class RestInvocation
     {
-        public RestInvocation(string verb = "get")
+        public RestInvocation(string verb)
         {
             Verb = verb;
         }
 
-        public string Verb { get; set; }
+        public string Verb { get; private set; }
 
         public async Task<dynamic> InvokeAsync(RestClient client, RestRequest request)
         {
