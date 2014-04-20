@@ -35,7 +35,8 @@ namespace DynamicRestProxy
             Debug.Assert(args != null);
 
             // 'segment' is a special escape indicator to support url segments that are not valid C# identifiers
-            // example: service.bills.mn.segment("2013s1").segment("SF 1").get()
+            // example: proxy.bills.mn.segment("2013s1").segment("SF 1").get()
+            // if you had a segment named segment you;d do this: proxy.segment("segment").get()
             if (binder.Name == "segment")
             {
                 if (args.Length != 1)
@@ -45,10 +46,14 @@ namespace DynamicRestProxy
             }
             else
             {
+                // build a rest request based on this instance, parent instances and invocation arguments
                 var builder = new RequestBuilder(this);
                 var request = builder.BuildRequest(binder, args);
+
+                // the binder name (i.e. the dynamic method name) is the verb
+                // example: proxy.locations.get() binder.Name == "get"
                 var invocation = new RestInvocation(binder.Name);
-                result = invocation.InvokeAsync(_client, request);
+                result = invocation.InvokeAsync(_client, request); // this will return a Task<dynamic> with the rest async call
             }
 
             return true;
