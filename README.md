@@ -12,6 +12,8 @@ The intent is to make it easier to access REST API's from C# without needing to 
 
 Is currently a work in progress. Supports the GET, POST, PUT, and DELETE verbs.
 
+If you try to run the unit tests take a close look at the CredentialStore class in the unit test project. It's pretty straighforward and you can use it to supply your own api keys while keeping them out of the code.
+
 Some examples:
 
 Basic GET with no parameters:
