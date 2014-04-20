@@ -9,7 +9,7 @@ All requests are asynynchronous and return dyanmic objects.
 
 The intent is to make it easier to access REST API's from C# without needing to create strongly typed API wrappers and numerous static POCO types for basic DTO responses. 
 
-Is currently a work in progress. Supports the GET, POST, and DELETE verbs.
+Is currently a work in progress. Supports the GET, POST, PUT, and DELETE verbs.
 
 Some examples:
 
@@ -55,3 +55,32 @@ http://dev.virtualearth.net/REST/v1/Locations?postalCode=55116&countryRegion=US&
             var r = result.resourceSets[0].resources[0].point.coordinates;
             Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
             Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
+            
+Create a Google calendar using POST:
+
+            var api = new RestClient("https://www.googleapis.com/calendar/v3");
+            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic apiProxy = new RestProxy(api);
+
+            dynamic calendar = new ExpandoObject();
+            calendar.summary = "unit_testing";
+
+            var response = await apiProxy.calendars.post(calendar);
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual((string)response.summary, "unit_testing");
+            
+Update the calendar using PUT:
+
+            var guid = Guid.NewGuid().ToString();
+            dynamic updated = new ExpandoObject();
+            updated.summary = "unit_testing";
+            updated.description = guid;
+            var result = await apiProxy.calendars.segment(response.id).put(updated);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(guid, (string)result.description);
+
+Delete the calendar:
+
+            await apiProxy.calendars.segment(response.id).delete();
+
