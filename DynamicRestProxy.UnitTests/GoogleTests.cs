@@ -110,8 +110,7 @@ namespace DynamicRestProxy.UnitTests
 
         [TestMethod]
         [TestCategory("ordered")]
-        [TestCategory("online")]
-        //  [Ignore] // - this test requires user interaction
+        // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
             await Authenticate();
@@ -132,7 +131,6 @@ namespace DynamicRestProxy.UnitTests
 
         [TestMethod]
         [TestCategory("ordered")]
-        [TestCategory("online")]
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
@@ -165,7 +163,6 @@ namespace DynamicRestProxy.UnitTests
 
         [TestMethod]
         [TestCategory("ordered")]
-        [TestCategory("online")]
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {

@@ -7,14 +7,6 @@ namespace DynamicRestProxy
     {
         private static string[] _verbs = new string[] { "post", "get", "delete", "put" }; //two verbs for now
         
-        public static string Verb(this InvokeMemberBinder binder)
-        {
-            if (binder.IsVerb())
-                return binder.Name;
-
-            return "get";
-        }
-
         public static int UnnamedArgCount(this InvokeMemberBinder binder)
         {
             return binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;

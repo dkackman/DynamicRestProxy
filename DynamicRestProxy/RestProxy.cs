@@ -33,7 +33,7 @@ namespace DynamicRestProxy
             // example: service.bills.mn.segment("2013s1").segment("SF 1").get()
             if (binder.Name == "segment")
             {
-                if (args.Length != 1)
+                if (args == null || args.Length != 1)
                     throw new InvalidOperationException("The escape sequence 'segment' must have exactly 1 unnamed parameter");
 
                 result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
@@ -42,7 +42,7 @@ namespace DynamicRestProxy
             {
                 var builder = new RequestBuilder(this);
                 var request = builder.BuildRequest(binder, args);
-                var invocation = new RestInvocation(binder.Verb());
+                var invocation = new RestInvocation(binder.Name);
                 result = invocation.InvokeAsync(_client, request);
             }
 
