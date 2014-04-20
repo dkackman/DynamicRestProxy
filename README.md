@@ -9,7 +9,7 @@ All requests are asynynchronous and return dyanmic objects.
 
 The intent is to make it easier to access REST API's from C# without needing to create strongly typed API wrappers and numerous static POCO types for basic DTO responses. 
 
-Is currently a work in progress. Supports the GET, POST, and DELETE verbs.
+Is currently a work in progress. Supports the GET, POST, PUT, and DELETE verbs.
 
 Some examples:
 
