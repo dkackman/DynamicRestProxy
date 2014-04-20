@@ -1,7 +1,8 @@
 DynamicRestProxy
 ================
 
-A rest client using the .NET Dynamic Language Runtime
+A rest client using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
+
 
 This is a set of classes that wrap the [RestSharp RestClient](http://restsharp.org/) with a [DyamicObject](http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx). The wrapper translates dyanmic method invlocations and call paths into REST requests. 
 
