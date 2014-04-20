@@ -12,6 +12,7 @@ namespace DynamicRestProxy.UnitTests
     public class BasicTests
     {
         [TestMethod]
+        [TestCategory("online")]
         public async Task ExplicitGetInvoke()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -25,6 +26,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         public async Task GetMethodSegmentWithArgs()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -38,6 +40,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         public async Task EscapeInvalidSegmentStartCharacter()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -51,6 +54,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         public async Task GetMethod2PathAsProperty2Params()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -64,6 +68,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         public async Task GetMethod1PathArg1Param()
         {
             var client = new RestClient("http://openstates.org/api/v1");

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 
 using RestSharp;
-using Newtonsoft.Json;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DynamicRestProxy.UnitTests
@@ -75,6 +75,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
@@ -91,6 +92,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {
@@ -108,6 +110,7 @@ namespace DynamicRestProxy.UnitTests
 
         [TestMethod]
         [TestCategory("ordered")]
+        [TestCategory("online")]
         //  [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
@@ -129,6 +132,7 @@ namespace DynamicRestProxy.UnitTests
 
         [TestMethod]
         [TestCategory("ordered")]
+        [TestCategory("online")]
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
@@ -161,6 +165,7 @@ namespace DynamicRestProxy.UnitTests
 
         [TestMethod]
         [TestCategory("ordered")]
+        [TestCategory("online")]
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {

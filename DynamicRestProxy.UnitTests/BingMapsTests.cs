@@ -30,6 +30,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         public async Task CoordinateFromPostalCode()
         {
             dynamic service = CreateProxy();
@@ -45,6 +46,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("online")]
         public async Task GetFormattedAddressFromCoordinate()
         {
             dynamic service = CreateProxy();
