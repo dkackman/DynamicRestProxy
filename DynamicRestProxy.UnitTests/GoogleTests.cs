@@ -22,9 +22,9 @@ namespace DynamicRestProxy.UnitTests
             if (!string.IsNullOrEmpty(_token))
                 return;
 
-            if (CredentialStore.Exists("google.auth.json"))
+            if (CredentialStore.ObjectExists("google.auth.json"))
             {
-                var access = CredentialStore.Retreive("google.auth.json");
+                var access = CredentialStore.RetreiveObject("google.auth.json");
 
                 if (DateTime.UtcNow >= DateTime.Parse((string)access.expiry))
                 {
@@ -45,7 +45,7 @@ namespace DynamicRestProxy.UnitTests
         private static void StoreAccess(dynamic access)
         {
             access.expiry = DateTime.UtcNow.Add(TimeSpan.FromSeconds((int)access.expires_in));
-            CredentialStore.Store("google.auth.json", access);
+            CredentialStore.StoreObject("google.auth.json", access);
         }
 
         private async Task<dynamic> RefreshAccessToken(dynamic access)

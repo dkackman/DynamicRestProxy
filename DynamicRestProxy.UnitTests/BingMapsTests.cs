@@ -24,7 +24,6 @@ namespace DynamicRestProxy.UnitTests
         {
             var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
             client.AddDefaultParameter("key", CredentialStore.Key("bing"));
-            client.AddDefaultParameter("o", "json");
 
             return new RestProxy(client);
         }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-
-using Newtonsoft.Json;
 
 namespace DynamicRestProxy.UnitTests
 {
@@ -46,13 +45,19 @@ namespace DynamicRestProxy.UnitTests
             return _keys[api];
         }
 
-        public static bool Exists(string name)
+        public static dynamic JsonKey(string api)
+        {
+            return JsonConvert.DeserializeObject<dynamic>(Key(api));
+        }
+
+        public static bool ObjectExists(string name)
         {
             return File.Exists(_root + name);
         }
 
-        public static dynamic Retreive(string name)
+        public static dynamic RetreiveObject(string name)
         {
+            Debug.Assert(File.Exists(_root + name));
             try
             {
                 using (var file = File.OpenRead(_root + name))
@@ -70,19 +75,14 @@ namespace DynamicRestProxy.UnitTests
             return null;
         }
 
-        public static void Store(string name, dynamic o)
+        public static void StoreObject(string name, dynamic o)
         {
-            using (var file = File.OpenWrite(_root + name))
+            using (var file = File.Open(_root + name, FileMode.Create, FileAccess.Write, FileShare.None))
             using (var writer = new StreamWriter(file))
-            {                
+            {
                 string json = JsonConvert.SerializeObject(o);
                 writer.Write(json);
             }
-        }
-
-        public static dynamic JsonKey(string api)
-        {
-            return JsonConvert.DeserializeObject<dynamic>(CredentialStore.Key(api));
         }
     }
 }

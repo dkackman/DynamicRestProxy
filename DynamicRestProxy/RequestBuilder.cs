@@ -26,7 +26,8 @@ namespace DynamicRestProxy
 
             var request = new RestRequest(template);
             request.RequestFormat = DataFormat.Json; // we only talk json            
-
+            request.AddHeader("Accept", "application/json, text/json, text/x-json, text/javascript");
+            
             // fill in the url segments with the names of each call chain member
             _proxy.AddSegment(request); // this recurses up the instance chain
 

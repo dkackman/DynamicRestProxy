@@ -28,6 +28,7 @@ namespace DynamicRestProxy
 
         public static async Task<dynamic> DynamicDeleteTaskAsync(this RestClient client, RestRequest request)
         {
+
             request.Method = Method.DELETE;
             var response = await client.ExecuteTaskAsync<dynamic>(request);
             if (response == null)
@@ -42,15 +43,16 @@ namespace DynamicRestProxy
             var response = await client.ExecuteTaskAsync<dynamic>(request);
             if (response == null)
                 return null;
-
+            
             return await response.Deserialize();
         }
 
         public static async Task<dynamic> Deserialize(this IRestResponse response)
         {
             if (!string.IsNullOrEmpty(response.Content))
+            {
                 return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(response.Content));
-
+            }
             return null;
         }
     }
