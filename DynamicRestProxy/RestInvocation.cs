@@ -8,9 +8,9 @@ namespace DynamicRestProxy
 {
     class RestInvocation
     {
-        private RestClient _client;
+        private IRestClient _client;
 
-        public RestInvocation(RestClient client, string verb)
+        public RestInvocation(IRestClient client, string verb)
         {
             Debug.Assert(client != null);
             _client = client;
@@ -19,7 +19,7 @@ namespace DynamicRestProxy
 
         public string Verb { get; private set; }
 
-        public async Task<dynamic> InvokeAsync(RestRequest request)
+        public async Task<dynamic> InvokeAsync(IRestRequest request)
         {
 
             // set the result to the async task that will execute the request and create the dynamic object

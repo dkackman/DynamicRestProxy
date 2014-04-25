@@ -10,7 +10,7 @@ namespace DynamicRestProxy
 {
     static class RestClientExtensions
     {
-        public static async Task<dynamic> ExecuteDynamicGetTaskAsync(this RestClient client, RestRequest request)
+        public static async Task<dynamic> ExecuteDynamicGetTaskAsync(this IRestClient client, IRestRequest request)
         {
             var response = await client.ExecuteGetTaskAsync(request);
             if (response == null)
@@ -19,7 +19,7 @@ namespace DynamicRestProxy
             return await response.Deserialize();
         }
 
-        public static async Task<dynamic> ExecuteDynamicPostTaskAsync(this RestClient client, RestRequest request)
+        public static async Task<dynamic> ExecuteDynamicPostTaskAsync(this IRestClient client, IRestRequest request)
         {
             var response = await client.ExecutePostTaskAsync(request);
             if (response == null)
@@ -28,7 +28,7 @@ namespace DynamicRestProxy
             return await response.Deserialize();
         }
 
-        public static async Task<dynamic> DynamicDeleteTaskAsync(this RestClient client, RestRequest request)
+        public static async Task<dynamic> DynamicDeleteTaskAsync(this IRestClient client, IRestRequest request)
         {
 
             request.Method = Method.DELETE;
@@ -39,7 +39,7 @@ namespace DynamicRestProxy
             return await response.Deserialize();
         }
 
-        public static async Task<dynamic> DynamicPutTaskAsync(this RestClient client, RestRequest request)
+        public static async Task<dynamic> DynamicPutTaskAsync(this IRestClient client, IRestRequest request)
         {
             request.Method = Method.PUT;
             var response = await client.ExecuteTaskAsync<dynamic>(request);

@@ -8,18 +8,18 @@ namespace DynamicRestProxy
 {
     public class RestProxy : DynamicObject
     {
-        private RestClient _client;
+        private IRestClient _client;
         private RestProxy _parent;
         private string _name;
 
         internal char KeywordEscapeCharacter { get; private set; }
 
-        public RestProxy(RestClient client, char keywordEscapeCharacter = '_')
+        public RestProxy(IRestClient client, char keywordEscapeCharacter = '_')
             : this(client, null, "", keywordEscapeCharacter)
         {
         }
 
-        internal RestProxy(RestClient client, RestProxy parent, string name, char keywordEscapeCharacter)
+        internal RestProxy(IRestClient client, RestProxy parent, string name, char keywordEscapeCharacter)
         {
             Debug.Assert(client != null);
 
@@ -65,7 +65,7 @@ namespace DynamicRestProxy
             Debug.Assert(binder != null);
             
             // this gets invoked when a dynamic property is accessed
-            // example: proxy.locations will invoke here with a binder named location
+            // example: proxy.locations will invoke here with a binder named locations
             // each dynamic property is treated as a url segment
             result = new RestProxy(_client, this, binder.Name, KeywordEscapeCharacter);
 
@@ -80,7 +80,7 @@ namespace DynamicRestProxy
             }
         }
 
-        internal void AddSegment(RestRequest request)
+        internal void AddSegment(IRestRequest request)
         {
             if (_parent != null && _parent.Index != -1) // don't add a segemnt for the root element
             {

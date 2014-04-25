@@ -92,7 +92,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic proxy = new RestProxy(client);
 
-            // this is the mechanism by which paramter names that are not valid c# property names can be used
+            // this is the mechanism by which parameter names that are not valid c# property names can be used
             var parameters = new Dictionary<string, object>();
             parameters.Add("chamber", "senate");
             parameters.Add("history.house_passage_result", "pass");
@@ -109,6 +109,5 @@ namespace DynamicRestProxy.UnitTests
                 Assert.AreEqual("pass", (string)bill.history.house_passage_result);
             }
         }
-
     }
 }
