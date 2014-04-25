@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+
+using Newtonsoft.Json;
 
 namespace DynamicRestProxy.UnitTests
 {
@@ -17,7 +18,7 @@ namespace DynamicRestProxy.UnitTests
         //#warning http://sunlightfoundation.com/api/accounts/register/
         private static Dictionary<string, string> _keys = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        private static string _root = @"d:\temp\";
+        private static string _root = @"d:\temp\"; //set this to wherever is appropriate for your keys
 
         static CredentialStore()
         {

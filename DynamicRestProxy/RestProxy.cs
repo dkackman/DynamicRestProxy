@@ -53,8 +53,8 @@ namespace DynamicRestProxy
 
                 // the binder name (i.e. the dynamic method name) is the verb
                 // example: proxy.locations.get() binder.Name == "get"
-                var invocation = new RestInvocation(binder.Name);
-                result = invocation.InvokeAsync(_client, request); // this will return a Task<dynamic> with the rest async call
+                var invocation = new RestInvocation(_client,binder.Name);
+                result = invocation.InvokeAsync( request); // this will return a Task<dynamic> with the rest async call
             }
 
             return true;

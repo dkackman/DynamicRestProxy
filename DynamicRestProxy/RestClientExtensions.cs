@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using RestSharp;
 
@@ -54,6 +56,14 @@ namespace DynamicRestProxy
                 return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(response.Content));
             }
             return null;
+        }
+
+        public static void AddDictionary(this IRestRequest request, IDictionary<string, object> args)
+        {
+            foreach (var kvp in args.Where(kvp => kvp.Value != null))
+            {
+                request.AddParameter(kvp.Key, kvp.Value.ToString());
+            }
         }
     }
 }

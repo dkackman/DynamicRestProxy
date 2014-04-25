@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using System.Diagnostics;
 using System.Dynamic;
 
@@ -36,7 +37,15 @@ namespace DynamicRestProxy
             // all named arguments are added as parameters
             for (int i = 0; i < binder.CallInfo.ArgumentNames.Count; i++)
             {
-                request.AddParameter(binder.CallInfo.ArgumentNames[i].TrimStart(_proxy.KeywordEscapeCharacter), args[i + unnamedArgCount]);
+                var arg = args[i + unnamedArgCount];
+                if (arg is IDictionary<string, object>) // if the arg is a dictionary, add each item as a parameter key value pair
+                {
+                    request.AddDictionary((IDictionary<string, object>)arg);
+                }
+                else
+                {
+                    request.AddParameter(binder.CallInfo.ArgumentNames[i].TrimStart(_proxy.KeywordEscapeCharacter), arg);
+                }
             }
 
             // all unnamed args get added to the request body
