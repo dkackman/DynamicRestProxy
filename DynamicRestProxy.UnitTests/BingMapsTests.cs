@@ -32,8 +32,8 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("online")]
         public async Task CoordinateFromPostalCode()
         {
-            dynamic service = CreateProxy();
-            var result = await service.Locations.get(postalCode: "55116", countryRegion: "US");
+            dynamic proxy = CreateProxy();
+            var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US");
 
             Assert.AreEqual((int)result.statusCode, 200);
             Assert.IsTrue(result.resourceSets.Count > 0);
@@ -48,8 +48,8 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("online")]
         public async Task GetFormattedAddressFromCoordinate()
         {
-            dynamic service = CreateProxy();
-            var result = await service.Locations.segment("44.9108238220215,-93.1702041625977").get(includeEntityTypes:"Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion");
+            dynamic proxy = CreateProxy();
+            var result = await proxy.Locations.segment("44.9108238220215,-93.1702041625977").get(includeEntityTypes: "Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion");
 
             Assert.AreEqual((int)result.statusCode, 200);
             Assert.IsTrue(result.resourceSets.Count > 0);

@@ -21,7 +21,6 @@ namespace DynamicRestProxy
 
         public async Task<dynamic> InvokeAsync(IRestRequest request)
         {
-
             // set the result to the async task that will execute the request and create the dynamic object
             // based on the supplied verb
             if (Verb == "post")

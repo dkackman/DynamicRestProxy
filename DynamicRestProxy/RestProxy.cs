@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Dynamic;
 using System.Diagnostics;
 
@@ -29,6 +30,30 @@ namespace DynamicRestProxy
             KeywordEscapeCharacter = keywordEscapeCharacter;
         }
 
+        public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
+        {
+            Debug.Assert(binder != null);
+
+            // this gets invoked when a dynamic property is accessed
+            // example: proxy.locations will invoke here with a binder named locations
+            // each dynamic property is treated as a url segment
+            result = new RestProxy(_client, this, arg.ToString(), KeywordEscapeCharacter);
+
+            return true;
+        }
+
+        public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+        {
+            Debug.Assert(binder != null);
+
+            // this gets invoked when a dynamic property is accessed
+            // example: proxy.locations will invoke here with a binder named locations
+            // each dynamic property is treated as a url segment
+            result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
+
+            return true;
+        }
+
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             Debug.Assert(binder != null);
@@ -38,12 +63,20 @@ namespace DynamicRestProxy
             // example: proxy.bills.mn.segment("2013s1").segment("SF 1").get()
             // if you had a segment named segment you'd do this: proxy.segment("segment").get()
             // or if there was a segment that was also an http verb: proxy.segment("get").get()
-            if (binder.Name == "segment")
+            if (!binder.IsVerb())
             {
                 if (args.Length != 1)
-                    throw new InvalidOperationException("The escape sequence 'segment' must have exactly 1 unnamed parameter");
+                    throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
 
-                result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
+                if (binder.Name == "segment")
+                {
+                    result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
+                }
+                else
+                {
+                    var tmp = new RestProxy(_client, this, binder.Name, KeywordEscapeCharacter);
+                    result = new RestProxy(_client, tmp, args[0].ToString(), KeywordEscapeCharacter);
+                }
             }
             else
             {
@@ -88,6 +121,28 @@ namespace DynamicRestProxy
             }
 
             request.AddUrlSegment(Index.ToString(), _name.TrimStart(KeywordEscapeCharacter));
-        }        
+        }
+
+        internal void ToString(StringBuilder builder)
+        {
+            if (_parent != null)
+                _parent.ToString(builder);
+
+            if (string.IsNullOrEmpty(_name)) // if _name is null we are the root
+            {
+                builder.Append(_client.BaseUrl);
+            }
+            else
+            {
+                builder.Append("/").Append(_name);
+            }
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            ToString(builder);
+            return builder.ToString();
+        }
     }
 }

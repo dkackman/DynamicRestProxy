@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 using RestSharp;
 
@@ -47,9 +48,9 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic service = new RestProxy(client);
+            dynamic proxy = new RestProxy(client);
 
-            var result = await service.bills.mn._2013s1.segment("SF 1").get();
+            var result = await proxy.bills.mn._2013s1.segment("SF 1").get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.id == "MNB00017167");
         }
@@ -93,9 +94,11 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new RestProxy(client);
 
             // this is the mechanism by which parameter names that are not valid c# property names can be used
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("chamber", "senate");
-            parameters.Add("history.house_passage_result", "pass");
+            var parameters = new Dictionary<string, object>()
+            {
+                { "chamber", "senate" },
+                { "history.house_passage_result", "pass" }
+            };
 
             dynamic result = await proxy.bills.get(paramList: parameters);
 
