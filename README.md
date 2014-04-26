@@ -79,11 +79,11 @@ Update the calendar using PUT:
             dynamic updated = new ExpandoObject();
             updated.summary = "unit_testing";
             updated.description = guid;
-            var result = await apiProxy.calendars.segment(response.id).put(updated);
+            var result = await apiProxy.calendars(response.id).put(updated);
             Assert.IsNotNull(result);
             Assert.AreEqual(guid, (string)result.description);
 
 Delete the calendar:
 
-            await apiProxy.calendars.segment(response.id).delete();
+            await apiProxy.calendars(response.id).delete();
 
