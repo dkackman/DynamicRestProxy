@@ -30,25 +30,16 @@ namespace DynamicRestProxy
             KeywordEscapeCharacter = keywordEscapeCharacter;
         }
 
-        public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
-        {
-            Debug.Assert(binder != null);
-
-            // this gets invoked when a dynamic property is accessed
-            // example: proxy.locations will invoke here with a binder named locations
-            // each dynamic property is treated as a url segment
-            result = new RestProxy(_client, this, arg.ToString(), KeywordEscapeCharacter);
-
-            return true;
-        }
-
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
             Debug.Assert(binder != null);
 
-            // this gets invoked when a dynamic property is accessed
-            // example: proxy.locations will invoke here with a binder named locations
-            // each dynamic property is treated as a url segment
+            if (args.Length != 1)
+                throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
+
+            // this is called when the dynamic object is invoked like a delagate
+            // dynamic segment1 = proxy.segment1;
+            // dynamic chain = segment1("escaped"); <- this calls TryInvoke
             result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
 
             return true;
@@ -59,26 +50,8 @@ namespace DynamicRestProxy
             Debug.Assert(binder != null);
             Debug.Assert(args != null);
 
-            // 'segment' is a special escape indicator to support url segments that are not valid C# identifiers
-            // example: proxy.bills.mn.segment("2013s1").segment("SF 1").get()
-            // if you had a segment named segment you'd do this: proxy.segment("segment").get()
-            // or if there was a segment that was also an http verb: proxy.segment("get").get()
-            if (!binder.IsVerb())
-            {
-                if (args.Length != 1)
-                    throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
-
-                if (binder.Name == "segment")
-                {
-                    result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
-                }
-                else
-                {
-                    var tmp = new RestProxy(_client, this, binder.Name, KeywordEscapeCharacter);
-                    result = new RestProxy(_client, tmp, args[0].ToString(), KeywordEscapeCharacter);
-                }
-            }
-            else
+            //
+            if (binder.IsVerb())
             {
                 // build a rest request based on this instance, parent instances and invocation arguments
                 var builder = new RequestBuilder(this);
@@ -86,8 +59,20 @@ namespace DynamicRestProxy
 
                 // the binder name (i.e. the dynamic method name) is the verb
                 // example: proxy.locations.get() binder.Name == "get"
-                var invocation = new RestInvocation(_client,binder.Name);
-                result = invocation.InvokeAsync( request); // this will return a Task<dynamic> with the rest async call
+                var invocation = new RestInvocation(_client, binder.Name);
+                result = invocation.InvokeAsync(request); // this will return a Task<dynamic> with the rest async call
+            }
+            else
+            {
+                if (args.Length != 1)
+                    throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
+
+                // this is for when we escape a url segment by passing it as an argument to a method invocation
+                // example: proxy.segment1("escaped")
+                // here we create two new dynamic objects, 1 for "segment1" which is the method name
+                // and then we create one for the escaped segment passed as an argument - "escaped" in the example
+                var tmp = new RestProxy(_client, this, binder.Name, KeywordEscapeCharacter);
+                result = new RestProxy(_client, tmp, args[0].ToString(), KeywordEscapeCharacter);
             }
 
             return true;
@@ -96,7 +81,7 @@ namespace DynamicRestProxy
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             Debug.Assert(binder != null);
-            
+
             // this gets invoked when a dynamic property is accessed
             // example: proxy.locations will invoke here with a binder named locations
             // each dynamic property is treated as a url segment
@@ -123,7 +108,7 @@ namespace DynamicRestProxy
             request.AddUrlSegment(Index.ToString(), _name.TrimStart(KeywordEscapeCharacter));
         }
 
-        internal void ToString(StringBuilder builder)
+        private void ToString(StringBuilder builder)
         {
             if (_parent != null)
                 _parent.ToString(builder);

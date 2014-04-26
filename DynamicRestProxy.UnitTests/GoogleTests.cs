@@ -100,7 +100,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
@@ -117,7 +117,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {

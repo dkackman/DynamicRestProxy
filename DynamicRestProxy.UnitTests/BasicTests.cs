@@ -14,7 +14,7 @@ namespace DynamicRestProxy.UnitTests
     public class BasicTests
     {
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         public async Task ExplicitGetInvoke()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -28,7 +28,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         public async Task GetMethodSegmentWithArgs()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -36,13 +36,13 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic proxy = new RestProxy(client);
 
-            var result = await proxy.bills.mn.segment("2013s1").segment("SF 1").get();
+            var result = await proxy.bills.mn("2013s1")("SF 1").get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.id == "MNB00017167");
         }
 
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         public async Task EscapeInvalidSegmentStartCharacter()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -50,13 +50,13 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic proxy = new RestProxy(client);
 
-            var result = await proxy.bills.mn._2013s1.segment("SF 1").get();
+            var result = await proxy.bills.mn._2013s1("SF 1").get();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.id == "MNB00017167");
         }
 
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         public async Task GetMethod2PathAsProperty2Params()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -70,7 +70,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         public async Task GetMethod1PathArg1Param()
         {
             var client = new RestClient("http://openstates.org/api/v1");
@@ -85,7 +85,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
-        [TestCategory("online")]
+        [TestCategory("integration")]
         public async Task EscapeParameterName()
         {
             var client = new RestClient("http://congress.api.sunlightfoundation.com");
