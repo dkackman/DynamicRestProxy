@@ -50,7 +50,6 @@ namespace DynamicRestProxy
             Debug.Assert(binder != null);
             Debug.Assert(args != null);
 
-            //
             if (binder.IsVerb())
             {
                 // build a rest request based on this instance, parent instances and invocation arguments
@@ -105,7 +104,7 @@ namespace DynamicRestProxy
                 _parent.AddSegment(request);
             }
 
-            request.AddUrlSegment(Index.ToString(), _name.TrimStart(KeywordEscapeCharacter));
+            request.AddUrlSegment(Index.ToString(), _name);
         }
 
         private void ToString(StringBuilder builder)

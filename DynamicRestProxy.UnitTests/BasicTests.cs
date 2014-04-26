@@ -43,20 +43,6 @@ namespace DynamicRestProxy.UnitTests
 
         [TestMethod]
         [TestCategory("integration")]
-        public async Task EscapeInvalidSegmentStartCharacter()
-        {
-            var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
-
-            dynamic proxy = new RestProxy(client);
-
-            var result = await proxy.bills.mn._2013s1("SF 1").get();
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.id == "MNB00017167");
-        }
-
-        [TestMethod]
-        [TestCategory("integration")]
         public async Task GetMethod2PathAsProperty2Params()
         {
             var client = new RestClient("http://openstates.org/api/v1");
