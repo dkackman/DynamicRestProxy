@@ -56,7 +56,7 @@ namespace DynamicRestProxy.UnitTests
             return File.Exists(_root + name);
         }
 
-        public static dynamic RetreiveObject(string name)
+        public static dynamic RetrieveObject(string name)
         {
             Debug.Assert(File.Exists(_root + name));
             try

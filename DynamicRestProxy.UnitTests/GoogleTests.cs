@@ -24,7 +24,7 @@ namespace DynamicRestProxy.UnitTests
 
             if (CredentialStore.ObjectExists("google.auth.json"))
             {
-                var access = CredentialStore.RetreiveObject("google.auth.json");
+                var access = CredentialStore.RetrieveObject("google.auth.json");
 
                 if (DateTime.UtcNow >= DateTime.Parse((string)access.expiry))
                 {
@@ -109,10 +109,10 @@ namespace DynamicRestProxy.UnitTests
             await Authenticate();
             Assert.IsNotNull(_token);
 
-            var api = new RestClient("https://www.googleapis.com");
-            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic apiProxy = new RestProxy(api);
-            var profile = await apiProxy.oauth2.v1.userinfo.get();
+            var client = new RestClient("https://www.googleapis.com");
+            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic proxy = new RestProxy(client);
+            var profile = await proxy.oauth2.v1.userinfo.get();
 
             Assert.IsNotNull(profile);
             Assert.AreEqual((string)profile.family_name, "Kackman");
@@ -126,10 +126,10 @@ namespace DynamicRestProxy.UnitTests
             await Authenticate();
             Assert.IsNotNull(_token);
 
-            var api = new RestClient("https://www.googleapis.com/calendar/v3");
-            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic apiProxy = new RestProxy(api);
-            var list = await apiProxy.users.me.calendarList.get();
+            var client = new RestClient("https://www.googleapis.com/calendar/v3");
+            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic proxy = new RestProxy(client);
+            var list = await proxy.users.me.calendarList.get();
 
             Assert.IsNotNull(list);
             Assert.AreEqual((string)list.kind, "calendar#calendarList");
@@ -164,10 +164,10 @@ namespace DynamicRestProxy.UnitTests
             await Authenticate();
             Assert.IsNotNull(_token);
 
-            var api = new RestClient("https://www.googleapis.com/calendar/v3");
-            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic apiProxy = new RestProxy(api);
-            var list = await apiProxy.users.me.calendarList.get();
+            var client = new RestClient("https://www.googleapis.com/calendar/v3");
+            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic proxy = new RestProxy(client);
+            var list = await proxy.users.me.calendarList.get();
             Assert.IsNotNull(list);
 
             string id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
@@ -178,10 +178,10 @@ namespace DynamicRestProxy.UnitTests
             calendar.summary = "unit_testing";
             calendar.description = guid;
 
-            var result = await apiProxy.calendars(id).put(calendar);
+            var result = await proxy.calendars(id).put(calendar);
             Assert.IsNotNull(result);
 
-            list = await apiProxy.users.me.calendarList.get();
+            list = await proxy.users.me.calendarList.get();
             Assert.IsNotNull(list);
             string description = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.description).FirstOrDefault();
 
@@ -196,19 +196,19 @@ namespace DynamicRestProxy.UnitTests
             await Authenticate();
             Assert.IsNotNull(_token);
 
-            var api = new RestClient("https://www.googleapis.com/calendar/v3");
-            api.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic apiProxy = new RestProxy(api);
-            var list = await apiProxy.users.me.calendarList.get();
+            var client = new RestClient("https://www.googleapis.com/calendar/v3");
+            client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
+            dynamic proxy = new RestProxy(client);
+            var list = await proxy.users.me.calendarList.get();
             Assert.IsNotNull(list);
 
             string id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
             Assert.IsFalse(string.IsNullOrEmpty(id));
 
-            var result = await apiProxy.calendars(id).delete();
+            var result = await proxy.calendars(id).delete();
             Assert.IsNull(result);
 
-            list = await apiProxy.users.me.calendarList.get();
+            list = await proxy.users.me.calendarList.get();
             Assert.IsNotNull(list);
             id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
 
