@@ -50,6 +50,8 @@ namespace DynamicRestProxy.UnitTests
 
         private async Task<dynamic> RefreshAccessToken(dynamic access)
         {
+            Assert.IsNotNull((string)access.refresh_token);
+
             dynamic key = CredentialStore.JsonKey("google").installed;
 
             var client = new RestClient("https://accounts.google.com");
@@ -176,7 +178,7 @@ namespace DynamicRestProxy.UnitTests
             calendar.summary = "unit_testing";
             calendar.description = guid;
 
-            var result = await apiProxy.calendars.segment(id).put(calendar);
+            var result = await apiProxy.calendars(id).put(calendar);
             Assert.IsNotNull(result);
 
             list = await apiProxy.users.me.calendarList.get();
@@ -203,7 +205,7 @@ namespace DynamicRestProxy.UnitTests
             string id = ((IEnumerable<dynamic>)(list.items)).Where(cal => cal.summary == "unit_testing").Select(cal => (string)cal.id).FirstOrDefault();
             Assert.IsFalse(string.IsNullOrEmpty(id));
 
-            var result = await apiProxy.calendars.segment(id).delete();
+            var result = await apiProxy.calendars(id).delete();
             Assert.IsNull(result);
 
             list = await apiProxy.users.me.calendarList.get();
