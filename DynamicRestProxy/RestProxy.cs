@@ -38,11 +38,12 @@ namespace DynamicRestProxy
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
             Debug.Assert(binder != null);
+            Debug.Assert(args != null);
 
             if (args.Length != 1)
                 throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
 
-            // this is called when the dynamic object is invoked like a delagate
+            // this is called when the dynamic object is invoked like a delegate
             // dynamic segment1 = proxy.segment1;
             // dynamic chain = segment1("escaped"); <- this calls TryInvoke
             result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
@@ -115,7 +116,7 @@ namespace DynamicRestProxy
         private void ToString(StringBuilder builder)
         {
             if (_parent != null)
-                _parent.ToString(builder);
+                _parent.ToString(builder); // go all the way up to the root and then back down
 
             if (string.IsNullOrEmpty(_name)) // if _name is null we are the root
             {
