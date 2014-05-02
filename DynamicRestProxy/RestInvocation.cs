@@ -25,19 +25,19 @@ namespace DynamicRestProxy
             // based on the supplied verb
             if (Verb == "post")
             {
-                return await _client.ExecuteDynamicPostTaskAsync(request);
+                return await _client.ExecuteDynamicTaskAsync(request, Method.POST);
             }
             else if (Verb == "get")
             {
-                return await _client.ExecuteDynamicGetTaskAsync(request);
+                return await _client.ExecuteDynamicTaskAsync(request, Method.GET);
             }
             else if (Verb == "delete")
             {
-                return await _client.DynamicDeleteTaskAsync(request);
+                return await _client.ExecuteDynamicTaskAsync(request, Method.DELETE);
             }
             else if (Verb == "put")
             {
-                return await _client.DynamicPutTaskAsync(request);
+                return await _client.ExecuteDynamicTaskAsync(request, Method.PUT);
             }
 
             Debug.Assert(false, "unsupported verb");

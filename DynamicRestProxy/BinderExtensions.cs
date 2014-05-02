@@ -5,7 +5,7 @@ namespace DynamicRestProxy
 {
     static class BinderExtensions
     {
-        private static string[] _verbs = new string[] { "post", "get", "delete", "put" }; // 4 verbs for now
+        private static readonly string[] _verbs = new string[] { "post", "get", "delete", "put" }; // 4 verbs for now
         
         public static int UnnamedArgCount(this InvokeMemberBinder binder)
         {

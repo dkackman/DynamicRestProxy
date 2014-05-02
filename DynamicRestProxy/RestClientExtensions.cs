@@ -10,28 +10,10 @@ namespace DynamicRestProxy
 {
     static class RestClientExtensions
     {
-        public static async Task<dynamic> ExecuteDynamicGetTaskAsync(this IRestClient client, IRestRequest request)
+        public static async Task<dynamic> ExecuteDynamicTaskAsync(this IRestClient client, IRestRequest request, Method method)
         {
-            var response = await client.ExecuteGetTaskAsync(request);
-            if (response == null)
-                return null;
+            request.Method = method;
 
-            return await response.Deserialize();
-        }
-
-        public static async Task<dynamic> ExecuteDynamicPostTaskAsync(this IRestClient client, IRestRequest request)
-        {
-            var response = await client.ExecutePostTaskAsync(request);
-            if (response == null)
-                return null;
-
-            return await response.Deserialize();
-        }
-
-        public static async Task<dynamic> DynamicDeleteTaskAsync(this IRestClient client, IRestRequest request)
-        {
-
-            request.Method = Method.DELETE;
             var response = await client.ExecuteTaskAsync<dynamic>(request);
             if (response == null)
                 return null;
@@ -39,17 +21,7 @@ namespace DynamicRestProxy
             return await response.Deserialize();
         }
 
-        public static async Task<dynamic> DynamicPutTaskAsync(this IRestClient client, IRestRequest request)
-        {
-            request.Method = Method.PUT;
-            var response = await client.ExecuteTaskAsync<dynamic>(request);
-            if (response == null)
-                return null;
-            
-            return await response.Deserialize();
-        }
-
-        public static async Task<dynamic> Deserialize(this IRestResponse response)
+        public static async Task<dynamic> Deserialize(this IRestResponse<dynamic> response)
         {
             if (!string.IsNullOrEmpty(response.Content))
             {
