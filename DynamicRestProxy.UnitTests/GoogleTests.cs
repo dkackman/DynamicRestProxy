@@ -54,8 +54,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic key = CredentialStore.JsonKey("google").installed;
 
-            var client = new RestClient("https://accounts.google.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("https://accounts.google.com");
             var response = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
             Assert.IsNotNull(response);
 
@@ -66,8 +65,7 @@ namespace DynamicRestProxy.UnitTests
         {
             dynamic key = CredentialStore.JsonKey("google").installed;
 
-            var client = new RestClient("https://accounts.google.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("https://accounts.google.com");
             var response = await proxy.o.oauth2.device.code.post(client_id: key.client_id, scope: "email profile https://www.googleapis.com/auth/calendar");
             Assert.IsNotNull(response);
 

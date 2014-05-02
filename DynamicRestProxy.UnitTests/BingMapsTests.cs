@@ -20,19 +20,14 @@ namespace DynamicRestProxy.UnitTests
     [TestClass]
     public class BingMapsTests
     {
-        private dynamic CreateProxy()
-        {
-            var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
-            client.AddDefaultParameter("key", CredentialStore.Key("bing"));
-
-            return new RestProxy(client);
-        }
-
         [TestMethod]
         [TestCategory("integration")]
         public async Task CoordinateFromPostalCode()
         {
-            dynamic proxy = CreateProxy();
+            var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
+            client.AddDefaultParameter("key", CredentialStore.Key("bing"));
+
+            dynamic proxy = new RestProxy(client);
             var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US");
 
             Assert.AreEqual((int)result.statusCode, 200);
@@ -48,7 +43,10 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("integration")]
         public async Task GetFormattedAddressFromCoordinate()
         {
-            dynamic proxy = CreateProxy();
+            var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
+            client.AddDefaultParameter("key", CredentialStore.Key("bing"));
+
+            dynamic proxy = new RestProxy(client);
             var result = await proxy.Locations("44.9108238220215,-93.1702041625977").get(includeEntityTypes: "Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion");
 
             Assert.AreEqual((int)result.statusCode, 200);

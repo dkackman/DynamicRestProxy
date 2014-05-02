@@ -11,8 +11,7 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("offline")]
         public void SegmentProperty()
         {
-            var client = new RestClient("http://example.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("http://example.com");
             dynamic chain = proxy.segment1;
 
             string s = chain.ToString();
@@ -23,8 +22,7 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("offline")]
         public void TwoSegmentProperties()
         {
-            var client = new RestClient("http://example.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("http://example.com");
             dynamic chain = proxy.segment1.segment2;
 
             string s = chain.ToString();
@@ -35,8 +33,7 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("offline")]
         public void EscapeSegment()
         {
-            var client = new RestClient("http://example.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("http://example.com");
             dynamic chain = proxy.segment1("escaped").segment2;
 
             string s = chain.ToString();
@@ -47,8 +44,7 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("offline")]
         public void EscapeTwoSequentialSegments()
         {
-            var client = new RestClient("http://example.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("http://example.com");
             dynamic chain = proxy.segment1("escaped")("escaped2");
 
             string s = chain.ToString();
@@ -59,8 +55,7 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("offline")]
         public void EscapeTwoSequentialSegmentsThenProperty()
         {
-            var client = new RestClient("http://example.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("http://example.com");
             dynamic chain = proxy.segment1("escaped")("escaped2").segment2;
 
             string s = chain.ToString();
@@ -71,8 +66,7 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("offline")]
         public void EscapeSegmentAsInvoke()
         {
-            var client = new RestClient("http://example.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("http://example.com");
             dynamic segment1 = proxy.segment1;
             dynamic chain = segment1("escaped");
 
@@ -84,8 +78,7 @@ namespace DynamicRestProxy.UnitTests
         [TestCategory("offline")]
         public void EscapeSegmentAsInvokeContinueChaining()
         {
-            var client = new RestClient("http://example.com");
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestProxy("http://example.com");
             dynamic segment1 = proxy.segment1;
             dynamic chain = segment1("escaped")("escaped2").segment2;
 

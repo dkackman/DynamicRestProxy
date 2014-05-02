@@ -15,6 +15,11 @@ namespace DynamicRestProxy
 
         internal char KeywordEscapeCharacter { get; private set; }
 
+        public RestProxy(string baseUrl, char keywordEscapeCharacter = '_')
+            : this(new RestClient(baseUrl), keywordEscapeCharacter)
+        {
+        }
+
         public RestProxy(IRestClient client, char keywordEscapeCharacter = '_')
             : this(client, null, "", keywordEscapeCharacter)
         {
