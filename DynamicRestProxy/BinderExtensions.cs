@@ -12,6 +12,11 @@ namespace DynamicRestProxy
             return binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
         }
 
+        public static string GetArgName(this InvokeMemberBinder binder, int i, char keywordEscapeCharacter)
+        {
+            return binder.CallInfo.ArgumentNames[i].TrimStart(keywordEscapeCharacter);
+        }
+
         public static bool IsVerb(this InvokeMemberBinder binder)
         {
             return _verbs.Contains(binder.Name);

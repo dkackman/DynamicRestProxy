@@ -14,19 +14,20 @@ namespace DynamicRestProxy
         {
             request.Method = method;
 
-            var response = await client.ExecuteTaskAsync<dynamic>(request);
+            var response = await client.ExecuteTaskAsync(request);
             if (response == null)
                 return null;
 
             return await response.Deserialize();
         }
 
-        public static async Task<dynamic> Deserialize(this IRestResponse<dynamic> response)
+        public static async Task<dynamic> Deserialize(this IRestResponse response)
         {
             if (!string.IsNullOrEmpty(response.Content))
             {
                 return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(response.Content));
             }
+            
             return null;
         }
 

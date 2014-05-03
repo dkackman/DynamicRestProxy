@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Collections.Generic;
 
 using RestSharp;
 
@@ -42,9 +43,14 @@ namespace DynamicRestProxy
                 {
                     request.AddDictionary((IDictionary<string, object>)arg);
                 }
+                else if (arg is FileInfo) // if the arg is a file, add it as such along with the the arg name
+                {
+                    var file = (FileInfo)arg;
+                    request.AddFile(binder.GetArgName(i, _proxy.KeywordEscapeCharacter), file.FullName);
+                }
                 else
                 {
-                    request.AddParameter(binder.CallInfo.ArgumentNames[i].TrimStart(_proxy.KeywordEscapeCharacter), arg);
+                    request.AddParameter(binder.GetArgName(i, _proxy.KeywordEscapeCharacter), arg);
                 }
             }
 
