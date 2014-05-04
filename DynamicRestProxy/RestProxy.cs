@@ -2,38 +2,34 @@
 using System.Text;
 using System.Dynamic;
 using System.Diagnostics;
-
-using RestSharp;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace DynamicRestProxy
 {
-    public class RestProxy : DynamicObject
-    {
-        private IRestClient _client;
-        private RestProxy _parent;
-        private string _name;
-
-        internal char KeywordEscapeCharacter { get; private set; }
-
-        public RestProxy(string baseUrl, char keywordEscapeCharacter = '_')
-            : this(new RestClient(baseUrl), keywordEscapeCharacter)
+    public abstract class RestProxy : DynamicObject
+    {        
+        protected RestProxy(RestProxy parent, string name)
         {
+            Parent = parent;
+            Name = name;
         }
 
-        public RestProxy(IRestClient client, char keywordEscapeCharacter = '_')
-            : this(client, null, "", keywordEscapeCharacter)
+        public RestProxy Parent { get; private set; }
+
+        public string Name { get; private set; }
+
+        public int Index
         {
+            get
+            {
+                return Parent != null ? Parent.Index + 1 : -1; // the root is the main url - does not represent a url segment
+            }
         }
 
-        internal RestProxy(IRestClient client, RestProxy parent, string name, char keywordEscapeCharacter)
-        {
-            Debug.Assert(client != null);
+        protected abstract string BaseUrl { get; }
 
-            _client = client;
-            _parent = parent;
-            _name = name;
-            KeywordEscapeCharacter = keywordEscapeCharacter;
-        }
+        protected abstract RestProxy CreateProxyNode(RestProxy parent, string name);
 
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
@@ -46,10 +42,12 @@ namespace DynamicRestProxy
             // this is called when the dynamic object is invoked like a delegate
             // dynamic segment1 = proxy.segment1;
             // dynamic chain = segment1("escaped"); <- this calls TryInvoke
-            result = new RestProxy(_client, this, args[0].ToString(), KeywordEscapeCharacter);
+            result = CreateProxyNode(this, args[0].ToString());
 
             return true;
         }
+
+        protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string,object> namedArgs);
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
@@ -58,14 +56,8 @@ namespace DynamicRestProxy
 
             if (binder.IsVerb())
             {
-                // build a rest request based on this instance, parent instances and invocation arguments
-                var builder = new RequestBuilder(this);
-                var request = builder.BuildRequest(binder, args);
-
-                // the binder name (i.e. the dynamic method name) is the verb
-                // example: proxy.locations.get() binder.Name == "get"
-                var invocation = new RestInvocation(_client, binder.Name);
-                result = invocation.InvokeAsync(request); // this will return a Task<dynamic> with the rest async call
+                // parse out the details of the invocation and have the derived class create a Task
+                result = CreateVerbAsyncTask(binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args));
             }
             else
             {
@@ -76,8 +68,8 @@ namespace DynamicRestProxy
                 // example: proxy.segment1("escaped")
                 // here we create two new dynamic objects, 1 for "segment1" which is the method name
                 // and then we create one for the escaped segment passed as an argument - "escaped" in the example
-                var tmp = new RestProxy(_client, this, binder.Name, KeywordEscapeCharacter);
-                result = new RestProxy(_client, tmp, args[0].ToString(), KeywordEscapeCharacter);
+                var tmp = CreateProxyNode(this, binder.Name);
+                result = CreateProxyNode(tmp, args[0].ToString());
             }
 
             return true;
@@ -90,41 +82,23 @@ namespace DynamicRestProxy
             // this gets invoked when a dynamic property is accessed
             // example: proxy.locations will invoke here with a binder named locations
             // each dynamic property is treated as a url segment
-            result = new RestProxy(_client, this, binder.Name, KeywordEscapeCharacter);
+            result = CreateProxyNode(this, binder.Name);
 
             return true;
         }
 
-        internal int Index
-        {
-            get
-            {
-                return _parent != null ? _parent.Index + 1 : -1; // the root is the main url - does not represent a url segment
-            }
-        }
-
-        internal void AddSegment(IRestRequest request)
-        {
-            if (_parent != null && _parent.Index != -1) // don't add a segemnt for the root element
-            {
-                _parent.AddSegment(request);
-            }
-
-            request.AddUrlSegment(Index.ToString(), _name);
-        }
-
         private void ToString(StringBuilder builder)
         {
-            if (_parent != null)
-                _parent.ToString(builder); // go all the way up to the root and then back down
+            if (Parent != null)
+                Parent.ToString(builder); // go all the way up to the root and then back down
 
-            if (string.IsNullOrEmpty(_name)) // if _name is null we are the root
+            if (string.IsNullOrEmpty(Name)) // if _name is null we are the root
             {
-                builder.Append(_client.BaseUrl);
+                builder.Append(BaseUrl);
             }
             else
             {
-                builder.Append("/").Append(_name);
+                builder.Append("/").Append(Name);
             }
         }
 

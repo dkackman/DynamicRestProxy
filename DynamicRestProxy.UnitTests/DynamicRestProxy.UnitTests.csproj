@@ -38,13 +38,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -60,26 +53,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FlickrTests.cs" />
+    <Compile Include="ParameterPassingTests.cs" />
+    <Compile Include="TestProxy.cs" />
     <Compile Include="UrlConstructionTests.cs" />
-    <Compile Include="CredentialStore.cs" />
-    <Compile Include="BasicTests.cs" />
-    <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BingMapsTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
-      <Project>{7c6f9508-4a79-4b0f-a15b-264bf6d4c167}</Project>
-      <Name>DynamicRestProxy</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="GoogleCalendar.orderedtest">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
+      <Project>{13073c29-a780-4f21-8544-80f0b51dac8d}</Project>
+      <Name>DynamicRestProxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
