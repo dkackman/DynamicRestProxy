@@ -8,6 +8,8 @@ using System.Dynamic;
 
 using RestSharp;
 
+using DynamicRestProxy.RestSharp;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DynamicRestProxy.UnitTests
@@ -54,7 +56,7 @@ namespace DynamicRestProxy.UnitTests
 
             dynamic key = CredentialStore.JsonKey("google").installed;
 
-            dynamic proxy = new RestProxy("https://accounts.google.com");
+            dynamic proxy = new RestSharpProxy("https://accounts.google.com");
             var response = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
             Assert.IsNotNull(response);
             Assert.IsNull(response.refresh_token);
@@ -67,7 +69,7 @@ namespace DynamicRestProxy.UnitTests
         {
             dynamic key = CredentialStore.JsonKey("google").installed;
 
-            dynamic proxy = new RestProxy("https://accounts.google.com");
+            dynamic proxy = new RestSharpProxy("https://accounts.google.com");
             var response = await proxy.o.oauth2.device.code.post(client_id: key.client_id, scope: "email profile https://www.googleapis.com/auth/calendar");
             Assert.IsNotNull(response);
 
@@ -111,7 +113,7 @@ namespace DynamicRestProxy.UnitTests
 
             var client = new RestClient("https://www.googleapis.com");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
             var profile = await proxy.oauth2.v1.userinfo.get();
 
             Assert.IsNotNull(profile);
@@ -128,7 +130,7 @@ namespace DynamicRestProxy.UnitTests
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
             var list = await proxy.users.me.calendarList.get();
 
             Assert.IsNotNull(list);
@@ -145,7 +147,7 @@ namespace DynamicRestProxy.UnitTests
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
 
             dynamic calendar = new ExpandoObject();
             calendar.summary = "unit_testing";
@@ -166,7 +168,7 @@ namespace DynamicRestProxy.UnitTests
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
             var list = await proxy.users.me.calendarList.get();
             Assert.IsNotNull(list);
 
@@ -198,7 +200,7 @@ namespace DynamicRestProxy.UnitTests
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
             var list = await proxy.users.me.calendarList.get();
             Assert.IsNotNull(list);
 

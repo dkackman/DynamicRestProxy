@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 using RestSharp;
 
+using DynamicRestProxy.RestSharp;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DynamicRestProxy.UnitTests
@@ -27,7 +29,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
             client.AddDefaultParameter("key", CredentialStore.Key("bing"));
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
             var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US");
 
             Assert.AreEqual((int)result.statusCode, 200);
@@ -46,7 +48,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
             client.AddDefaultParameter("key", CredentialStore.Key("bing"));
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
             var result = await proxy.Locations("44.9108238220215,-93.1702041625977").get(includeEntityTypes: "Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion");
 
             Assert.AreEqual((int)result.statusCode, 200);

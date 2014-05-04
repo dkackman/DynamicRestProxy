@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD3A49CD-A915-4010-B4BA-A81766F0CB14}</ProjectGuid>
+    <ProjectGuid>{2FD036DF-6DDD-4396-9FF7-EEE9D34623DC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DynamicRestProxy.UnitTests</RootNamespace>
-    <AssemblyName>DynamicRestProxy.UnitTests</AssemblyName>
+    <RootNamespace>DynamicRestProxy.RestSharp.UnitTests</RootNamespace>
+    <AssemblyName>DynamicRestProxy.RestSharp.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -38,6 +38,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -53,16 +60,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ParameterPassingTests.cs" />
-    <Compile Include="TestProxy.cs" />
-    <Compile Include="UrlConstructionTests.cs" />
+    <Compile Include="BasicTests.cs" />
+    <Compile Include="BingMapsTests.cs" />
+    <Compile Include="CredentialStore.cs" />
+    <Compile Include="FlickrTests.cs" />
+    <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="GoogleCalendar.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DynamicRestProxy.RestSharp\DynamicRestProxy.RestSharp.csproj">
+      <Project>{272daae2-04e7-47a4-9a79-66e5f7802aba}</Project>
+      <Name>DynamicRestProxy.RestSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
       <Project>{13073c29-a780-4f21-8544-80f0b51dac8d}</Project>
       <Name>DynamicRestProxy</Name>

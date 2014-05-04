@@ -6,6 +6,8 @@ using System.Diagnostics;
 
 using RestSharp;
 
+using DynamicRestProxy.RestSharp;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DynamicRestProxy.UnitTests
@@ -20,7 +22,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
 
             dynamic result = await proxy.metadata.mn.get();
             Assert.IsNotNull(result);
@@ -34,7 +36,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
 
             var result = await proxy.bills.mn("2013s1")("SF 1").get();
             Assert.IsNotNull(result);
@@ -48,9 +50,13 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic proxy = new RestProxy(client);
-
-            var result = await proxy.legislators.geo.get(lat: 44.926868, _long: -93.214049);
+            dynamic proxy = new RestSharpProxy(client);
+            var parameters = new Dictionary<string, object>()
+            {
+                { "lat", 44.926868 },
+                { "long", -93.214049 } // since long is a keyword we need to pass arguments in a Dictionary
+            };
+            var result = await proxy.legislators.geo.get(paramList: parameters);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
         }
@@ -62,7 +68,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://openstates.org/api/v1");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
 
             var result = await proxy.bills.get(state: "mn", chamber: "upper", status: "passed_upper");
             Assert.IsNotNull(result);
@@ -77,7 +83,7 @@ namespace DynamicRestProxy.UnitTests
             var client = new RestClient("http://congress.api.sunlightfoundation.com");
             client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
 
             // this is the mechanism by which parameter names that are not valid c# property names can be used
             var parameters = new Dictionary<string, object>()

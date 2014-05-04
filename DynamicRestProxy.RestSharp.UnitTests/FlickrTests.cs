@@ -7,6 +7,8 @@ using System.Diagnostics;
 
 using RestSharp;
 
+using DynamicRestProxy.RestSharp;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DynamicRestProxy.UnitTests
@@ -25,7 +27,7 @@ namespace DynamicRestProxy.UnitTests
             client.AddDefaultParameter("api_key", (string)key.Key);
             client.AddDefaultParameter("nojsoncallback", "1");
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
 
             dynamic result = await proxy.get(method: "flickr.people.findByUsername", username: "dkackman");
             Assert.IsNotNull(result);
@@ -45,7 +47,7 @@ namespace DynamicRestProxy.UnitTests
 
             var file = new FileInfo(@"D:\temp\test.png");
 
-            dynamic proxy = new RestProxy(client);
+            dynamic proxy = new RestSharpProxy(client);
 
             dynamic result = await proxy.upload.post(photo: file);
 

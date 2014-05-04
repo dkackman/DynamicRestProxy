@@ -1,8 +1,11 @@
-﻿using System.IO;
+﻿using System.Linq;
+using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Collections.Generic;
+
+using DynamicRestProxy.RestSharp;
 
 using RestSharp;
 
@@ -10,17 +13,15 @@ namespace DynamicRestProxy
 {
     class RequestBuilder
     {
-        RestProxy _proxy;
-        public RequestBuilder(RestProxy proxy)
+        RestSharpProxy _proxy;
+        public RequestBuilder(RestSharpProxy proxy)
         {
             Debug.Assert(proxy != null);
             _proxy = proxy;
         }
 
-        public RestRequest BuildRequest(InvokeMemberBinder binder, object[] args)
+        public IRestRequest BuildRequest(IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
-            Debug.Assert(binder.IsVerb());
-
             // total number of segments is the number or parts of the call chain not including the root
             // example: proxy.location.geo.get() has two url segments - the verb doesn't count
             // Index is zero based so add one
@@ -33,31 +34,29 @@ namespace DynamicRestProxy
             // fill in the url segments with the names of each call chain member
             _proxy.AddSegment(request); // this recurses up the instance chain
 
-            int unnamedArgCount = binder.UnnamedArgCount();
-
-            // all named arguments are added as parameters
-            for (int i = 0; i < binder.CallInfo.ArgumentNames.Count; i++)
+            // all unnamed args get added to the request body
+            foreach (var arg in unnamedArgs.Where(o => o != null))
             {
-                var arg = args[i + unnamedArgCount];
-                if (arg is IDictionary<string, object>) // if the arg is a dictionary, add each item as a parameter key value pair
+                request.AddBody(arg);
+            }
+
+            foreach(var kvp in namedArgs.Where(kvp => kvp.Value != null))
+            {
+                if (kvp.Value is IDictionary<string, object>) // if the arg is a dictionary, add each item as a parameter key value pair
                 {
-                    request.AddDictionary((IDictionary<string, object>)arg);
+                    // the name of a dictionary are does not matter since we are dereferencing everything 
+                    request.AddDictionary((IDictionary<string, object>)kvp.Value);
                 }
-                else if (arg is FileInfo) // if the arg is a file, add it as such along with the the arg name
+                else if (kvp.Value is FileInfo) // if the arg is a file, add it as such along with the the arg name
                 {
-                    var file = (FileInfo)arg;
-                    request.AddFile(binder.GetArgName(i, _proxy.KeywordEscapeCharacter), file.FullName);
+                    var file = (FileInfo)kvp.Value;
+                    request.AddFile(kvp.Key, file.FullName);
                 }
                 else
                 {
-                    request.AddParameter(binder.GetArgName(i, _proxy.KeywordEscapeCharacter), arg);
+                    // verything else is key value pair as string
+                    request.AddParameter(kvp.Key, kvp.Value.ToString());
                 }
-            }
-
-            // all unnamed args get added to the request body
-            for (int i = 0; i < unnamedArgCount; i++)
-            {
-                request.AddBody(args[i]);
             }
 
             return request;
