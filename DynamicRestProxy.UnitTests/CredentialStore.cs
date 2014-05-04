@@ -25,6 +25,7 @@ namespace DynamicRestProxy.UnitTests
             AddKey("sunlight", _root + "sunlight.key.txt");
             AddKey("bing", _root + "bing.key.txt");
             AddKey("google", _root + "google.key.json");
+            AddKey("flickr", _root + "flickr.key.json");
         }
 
         static void AddKey(string key, string keyPath)
