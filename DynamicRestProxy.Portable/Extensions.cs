@@ -11,13 +11,14 @@ namespace DynamicRestProxy.PortableHttpClient
     {
         public static string AsQueryString(this IDictionary<string, object> parameters, string prepend = "?")
         {
-            var builder = new StringBuilder();
+            var builder = new StringBuilder(prepend);
 
             var separator = "";
             foreach(var kvp in parameters.Where(kvp => kvp.Value != null))
             {
                 if (kvp.Value is IDictionary<string, object>)
                 {
+                    // since we can pass escaped parameters in a dictionary recurse if the value is a dictionary
                     builder.Append(((IDictionary<string, object>)kvp.Value).AsQueryString(""));
                 }
                 else
@@ -26,7 +27,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 }
                 separator = "&";
             }
-            return prepend + builder.ToString();
+            return builder.ToString();
         }
     }
 }

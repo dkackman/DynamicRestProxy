@@ -38,6 +38,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         [TestMethod]
         [TestCategory("RestSharp")]
         [TestCategory("integration")]
+        [Ignore]
         public async Task UploadPhoto()
         {
             var key = CredentialStore.JsonKey("flickr");

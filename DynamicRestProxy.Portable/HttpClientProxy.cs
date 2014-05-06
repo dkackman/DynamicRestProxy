@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net;
 
-using Newtonsoft.Json;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -51,20 +50,18 @@ namespace DynamicRestProxy.PortableHttpClient
         }
 
         protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
-        {           
+        {
             var request = new HttpRequestMessage(HttpMethod.Get, GetEndPointPath() + namedArgs.AsQueryString());
-            request.Headers.TransferEncodingChunked = true;
+
+            using (var handler = new HttpClientHandler())
+            {
+                request.Headers.TransferEncodingChunked = handler.SupportsTransferEncodingChunked();
+            }
 
             HttpResponseMessage response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
-            if (!string.IsNullOrEmpty(content))
-            {
-                return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(content));
-            }
-
-            return null;
+            return await response.Deserialize();
         }
     }
 }

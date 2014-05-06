@@ -18,6 +18,9 @@ namespace DynamicRestProxy
             if (response == null)
                 return null;
 
+            if (response.ErrorException != null)
+                throw response.ErrorException;
+
             return await response.Deserialize();
         }
 
