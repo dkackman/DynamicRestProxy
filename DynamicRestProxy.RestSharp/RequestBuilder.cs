@@ -25,9 +25,7 @@ namespace DynamicRestProxy
             // total number of segments is the number or parts of the call chain not including the root
             // example: proxy.location.geo.get() has two url segments - the verb doesn't count
             // Index is zero based so add one
-            string template = CreateUrlSegmentTemplate(_proxy.Index + 1);
-
-            var request = new RestRequest(template);
+            var request = new RestRequest(CreateUrlSegmentTemplate(_proxy.Index + 1));
             request.RequestFormat = DataFormat.Json; // we only talk json            
             request.AddHeader("Accept", "application/json, text/json, text/x-json, text/javascript");
             
@@ -44,7 +42,7 @@ namespace DynamicRestProxy
             {
                 if (kvp.Value is IDictionary<string, object>) // if the arg is a dictionary, add each item as a parameter key value pair
                 {
-                    // the name of a dictionary are does not matter since we are dereferencing everything 
+                    // the name of a dictionary does not matter since we are dereferencing everything 
                     request.AddDictionary((IDictionary<string, object>)kvp.Value);
                 }
                 else if (kvp.Value is FileInfo) // if the arg is a file, add it as such along with the the arg name

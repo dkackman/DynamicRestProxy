@@ -46,8 +46,7 @@ namespace DynamicRestProxy.RestSharp
             return new RestSharpProxy(_client, parent, name);
         }
 
-
-        protected override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
             var builder = new RequestBuilder(this);
             var request = builder.BuildRequest(unnamedArgs, namedArgs);
@@ -55,7 +54,7 @@ namespace DynamicRestProxy.RestSharp
             // the binder name (i.e. the dynamic method name) is the verb
             // example: proxy.locations.get() binder.Name == "get"
             var invocation = new RestInvocation(_client, verb);
-            return invocation.InvokeAsync(request); // this will return a Task<dynamic> with the rest async call
+            return await invocation.InvokeAsync(request); // this will return a Task<dynamic> with the rest async call
         }
 
         internal void AddSegment(IRestRequest request)

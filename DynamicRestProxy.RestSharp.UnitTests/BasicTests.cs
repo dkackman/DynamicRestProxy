@@ -10,12 +10,13 @@ using DynamicRestProxy.RestSharp;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DynamicRestProxy.UnitTests
+namespace DynamicRestProxy.RestSharp.UnitTests
 {
     [TestClass]
     public class BasicTests
     {
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task ExplicitGetInvoke()
         {
@@ -30,6 +31,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task GetMethodSegmentWithArgs()
         {
@@ -44,6 +46,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task GetMethod2PathAsProperty2Params()
         {
@@ -62,6 +65,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task GetMethod1PathArg1Param()
         {
@@ -77,6 +81,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task EscapeParameterName()
         {

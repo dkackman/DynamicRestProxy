@@ -12,7 +12,7 @@ using DynamicRestProxy.RestSharp;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DynamicRestProxy.UnitTests
+namespace DynamicRestProxy.RestSharp.UnitTests
 {
     [TestClass]
     public class GoogleTests
@@ -104,6 +104,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
@@ -121,6 +122,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
@@ -138,6 +140,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("ordered")]
         // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
@@ -159,6 +162,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("ordered")]
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
@@ -191,6 +195,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("ordered")]
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()

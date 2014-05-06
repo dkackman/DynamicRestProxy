@@ -8,7 +8,7 @@ using DynamicRestProxy.RestSharp;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DynamicRestProxy.UnitTests
+namespace DynamicRestProxy.RestSharp.UnitTests
 {
     static class Extensions
     {
@@ -23,6 +23,7 @@ namespace DynamicRestProxy.UnitTests
     public class BingMapsTests
     {
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task CoordinateFromPostalCode()
         {
@@ -42,6 +43,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task GetFormattedAddressFromCoordinate()
         {

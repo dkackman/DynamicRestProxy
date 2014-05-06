@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace DynamicRestProxy
 {
     public abstract class RestProxy : DynamicObject
-    {        
+    {
         protected RestProxy(RestProxy parent, string name)
         {
             Parent = parent;
@@ -47,7 +47,7 @@ namespace DynamicRestProxy
             return true;
         }
 
-        protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string,object> namedArgs);
+        protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
@@ -100,6 +100,27 @@ namespace DynamicRestProxy
             {
                 builder.Append("/").Append(Name);
             }
+        }
+
+        protected void GetEndPointPath(StringBuilder builder)
+        {
+            if (Parent != null)
+            { 
+                Parent.GetEndPointPath(builder); // go all the way up to the root and then back down
+            }
+
+            builder.Append(Name);
+            if (Parent != null)
+            {
+                builder.Append("/");
+            }
+        }
+
+        protected string GetEndPointPath()
+        {
+            var builder = new StringBuilder();
+            GetEndPointPath(builder);
+            return builder.ToString();
         }
 
         public override string ToString()

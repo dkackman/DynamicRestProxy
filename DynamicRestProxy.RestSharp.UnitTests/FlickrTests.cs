@@ -11,12 +11,13 @@ using DynamicRestProxy.RestSharp;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DynamicRestProxy.UnitTests
+namespace DynamicRestProxy.RestSharp.UnitTests
 {
     [TestClass]
     public class FlickrTests
     {
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task FindUserByName()
         {
@@ -35,6 +36,7 @@ namespace DynamicRestProxy.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task UploadPhoto()
         {

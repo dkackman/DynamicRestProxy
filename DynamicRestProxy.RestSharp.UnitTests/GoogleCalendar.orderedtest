@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<OrderedTest name="GoogleCalendar" storage="d:\users\don\documents\visual studio 2013\projects\dynamicrestproxy\dynamicrestproxy.unittests\googlecalendar.orderedtest" id="89bad2de-c25f-4c73-a3a4-d4560175ba3b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+<OrderedTest name="googlecalendar" storage="d:\users\don\documents\github\dynamicrestproxy\dynamicrestproxy.restsharp.unittests\googlecalendar.orderedtest" id="89bad2de-c25f-4c73-a3a4-d4560175ba3b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <TestLinks>
-    <TestLink id="c8952b7f-e0ac-3645-9e39-fbb38cb482aa" name="CreateCalendar" storage="bin\debug\dynamicrestproxy.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="c8952b7f-e0ac-3645-9e39-fbb38cb482aa" name="CreateCalendar" storage="bin\debug\dynamicrestproxy.restsharp.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <TestLink id="595debba-36bc-1318-f278-70e78f984699" name="UpdateCalendar" storage="bin\debug\dynamicrestproxy.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <TestLink id="6261b9f2-49b2-8d4e-f4e5-28a18971289d" name="DeleteCalendar" storage="bin\debug\dynamicrestproxy.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </TestLinks>

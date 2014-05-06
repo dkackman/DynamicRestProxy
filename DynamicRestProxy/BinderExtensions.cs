@@ -10,13 +10,7 @@ namespace DynamicRestProxy
 
         public static IEnumerable<object> GetUnnamedArgs(this InvokeMemberBinder binder, object[] args)
         {
-            int unnamedArgCount = binder.UnnamedArgCount();
-            var ret = new List<object>();
-            for (int i = 0; i < unnamedArgCount; i++)
-            {                
-                ret.Add(args[i]);
-            }
-            return ret;
+            return args.Take(binder.UnnamedArgCount());
         }
 
         public static IDictionary<string, object> GetNamedArgs(this InvokeMemberBinder binder, object[] args)

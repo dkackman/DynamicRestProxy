@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C31FD1
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.Portable", "DynamicRestProxy.Portable\DynamicRestProxy.Portable.csproj", "{11B51B4D-D60E-42E0-81D8-C9BCC08063AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.PortableHttpClient", "DynamicRestProxy.Portable\DynamicRestProxy.PortableHttpClient.csproj", "{11B51B4D-D60E-42E0-81D8-C9BCC08063AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.Portable.UnitTests", "DynamicRestPRoxy.Portable.UnitTests\DynamicRestProxy.Portable.UnitTests.csproj", "{8F20FF2D-3ECA-4444-9892-09292289B248}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.PortableHttpClient.UnitTests", "DynamicRestPRoxy.Portable.UnitTests\DynamicRestProxy.PortableHttpClient.UnitTests.csproj", "{8F20FF2D-3ECA-4444-9892-09292289B248}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.RestSharp", "DynamicRestProxy.RestSharp\DynamicRestProxy.RestSharp.csproj", "{272DAAE2-04E7-47A4-9A79-66E5F7802ABA}"
 EndProject

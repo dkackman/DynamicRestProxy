@@ -5,7 +5,7 @@ using System.IO;
 
 using Newtonsoft.Json;
 
-namespace DynamicRestProxy.UnitTests
+namespace DynamicRestProxy.RestSharp.UnitTests
 {
     /// <summary>
     /// This is a quick and dirty way to store service credentials in a place
