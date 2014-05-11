@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -55,8 +53,9 @@ namespace DynamicRestProxy.PortableHttpClient
 
         private static HttpContent CreateContent(HttpMethod method, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
-            if (unnamedArgs.Count() > 0)
+            if (unnamedArgs.Any())
             {
+                // only one object can go in the body so take the first one
                 var content = new ByteArrayContent(EncodeObject(unnamedArgs.First()));
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 return content;
@@ -64,7 +63,7 @@ namespace DynamicRestProxy.PortableHttpClient
 
             if (method == HttpMethod.Post && namedArgs.Count > 0)
             {
-                var content = new ByteArrayContent(EncodeQueryString(namedArgs));
+                var content = new ByteArrayContent(namedArgs.AsEncodedQueryString());
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 return content;
             }
@@ -74,12 +73,6 @@ namespace DynamicRestProxy.PortableHttpClient
         private static byte[] EncodeObject(object o)
         {
             var content = JsonConvert.SerializeObject(o);
-            return Encoding.UTF8.GetBytes(content);
-        }
-
-        private static byte[] EncodeQueryString(IDictionary<string, object> namedArgs)
-        {
-            var content = namedArgs.AsQueryString("");
             return Encoding.UTF8.GetBytes(content);
         }
 

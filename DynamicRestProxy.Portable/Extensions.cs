@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 
 namespace DynamicRestProxy.PortableHttpClient
@@ -31,6 +29,12 @@ namespace DynamicRestProxy.PortableHttpClient
                 separator = "&";
             }
             return builder.ToString();
+        }
+
+        public static byte[] AsEncodedQueryString(this IDictionary<string, object> namedArgs)
+        {
+            var content = namedArgs.AsQueryString("");
+            return Encoding.UTF8.GetBytes(content);
         }
     }
 }
