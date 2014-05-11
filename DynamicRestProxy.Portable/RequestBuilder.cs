@@ -38,7 +38,7 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 request.Content = content;
             }
-
+            
             return request;
         }
 

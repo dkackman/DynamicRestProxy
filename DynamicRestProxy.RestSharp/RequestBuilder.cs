@@ -33,12 +33,12 @@ namespace DynamicRestProxy
             _proxy.AddSegment(request); // this recurses up the instance chain
 
             // all unnamed args get added to the request body
-            foreach (var arg in unnamedArgs.Where(o => o != null))
+            foreach (var arg in unnamedArgs)
             {
                 request.AddBody(arg);
             }
 
-            foreach(var kvp in namedArgs.Where(kvp => kvp.Value != null))
+            foreach(var kvp in namedArgs)
             {
                 if (kvp.Value is IDictionary<string, object>) // if the arg is a dictionary, add each item as a parameter key value pair
                 {
@@ -52,7 +52,7 @@ namespace DynamicRestProxy
                 }
                 else
                 {
-                    // verything else is key value pair as string
+                    // everything else is key value pair as string
                     request.AddParameter(kvp.Key, kvp.Value.ToString());
                 }
             }

@@ -33,8 +33,13 @@ namespace DynamicRestProxy.PortableHttpClient
 
         public static byte[] AsEncodedQueryString(this IDictionary<string, object> namedArgs)
         {
+            return namedArgs.AsEncodedQueryString(Encoding.UTF8);
+        }
+
+        public static byte[] AsEncodedQueryString(this IDictionary<string, object> namedArgs, Encoding encoding)
+        {
             var content = namedArgs.AsQueryString("");
-            return Encoding.UTF8.GetBytes(content);
+            return encoding.GetBytes(content);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DynamicRestProxy
 
         public static IEnumerable<object> GetUnnamedArgs(this InvokeMemberBinder binder, object[] args)
         {
-            return args.Take(binder.UnnamedArgCount());
+            return args.Take(binder.UnnamedArgCount()).Where(o => o != null); // filter out nulls
         }
 
         public static IDictionary<string, object> GetNamedArgs(this InvokeMemberBinder binder, object[] args)
@@ -20,7 +20,8 @@ namespace DynamicRestProxy
             for (int i = 0; i < binder.CallInfo.ArgumentNames.Count; i++)
             {
                 var arg = args[i + unnamedArgCount];
-                ret.Add(binder.GetArgName(i), arg);
+                if (arg != null) // filter out null parameters
+                    ret.Add(binder.GetArgName(i), arg);
             }
             return ret;
         }
