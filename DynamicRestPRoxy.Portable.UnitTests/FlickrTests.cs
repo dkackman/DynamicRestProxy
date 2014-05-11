@@ -45,7 +45,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("portable")]
         [TestCategory("integration")]
         [Ignore]
-        public async Task UploadPhoto()
+        public  void UploadPhoto()
         {
             var key = CredentialStore.JsonKey("flickr");
 

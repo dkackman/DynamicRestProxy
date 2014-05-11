@@ -44,7 +44,9 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="HttpClientProxy.cs" />
+    <Compile Include="DynamicRestClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

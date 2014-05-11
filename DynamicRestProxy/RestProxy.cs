@@ -116,11 +116,11 @@ namespace DynamicRestProxy
             }
         }
 
-        protected string GetEndPointPath()
+        public string GetEndPointPath()
         {
             var builder = new StringBuilder();
             GetEndPointPath(builder);
-            return builder.ToString();
+            return builder.ToString().Trim('/');
         }
 
         public override string ToString()

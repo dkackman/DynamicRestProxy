@@ -11,6 +11,9 @@ namespace DynamicRestProxy.PortableHttpClient
     {
         public static string AsQueryString(this IDictionary<string, object> parameters, string prepend = "?")
         {
+            if (parameters.Count == 0)
+                return "";
+
             var builder = new StringBuilder(prepend);
 
             var separator = "";

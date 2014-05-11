@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="orderedtest1" storage="d:\users\don\documents\github\dynamicrestproxy\dynamicrestproxy.portable.unittests\orderedtest1.orderedtest" id="68ac1dd7-026a-454c-8112-cc346f97f84f" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="50351819-2efe-da8e-5189-9fe81eb0dd94" name="CreateCalendar" storage="bin\debug\dynamicrestproxy.portablehttpclient.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="923d7df7-1a5e-1b99-c25f-abbb9a9e5c90" name="UpdateCalendar" storage="bin\debug\dynamicrestproxy.portablehttpclient.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="851bc02b-9d13-0aac-6291-4ef4bd3fb571" name="DeleteCalendar" storage="bin\debug\dynamicrestproxy.portablehttpclient.unittests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

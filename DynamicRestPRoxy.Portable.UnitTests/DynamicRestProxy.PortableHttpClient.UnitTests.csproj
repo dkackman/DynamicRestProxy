@@ -69,6 +69,7 @@
     <Compile Include="BingMapsTests.cs" />
     <Compile Include="CredentialStore.cs" />
     <Compile Include="FlickrTests.cs" />
+    <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DyanmicProxy.GoogleCalendar.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

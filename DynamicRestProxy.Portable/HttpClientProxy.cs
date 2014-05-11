@@ -8,18 +8,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net;
 
-
 namespace DynamicRestProxy.PortableHttpClient
 {
     public class HttpClientProxy : RestProxy
     {
         private HttpClient _client;
-
-        public HttpClientProxy(string baseUrl)
-            : this(new HttpClient())
-        {
-            _client.BaseAddress = new Uri(baseUrl);
-        }
 
         public HttpClientProxy(HttpClient client)
             : this(client, null, "")
@@ -36,7 +29,7 @@ namespace DynamicRestProxy.PortableHttpClient
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));                 
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
         }
 
         protected override string BaseUrl
@@ -51,17 +44,14 @@ namespace DynamicRestProxy.PortableHttpClient
 
         protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, GetEndPointPath() + namedArgs.AsQueryString());
-
-            using (var handler = new HttpClientHandler())
+            var builder = new RequestBuilder(this);
+            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
+            using (var response = await _client.SendAsync(request))
             {
-                request.Headers.TransferEncodingChunked = handler.SupportsTransferEncodingChunked();
+                response.EnsureSuccessStatusCode();
+
+                return await response.Deserialize();
             }
-
-            HttpResponseMessage response = await _client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Deserialize();
         }
     }
 }
