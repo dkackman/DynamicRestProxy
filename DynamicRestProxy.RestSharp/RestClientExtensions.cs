@@ -31,7 +31,7 @@ namespace DynamicRestProxy
                 return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(response.Content));
             }
 
-            return await Task.Factory.StartNew<object>(() => { return null; });
+            return await Task.Factory.StartNew<dynamic>(() => { return null; });
         }
 
         public static void AddDictionary(this IRestRequest request, IDictionary<string, object> args)

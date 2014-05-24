@@ -15,7 +15,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(content));
             }
 
-            return await Task.Factory.StartNew<object>(() => { return null; });
+            return await Task.Factory.StartNew<dynamic>(() => { return null; });
         }        
     }
 }
