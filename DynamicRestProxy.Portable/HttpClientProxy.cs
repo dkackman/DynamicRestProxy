@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -40,7 +40,7 @@ namespace DynamicRestProxy.PortableHttpClient
 
         protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
-            var builder = new RequestBuilder(this);
+            var builder = new RequestBuilder(this, new DynamicRestClientDefaults());
             using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             using (var response = await _client.SendAsync(request))
             {

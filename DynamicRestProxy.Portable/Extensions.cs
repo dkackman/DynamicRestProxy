@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Net;
 using System.Linq;
 using System.Text;
-using System.Net;
+using System.Collections.Generic;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
     static class Extensions
     {
-        public static string AsQueryString(this IDictionary<string, object> parameters, string prepend = "?")
+        public static string AsQueryString(this IEnumerable<KeyValuePair<string, object>> parameters, string prepend = "?")
         {
-            if (parameters.Count == 0)
+            if (!parameters.Any())
                 return "";
 
             var builder = new StringBuilder(prepend);
@@ -28,15 +28,16 @@ namespace DynamicRestProxy.PortableHttpClient
                 }
                 separator = "&";
             }
+
             return builder.ToString();
         }
 
-        public static byte[] AsEncodedQueryString(this IDictionary<string, object> namedArgs)
+        public static byte[] AsEncodedQueryString(this IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
             return namedArgs.AsEncodedQueryString(Encoding.UTF8);
         }
 
-        public static byte[] AsEncodedQueryString(this IDictionary<string, object> namedArgs, Encoding encoding)
+        public static byte[] AsEncodedQueryString(this IEnumerable<KeyValuePair<string, object>> namedArgs, Encoding encoding)
         {
             var content = namedArgs.AsQueryString("");
             return encoding.GetBytes(content);
