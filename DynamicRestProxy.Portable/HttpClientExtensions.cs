@@ -2,13 +2,14 @@
 using System.Net.Http;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
     static class HttpClientExtensions
     {
         public async static Task<dynamic> Deserialize(this HttpResponseMessage response)
-        {
+        {            
             var content = await response.Content.ReadAsStringAsync();
             if (!string.IsNullOrEmpty(content))
             {

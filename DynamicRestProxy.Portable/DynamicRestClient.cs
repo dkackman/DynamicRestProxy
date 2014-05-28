@@ -11,17 +11,19 @@ namespace DynamicRestProxy.PortableHttpClient
     {
         private string _baseUrl;
         private DynamicRestClientDefaults _defaults;
+        private Func<HttpRequestMessage, Task> _configureRequest;
 
-        public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null)
-            : this(baseUrl, null, "", defaults)
+        public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, Task> configure = null)
+            : this(baseUrl, null, "", defaults, configure)
         {
         }
 
-        internal DynamicRestClient(string baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults)
+        internal DynamicRestClient(string baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, Task> configure)
             : base(parent, name)
         {
             _baseUrl = baseUrl;
             _defaults = defaults ?? new DynamicRestClientDefaults();
+            _configureRequest = configure;
         }
 
         protected override string BaseUrl
@@ -31,7 +33,7 @@ namespace DynamicRestProxy.PortableHttpClient
 
         protected override RestProxy CreateProxyNode(RestProxy parent, string name)
         {
-            return new DynamicRestClient(_baseUrl, parent, name, _defaults);
+            return new DynamicRestClient(_baseUrl, parent, name, _defaults, _configureRequest);
         }
 
         protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
@@ -40,11 +42,20 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 var builder = new RequestBuilder(this, _defaults);
                 using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
-                using (var response = await client.SendAsync(request))
                 {
-                    response.EnsureSuccessStatusCode();
+                    // give the user code a chance to setup any other request details
+                    // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client
+                    if (_configureRequest != null)
+                    {
+                        await _configureRequest(request);
+                    }
 
-                    return await response.Deserialize();
+                    using (var response = await client.SendAsync(request))
+                    {
+                        response.EnsureSuccessStatusCode();
+
+                        return await response.Deserialize();
+                    }
                 }
             }
         }
@@ -65,8 +76,8 @@ namespace DynamicRestProxy.PortableHttpClient
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
-            
-            foreach(var kvp in _defaults.DefaultHeaders)
+
+            foreach (var kvp in _defaults.DefaultHeaders)
             {
                 client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
             }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using RestSharp;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DynamicRestProxy
 {
@@ -17,7 +18,7 @@ namespace DynamicRestProxy
             var response = await client.ExecuteTaskAsync(request);
             if (response == null)
                 return null;
-
+            
             if (response.ErrorException != null)
                 throw response.ErrorException;
 
