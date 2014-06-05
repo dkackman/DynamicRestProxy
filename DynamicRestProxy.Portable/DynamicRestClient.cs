@@ -22,7 +22,7 @@ namespace DynamicRestProxy.PortableHttpClient
             : base(parent, name)
         {
             _baseUrl = baseUrl;
-            _defaults = defaults ?? new DynamicRestClientDefaults();
+            _defaults = defaults ?? new DynamicRestClientDefaults(); ;
             _configureRequest = configure;
         }
 
@@ -77,14 +77,17 @@ namespace DynamicRestProxy.PortableHttpClient
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
 
-            foreach (var kvp in _defaults.DefaultHeaders)
+            if (_defaults != null)
             {
-                client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
-            }
+                foreach (var kvp in _defaults.DefaultHeaders)
+                {
+                    client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
+                }
 
-            if (!string.IsNullOrEmpty(_defaults.OAuthToken))
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _defaults.OAuthToken);
+                if (!string.IsNullOrEmpty(_defaults.OAuthToken))
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _defaults.OAuthToken);
+                }
             }
 
             return client;
