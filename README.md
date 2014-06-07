@@ -12,8 +12,8 @@ The intent is to make it easier to access REST API's from C# without needing to 
 Is currently a work in progress. Supports the GET, POST, PUT, and DELETE verbs.
 
 There is a [NuGet package](https://www.nuget.org/packages/DynamicRestProxy/) for the abstract base class to allow different http client libraries to be used. Current concrete implementations include: 
-- [RestSharp RestClient](http://restsharp.org/) 
-- [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/) [NuGet package](https://www.nuget.org/packages/DynamicRestClient/)
+- [RestSharp RestClient](http://restsharp.org/). 
+- [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). This also has a [NuGet package](https://www.nuget.org/packages/DynamicRestClient/).
 
 If you try to run the unit tests take a close look at the CredentialStore class in the unit test project. It's pretty straighforward and you can use it to supply your own api keys while keeping them out of the code.
 
