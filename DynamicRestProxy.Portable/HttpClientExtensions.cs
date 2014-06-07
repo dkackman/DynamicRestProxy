@@ -14,25 +14,23 @@ namespace DynamicRestProxy.PortableHttpClient
         public async static Task<dynamic> Deserialize(this HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
-            if (!string.IsNullOrEmpty(content))
-            {
-                return await content.Deserialize();
-            }
 
-            return await Task.Factory.StartNew<dynamic>(() => { return null; });
+            return await content.Deserialize();
         }
 
         public async static Task<dynamic> Deserialize(this string content)
         {
-            Debug.Assert(!string.IsNullOrEmpty(content));
-
-            var converter = new ExpandoObjectConverter();
-            if (content.StartsWith("[")) // when the result is a list we need to tell JSonConvert
+            if (!string.IsNullOrEmpty(content))
             {
-                return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<List<dynamic>>(content, converter));
-            }
+                var converter = new ExpandoObjectConverter();
+                if (content.StartsWith("[")) // when the result is a list we need to tell JSonConvert
+                {
+                    return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<List<dynamic>>(content, converter));
+                }
 
-            return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<ExpandoObject>(content, converter));
+                return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<ExpandoObject>(content, converter));
+            }
+            return await Task.Factory.StartNew<dynamic>(() => { return null; });
         }
     }
 }
