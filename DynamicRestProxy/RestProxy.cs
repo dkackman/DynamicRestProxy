@@ -7,6 +7,10 @@ using System.Collections.Generic;
 
 namespace DynamicRestProxy
 {
+    /// <summary>
+    /// Base proxy class. Derived classes implement the specfic rest/http communication mechanisms.
+    /// Each node in a chain of proxy instances represents a specific endpoint
+    /// </summary>
     public abstract class RestProxy : DynamicObject
     {
         protected RestProxy(RestProxy parent, string name)
@@ -15,10 +19,19 @@ namespace DynamicRestProxy
             Name = name;
         }
 
+        /// <summary>
+        /// The parent of this node
+        /// </summary>
         public RestProxy Parent { get; private set; }
 
+        /// <summary>
+        /// The name of this node. This is the text used when forming the complete Url
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// The numeric index of this node in the chain
+        /// </summary>
         public int Index
         {
             get
@@ -27,8 +40,17 @@ namespace DynamicRestProxy
             }
         }
 
+        /// <summary>
+        /// The base Url of the endpoint. Overridden in derived classess to allow specific rest client to deteremine how it is stored
+        /// </summary>
         protected abstract string BaseUrl { get; }
 
+        /// <summary>
+        /// Factory method used to create instances of derived child nodes. Overrideen in derived classess to create derived instances
+        /// </summary>
+        /// <param name="parent">The parent of the newly created child</param>
+        /// <param name="name">The name of the newly created child</param>
+        /// <returns>Derived child instance</returns>
         protected abstract RestProxy CreateProxyNode(RestProxy parent, string name);
 
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
@@ -47,6 +69,13 @@ namespace DynamicRestProxy
             return true;
         }
 
+        /// <summary>
+        /// Abstract method to create a Task that will execute the necessary http communication
+        /// </summary>
+        /// <param name="verb">The http verb to execute (must be get, post, put or delete)</param>
+        /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
+        /// <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
+        /// <returns>Task<dynamic> that will execute the http call and return a dynamic object with the results</dynamic></returns>
         protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
@@ -102,6 +131,10 @@ namespace DynamicRestProxy
             }
         }
 
+        /// <summary>
+        /// Used to generate a complete Url for the endpoint
+        /// </summary>
+        /// <param name="builder"></param>
         protected void GetEndPointPath(StringBuilder builder)
         {
             if (Parent != null)
@@ -116,6 +149,10 @@ namespace DynamicRestProxy
             }
         }
 
+        /// <summary>
+        /// The complete Url (minus parameters) for this endpoint
+        /// </summary>
+        /// <returns>The url</returns>
         public string GetEndPointPath()
         {
             var builder = new StringBuilder();
