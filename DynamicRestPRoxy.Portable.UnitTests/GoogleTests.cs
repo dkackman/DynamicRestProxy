@@ -60,7 +60,6 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             dynamic proxy = new DynamicRestClient("https://accounts.google.com");
             var response = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
             Assert.IsNotNull(response);
-            Assert.IsNull(response.refresh_token);
 
             response.refresh_token = access.refresh_token; // the new access token doesn't have a new refresh token so move our current one here for long term storage
             return response;
