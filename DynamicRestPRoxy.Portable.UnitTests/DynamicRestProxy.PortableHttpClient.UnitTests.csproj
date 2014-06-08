@@ -68,7 +68,9 @@
     <Compile Include="BasicTests.cs" />
     <Compile Include="BingMapsTests.cs" />
     <Compile Include="CredentialStore.cs" />
+    <Compile Include="DynamicClientTests.cs" />
     <Compile Include="FlickrTests.cs" />
+    <Compile Include="GoogleOAuth2.cs" />
     <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

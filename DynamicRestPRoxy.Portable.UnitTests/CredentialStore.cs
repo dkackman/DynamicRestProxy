@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Dynamic;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DynamicRestProxy.PortableHttpClient.UnitTests
 {
@@ -49,7 +51,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
         public static dynamic JsonKey(string api)
         {
-            return JsonConvert.DeserializeObject<dynamic>(Key(api));
+            return JsonConvert.DeserializeObject<ExpandoObject>(Key(api), new ExpandoObjectConverter());
         }
 
         public static bool ObjectExists(string name)
@@ -66,7 +68,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 using (var reader = new StreamReader(file))
                 {
                     string json = reader.ReadToEnd();
-                    return JsonConvert.DeserializeObject<dynamic>(json);
+
+                    return JsonConvert.DeserializeObject<ExpandoObject>(json, new ExpandoObjectConverter());
                 }
             }
             catch (Exception e)
