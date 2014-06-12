@@ -17,50 +17,40 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     public class FlickrTests
     {
         [TestMethod]
-        [TestCategory("portable")]
+        [TestCategory("portable-client")]
         [TestCategory("integration")]
         public async Task FindUserByName()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
+            var key = CredentialStore.JsonKey("flickr");
+            var defaults = new DynamicRestClientDefaults();
+            defaults.DefaultParameters.Add("format", "json");
+            defaults.DefaultParameters.Add("api_key", key.Key);
+            defaults.DefaultParameters.Add("nojsoncallback", "1");
 
-            using (var client = new HttpClient(handler, true))
-            {
-                client.BaseAddress = new Uri("https://api.flickr.com/services/rest/");
+            dynamic client = new DynamicRestClient("https://api.flickr.com/services/rest/", defaults);
 
-                dynamic proxy = new HttpClientProxy(client);
-
-                var key = CredentialStore.JsonKey("flickr");
-                
-                dynamic result = await proxy.get(method: "flickr.people.findByUsername", username: "dkackman", format: "json", api_key: key.Key, nojsoncallback: "1");
-                Assert.IsNotNull(result);
-                Assert.AreEqual("9039518@N03", (string)result.user.id);
-            }
+            dynamic result = await client.get(method: "flickr.people.findByUsername", username: "dkackman");
+            Assert.IsNotNull(result);
+            Assert.AreEqual("9039518@N03", (string)result.user.id);
         }
 
         [TestMethod]
-        [TestCategory("portable")]
+        [TestCategory("portable-client")]
         [TestCategory("integration")]
         [Ignore]
-        public  void UploadPhoto()
+        public async Task UploadPhoto()
         {
             var key = CredentialStore.JsonKey("flickr");
+            var defaults = new DynamicRestClientDefaults();
+            defaults.DefaultParameters.Add("format", "json");
+            defaults.DefaultParameters.Add("api_key", key.Key);
+            defaults.DefaultParameters.Add("nojsoncallback", "1");
 
-            //var client = new RestClient("https://up.flickr.com/services/");
-            //client.AddDefaultParameter("format", "json");
-            //client.AddDefaultParameter("api_key", (string)key.Key);
-            //client.AddDefaultParameter("nojsoncallback", "1");
+            dynamic client = new DynamicRestClient("https://up.flickr.com/services/", defaults);
 
-            //var file = new FileInfo(@"D:\temp\test.png");
+            dynamic result = await client.upload.post(photo: File.OpenRead(@"D:\temp\test.png"));
 
-            //dynamic proxy = new HttpClientProxy(client);
-
-            //dynamic result = await proxy.upload.post(photo: file);
-
-            //Assert.IsNotNull(result);
+            Assert.IsNotNull(result);
 
         }
     }
