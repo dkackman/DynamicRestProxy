@@ -24,7 +24,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
-            var auth = new GoogleOAuth2("email profile");
+            var auth = new GoogleOAuth2();
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
             var handler = new HttpClientHandler();
@@ -52,7 +52,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            var auth = new GoogleOAuth2();
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -81,7 +81,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            var auth = new GoogleOAuth2();
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -114,7 +114,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            var auth = new GoogleOAuth2();
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -157,7 +157,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            var auth = new GoogleOAuth2();
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
