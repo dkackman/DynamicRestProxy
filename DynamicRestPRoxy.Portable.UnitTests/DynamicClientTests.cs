@@ -8,6 +8,8 @@ using DynamicRestProxy.PortableHttpClient;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using UnitTestHelpers;
+
 namespace DynamicRestProxy.PortableHttpClient.UnitTests
 {
     [TestClass]

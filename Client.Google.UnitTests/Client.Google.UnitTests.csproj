@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD3A49CD-A915-4010-B4BA-A81766F0CB14}</ProjectGuid>
+    <ProjectGuid>{23FD9838-1477-4BF6-92C9-EBC031956F81}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DynamicRestProxy.UnitTests</RootNamespace>
-    <AssemblyName>DynamicRestProxy.UnitTests</AssemblyName>
+    <RootNamespace>Client.Google.UnitTests</RootNamespace>
+    <AssemblyName>Client.Google.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,8 +37,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -53,20 +61,26 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ParameterPassingTests.cs" />
-    <Compile Include="TestProxy.cs" />
-    <Compile Include="UrlConstructionTests.cs" />
+    <Compile Include="DriveTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\DynamicRestProxy.Portable\DynamicRestProxy.PortableHttpClient.csproj">
+      <Project>{11b51b4d-d60e-42e0-81d8-c9bcc08063ad}</Project>
+      <Name>DynamicRestProxy.PortableHttpClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
       <Project>{13073c29-a780-4f21-8544-80f0b51dac8d}</Project>
       <Name>DynamicRestProxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UnitTestHelpers\UnitTestHelpers.csproj">
+      <Project>{a589a7ba-9e16-4ae4-b01c-8d6b0aa9cff8}</Project>
+      <Name>UnitTestHelpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

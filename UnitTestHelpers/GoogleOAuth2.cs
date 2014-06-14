@@ -3,14 +3,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace DynamicRestProxy.PortableHttpClient.UnitTests
+using DynamicRestProxy.PortableHttpClient;
+
+namespace UnitTestHelpers
 {
     /// <summary>
     /// Helper class to deal with google oauth for unit testing
     /// The first time a machine authenticates user interaction is required
     /// Subsequent unit test runs will use a stored token that will refresh with google
     /// </summary>
-    static class GoogleOAuth2
+    public static class GoogleOAuth2
     {
         public static async Task<string> Authenticate(string token)
         {

@@ -11,6 +11,8 @@ using DynamicRestProxy.RestSharp;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using UnitTestHelpers;
+
 namespace DynamicRestProxy.RestSharp.UnitTests
 {
     [TestClass]

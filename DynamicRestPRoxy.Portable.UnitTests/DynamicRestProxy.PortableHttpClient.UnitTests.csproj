@@ -67,10 +67,8 @@
   <ItemGroup>
     <Compile Include="BasicTests.cs" />
     <Compile Include="BingMapsTests.cs" />
-    <Compile Include="CredentialStore.cs" />
     <Compile Include="DynamicClientTests.cs" />
     <Compile Include="FlickrTests.cs" />
-    <Compile Include="GoogleOAuth2.cs" />
     <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +80,10 @@
     <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
       <Project>{13073c29-a780-4f21-8544-80f0b51dac8d}</Project>
       <Name>DynamicRestProxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnitTestHelpers\UnitTestHelpers.csproj">
+      <Project>{a589a7ba-9e16-4ae4-b01c-8d6b0aa9cff8}</Project>
+      <Name>UnitTestHelpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

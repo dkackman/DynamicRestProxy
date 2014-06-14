@@ -8,6 +8,8 @@ using DynamicRestProxy.RestSharp;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using UnitTestHelpers;
+
 namespace DynamicRestProxy.RestSharp.UnitTests
 {
     static class Extensions

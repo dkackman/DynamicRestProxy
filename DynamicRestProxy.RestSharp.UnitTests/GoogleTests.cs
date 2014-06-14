@@ -10,95 +10,14 @@ using RestSharp;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using UnitTestHelpers;
+
 namespace DynamicRestProxy.RestSharp.UnitTests
 {
     [TestClass]
     public class GoogleTests
     {
-        private static string _token;
-
-        private async Task Authenticate()
-        {
-            if (!string.IsNullOrEmpty(_token))
-                return;
-
-            if (CredentialStore.ObjectExists("google.auth.json"))
-            {
-                var access = CredentialStore.RetrieveObject("google.auth.json");
-
-                if (DateTime.UtcNow >= DateTime.Parse((string)access.expiry))
-                {
-                    access = await RefreshAccessToken(access);
-                    StoreAccess(access);
-                }
-                
-                _token = access.access_token;
-            }
-            else
-            {
-                var access = await GetNewAccessToken();
-                StoreAccess(access);
-                _token = access.access_token;
-            }
-        }
-
-        private static void StoreAccess(dynamic access)
-        {
-            access.expiry = DateTime.UtcNow.Add(TimeSpan.FromSeconds((int)access.expires_in));
-            CredentialStore.StoreObject("google.auth.json", access);
-        }
-
-        private async Task<dynamic> RefreshAccessToken(dynamic access)
-        {
-            Assert.IsNotNull((string)access.refresh_token);
-
-            dynamic key = CredentialStore.JsonKey("google").installed;
-
-            dynamic proxy = new RestSharpProxy("https://accounts.google.com");
-            var response = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
-            Assert.IsNotNull(response);
-
-            response.refresh_token = access.refresh_token; // the new access token doesn't have a new refresh token so move our current one here for long term storage
-            return response;
-        }
-
-        private async Task<dynamic> GetNewAccessToken()
-        {
-            dynamic key = CredentialStore.JsonKey("google").installed;
-
-            dynamic proxy = new RestSharpProxy("https://accounts.google.com");
-            var response = await proxy.o.oauth2.device.code.post(client_id: key.client_id, scope: "email profile https://www.googleapis.com/auth/calendar");
-            Assert.IsNotNull(response);
-
-            Debug.WriteLine((string)response.user_code);
-
-            // use clip.exe to put the user code on the clipboard
-            Process p = new Process();
-            p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.Arguments = string.Format("/c echo {0} | clip", response.user_code);
-            p.Start();
-
-            // this requires user permission - open a broswer - enter the user_code which is now in the clipboard
-            Process.Start((string)response.verification_url);
-
-            int expiration = response.expires_in;
-            int interval = response.interval;
-            int time = interval;
-
-            dynamic tokenResonse = null;
-            // we are using the device flow so enter the code in the browser - poll google for success
-            while (time < expiration)
-            {
-                Thread.Sleep(interval * 1000);
-                tokenResonse = await proxy.o.oauth2.token.post(client_id: key.client_id, client_secret: key.client_secret, code: response.device_code, grant_type: "http://oauth.net/grant_type/device/1.0");
-                if (tokenResonse.access_token != null)
-                    break;
-                time += interval;
-            }
-
-            Assert.IsNotNull(tokenResonse);
-            return tokenResonse;
-        }
+        private static string _token = null;
 
         [TestMethod]
         [TestCategory("RestSharp")]
@@ -106,7 +25,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
-            await Authenticate();
+            _token = await GoogleOAuth2.Authenticate(_token);
             Assert.IsNotNull(_token);
 
             var client = new RestClient("https://www.googleapis.com");
@@ -124,7 +43,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {
-            await Authenticate();
+            _token = await GoogleOAuth2.Authenticate(_token);
             Assert.IsNotNull(_token);
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
@@ -142,7 +61,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
-            await Authenticate();
+            _token = await GoogleOAuth2.Authenticate(_token);
             Assert.IsNotNull(_token);
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
@@ -164,7 +83,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
-            await Authenticate();
+            _token = await GoogleOAuth2.Authenticate(_token);
             Assert.IsNotNull(_token);
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
@@ -197,7 +116,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {
-            await Authenticate();
+            _token = await GoogleOAuth2.Authenticate(_token);
             Assert.IsNotNull(_token);
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");

@@ -7,14 +7,14 @@ using System.Dynamic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace DynamicRestProxy.PortableHttpClient.UnitTests
+namespace UnitTestHelpers
 {
     /// <summary>
     /// This is a quick and dirty way to store service credentials in a place
     /// that is easy to acces but stored outside of the source tree so that they
     /// do not get checked into github
     /// </summary>
-    static class CredentialStore
+    public static class CredentialStore
     {
         //#error either load you key from a file outside of the source try like below or return it directly here
         //#warning http://sunlightfoundation.com/api/accounts/register/
