@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.DynamicRestProxy", "N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.DynamicRestClient", "NuGet.DynamicRestClient\NuGet.DynamicRestClient.csproj", "{1D805AB8-F6C8-49AB-82B8-D954B998BBE9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{5D427DF5-A5A6-442F-9829-ADA85EF1EE61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{AEFFFBCB-25A7-4B27-8C5D-DFB05C310DC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,5 +67,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FD3A49CD-A915-4010-B4BA-A81766F0CB14} = {5D427DF5-A5A6-442F-9829-ADA85EF1EE61}
+		{8F20FF2D-3ECA-4444-9892-09292289B248} = {5D427DF5-A5A6-442F-9829-ADA85EF1EE61}
+		{2FD036DF-6DDD-4396-9FF7-EEE9D34623DC} = {5D427DF5-A5A6-442F-9829-ADA85EF1EE61}
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {AEFFFBCB-25A7-4B27-8C5D-DFB05C310DC0}
+		{1D805AB8-F6C8-49AB-82B8-D954B998BBE9} = {AEFFFBCB-25A7-4B27-8C5D-DFB05C310DC0}
 	EndGlobalSection
 EndGlobal
