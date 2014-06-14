@@ -12,9 +12,17 @@ namespace UnitTestHelpers
     /// The first time a machine authenticates user interaction is required
     /// Subsequent unit test runs will use a stored token that will refresh with google
     /// </summary>
-    public static class GoogleOAuth2
+    public class GoogleOAuth2
     {
-        public static async Task<string> Authenticate(string token)
+        private string _scope;
+
+        public GoogleOAuth2(string scope)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(scope));
+            _scope = scope;
+        }
+
+        public async Task<string> Authenticate(string token)
         {
             if (!string.IsNullOrEmpty(token))
                 return token;
@@ -56,12 +64,12 @@ namespace UnitTestHelpers
             return response;
         }
 
-        private static async Task<dynamic> GetNewAccessToken()
+        private async Task<dynamic> GetNewAccessToken()
         {
             dynamic key = CredentialStore.JsonKey("google").installed;
 
             dynamic proxy = new DynamicRestClient("https://accounts.google.com");
-            var response = await proxy.o.oauth2.device.code.post(client_id: key.client_id, scope: "email profile https://www.googleapis.com/auth/calendar");
+            var response = await proxy.o.oauth2.device.code.post(client_id: key.client_id, scope: _scope);
 
             Debug.WriteLine((string)response.user_code);
 

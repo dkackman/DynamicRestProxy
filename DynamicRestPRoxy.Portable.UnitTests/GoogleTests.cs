@@ -24,8 +24,9 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
             var handler = new HttpClientHandler();
             if (handler.SupportsAutomaticDecompression)
             {
@@ -51,8 +52,9 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var handler = new HttpClientHandler();
             if (handler.SupportsAutomaticDecompression)
@@ -79,8 +81,9 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var handler = new HttpClientHandler();
             if (handler.SupportsAutomaticDecompression)
@@ -111,8 +114,9 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var handler = new HttpClientHandler();
             if (handler.SupportsAutomaticDecompression)
@@ -153,8 +157,9 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var handler = new HttpClientHandler();
             if (handler.SupportsAutomaticDecompression)

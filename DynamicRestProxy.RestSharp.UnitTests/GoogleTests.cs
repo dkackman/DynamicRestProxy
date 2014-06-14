@@ -25,8 +25,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var client = new RestClient("https://www.googleapis.com");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
@@ -43,8 +44,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
@@ -61,8 +63,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
@@ -83,8 +86,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
@@ -116,8 +120,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {
-            _token = await GoogleOAuth2.Authenticate(_token);
-            Assert.IsNotNull(_token);
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
 
             var client = new RestClient("https://www.googleapis.com/calendar/v3");
             client.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(_token);
