@@ -18,7 +18,7 @@ namespace UnitTestHelpers
     {
         // this are the scopes used by all of the unit tests
         // because all tests share the same access token these need to be set together
-        private string _scope = "email profile https://www.googleapis.com/auth/calendar"; // https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly";
+        private string _scope = "email profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/devstorage.read_write";
 
         public GoogleOAuth2()
         {

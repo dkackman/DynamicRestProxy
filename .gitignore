@@ -214,3 +214,7 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 *.nupkg
+/NuGet.DynamicRestClient/lib/Newtonsoft.Json.xml
+/NuGet.DynamicRestClient/lib/System.Net.Http.Extensions.xml
+/NuGet.DynamicRestClient/lib/System.Net.Http.Primitives.xml
+/NuGet.DynamicRestClient/lib/System.Net.Http.xml

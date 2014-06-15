@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="DriveTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CloudStorageTests.cs" />
+    <Compile Include="AuthTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicRestProxy.Portable\DynamicRestProxy.PortableHttpClient.csproj">

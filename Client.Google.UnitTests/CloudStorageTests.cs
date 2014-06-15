@@ -14,16 +14,15 @@ using UnitTestHelpers;
 namespace Client.Google.UnitTests
 {
     [TestClass]
-    public class DriveTests
+    public class CloudStorageTests
     {
-        private static string _token = null;        
+        private static string _token = null;
 
         [TestMethod]
         [TestCategory("portable-client")]
         [TestCategory("integration")]
         [TestCategory("google")]
-        [Ignore] // drive scopes don't work with device pin based oauth2 - ignore for now
-        public async Task UploadFile()
+        public async Task UploadObject()
         {
             var auth = new GoogleOAuth2();
             _token = await auth.Authenticate(_token);
@@ -34,9 +33,11 @@ namespace Client.Google.UnitTests
 
             dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
 
-            dynamic result = await google.upload.drive.v2.files.post(File.OpenRead(@"D:\temp\test.png"), uploadType: "media", title: "unit_test.jpg");
-
-            Assert.IsNotNull(result);
+            using (var stream = new StreamInfo(File.OpenRead(@"D:\temp\test.png"), "image/png"))
+            {
+                dynamic result = await google.upload.storage.v1.b.unit_tests.o.post(stream, name: new PostUrlParam("test_object"), uploadType: new PostUrlParam("media"));
+                Assert.IsNotNull(result);
+            }
         }
     }
 }

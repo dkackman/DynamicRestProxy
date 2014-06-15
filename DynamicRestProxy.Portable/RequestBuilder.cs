@@ -42,43 +42,48 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 request.Content = content;
             }
-            
+
             return request;
         }
 
         private Uri MakeUri(HttpMethod method, IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
-            string uri = _proxy.GetEndPointPath();
+            var builder = new StringBuilder(_proxy.GetEndPointPath());
 
+            // all methods but post put params on the url
             if (method != HttpMethod.Post)
-                uri += namedArgs.AsQueryString();
+            {
+                builder.Append(namedArgs.AsQueryString());
+            }
+            else
+            {
+                // by default post uses form encoded paramters but it is allowable to have params on the url
+                // see google storage api for example https://developers.google.com/storage/docs/json_api/v1/objects/insert
+                // the PostUrlParam will wrap the param value and is a signal to force it onto the url and not form encode it
+                builder.Append(namedArgs.Where(kvp => kvp.Value is PostUrlParam).AsQueryString());
+            }
 
-            return new Uri(uri, UriKind.Relative);
+            return new Uri(builder.ToString(), UriKind.Relative);
         }
 
         private static HttpContent CreateContent(HttpMethod method, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
             if (unnamedArgs.Any())
             {
-                // only one object can go in the body so take the first one
-                var content = new ByteArrayContent(EncodeObject(unnamedArgs.First()));
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                return content;
+                // until we add multipart uploads only one object can go in the body so take the first one
+                return ContentFactory.Create(unnamedArgs.First());
             }
 
-            if (method == HttpMethod.Post && namedArgs.Any())
+            // for post requests pass any params as form-encoded - unless forced on the query string
+            var localNamedArgs = namedArgs.Where(kvp => !(kvp.Value is PostUrlParam));
+            if (method == HttpMethod.Post && localNamedArgs.Any())
             {
-                var content = new ByteArrayContent(namedArgs.AsEncodedQueryString());
+                var content = new ByteArrayContent(localNamedArgs.AsEncodedQueryString());
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 return content;
             }
 
             return null;
-        }
-        private static byte[] EncodeObject(object o)
-        {
-            var content = JsonConvert.SerializeObject(o);
-            return Encoding.UTF8.GetBytes(content);
         }
 
         private static HttpMethod GetMethod(string verb)
