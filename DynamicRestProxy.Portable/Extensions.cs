@@ -31,16 +31,5 @@ namespace DynamicRestProxy.PortableHttpClient
 
             return builder.ToString();
         }
-
-        public static byte[] AsEncodedQueryString(this IEnumerable<KeyValuePair<string, object>> namedArgs)
-        {
-            return namedArgs.AsEncodedQueryString(Encoding.UTF8);
-        }
-
-        public static byte[] AsEncodedQueryString(this IEnumerable<KeyValuePair<string, object>> namedArgs, Encoding encoding)
-        {
-            var content = namedArgs.AsQueryString("");
-            return encoding.GetBytes(content);
-        }
     }
 }

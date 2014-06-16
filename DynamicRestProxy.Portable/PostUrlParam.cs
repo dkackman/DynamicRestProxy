@@ -3,7 +3,7 @@ namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
     /// By default POST parameters will be form encoded.
-    /// Use this to force the request to have a particular paramter encoded on the url query
+    /// Use this to force the request to have a particular parameter encoded on the url query
     /// </summary>
     public sealed class PostUrlParam
     {

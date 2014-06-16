@@ -51,7 +51,7 @@ namespace DynamicRestProxy.PortableHttpClient
         private static HttpContent CreateFromStream(Stream content, string mimeType = "application/octet-stream")
         {
             Debug.Assert(content != null);
-            var streamContent = new StreamContent(content, (int)content.Length);
+            var streamContent = new StreamContent(content);
             streamContent.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
 
             return streamContent;
