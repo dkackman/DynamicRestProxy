@@ -39,5 +39,29 @@ namespace Client.Google.UnitTests
                 Assert.IsNotNull(result);
             }
         }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
+        public async Task MultiPartUploadObject()
+        {
+            var auth = new GoogleOAuth2();
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
+
+            var defaults = new DynamicRestClientDefaults();
+            defaults.OAuthToken = _token;
+
+            dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
+
+            using (var stream = new StreamInfo(File.OpenRead(@"D:\temp\test2.png"), "image/png"))
+            {
+                dynamic metaData = new ExpandoObject();
+                metaData.name = "test2";
+                dynamic result = await google.upload.storage.v1.b.unit_tests.o.post(metaData, stream, uploadType: new PostUrlParam("multipart"));
+                Assert.IsNotNull(result);
+            }
+        }
     }
 }

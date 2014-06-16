@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-using Newtonsoft.Json;
-
 namespace DynamicRestProxy.PortableHttpClient
 {
     class RequestBuilder
@@ -68,12 +66,13 @@ namespace DynamicRestProxy.PortableHttpClient
 
         private static HttpContent CreateContent(HttpMethod method, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
+            // if there are unnamed args they represent the request body
             if (unnamedArgs.Any())
             {
-                // until we add multipart uploads only one object can go in the body so take the first one
-                return ContentFactory.Create(unnamedArgs.First());
+                return ContentFactory.Create(unnamedArgs);
             }
 
+            // otherwise we assume that the named args that don't go on the url represent form encoded request body
             // for post requests pass any params as form-encoded - unless forced on the query string
             var localNamedArgs = namedArgs.Where(kvp => !(kvp.Value is PostUrlParam));
             if (method == HttpMethod.Post && localNamedArgs.Any())
