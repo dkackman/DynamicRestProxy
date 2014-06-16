@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\DynamicRestProxy.PortableHttpClient.dll" />
-    <Content Include="lib\DynamicRestProxy.xml" />
+    <Content Include="lib\DynamicRestProxy.PortableHttpClient.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

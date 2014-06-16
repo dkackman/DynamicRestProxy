@@ -13,6 +13,11 @@ namespace DynamicRestProxy
     /// </summary>
     public abstract class RestProxy : DynamicObject
     {
+        /// <summary>
+        /// cto
+        /// </summary>
+        /// <param name="parent">Parent</param>
+        /// <param name="name">Name</param>
         protected RestProxy(RestProxy parent, string name)
         {
             Parent = parent;
@@ -53,6 +58,9 @@ namespace DynamicRestProxy
         /// <returns>Derived child instance</returns>
         protected abstract RestProxy CreateProxyNode(RestProxy parent, string name);
 
+        /// <summary>
+        /// <see cref="System.Dynamic.DynamicObject.TryInvoke(InvokeBinder, object[], out object)"/>
+        /// </summary>
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
             Debug.Assert(binder != null);
@@ -78,6 +86,9 @@ namespace DynamicRestProxy
         /// <returns>Task<dynamic> that will execute the http call and return a dynamic object with the results</dynamic></returns>
         protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
 
+        /// <summary>
+        /// <see cref="System.Dynamic.DynamicObject.TryInvokeMember(InvokeMemberBinder, object[], out object)"/>
+        /// </summary>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             Debug.Assert(binder != null);
@@ -104,6 +115,9 @@ namespace DynamicRestProxy
             return true;
         }
 
+        /// <summary>
+        /// <see cref="System.Dynamic.DynamicObject.TryGetMember(GetMemberBinder, out object)"/>
+        /// </summary>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             Debug.Assert(binder != null);
@@ -160,6 +174,10 @@ namespace DynamicRestProxy
             return builder.ToString().Trim('/');
         }
 
+        /// <summary>
+        /// <see cref="System.Object.ToString"/>
+        /// </summary>
+        /// <returns>The full Url of this node in the path chain</returns>
         public override string ToString()
         {
             var builder = new StringBuilder();

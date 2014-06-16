@@ -7,12 +7,21 @@ using System.Net.Http.Headers;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
+    /// <summary>
+    /// A rest client that uses dynamic objects for invocation and result values
+    /// </summary>
     public class DynamicRestClient : RestProxy
     {
         private string _baseUrl;
         private DynamicRestClientDefaults _defaults;
         private Func<HttpRequestMessage, Task> _configureRequest;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="baseUrl">The root url for all requests</param>
+        /// <param name="defaults">Default values to add to all requests</param>
+        /// <param name="configure">A callback function that will be called just before any request is sent</param>
         public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, Task> configure = null)
             : this(baseUrl, null, "", defaults, configure)
         {
@@ -26,16 +35,25 @@ namespace DynamicRestProxy.PortableHttpClient
             _configureRequest = configure;
         }
 
+        /// <summary>
+        /// <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>
+        /// </summary>
         protected override string BaseUrl
         {
             get { return _baseUrl; }
         }
 
+        /// <summary>
+        /// <see cref="DynamicRestProxy.RestProxy.CreateProxyNode(RestProxy, string)"/>
+        /// </summary>
         protected override RestProxy CreateProxyNode(RestProxy parent, string name)
         {
             return new DynamicRestClient(_baseUrl, parent, name, _defaults, _configureRequest);
         }
 
+        /// <summary>
+        /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
+        /// </summary>
         protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
             using (var client = CreateClient())
