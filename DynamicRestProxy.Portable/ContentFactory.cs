@@ -34,6 +34,11 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             Debug.Assert(content != null);
 
+            if (content is HttpContent)
+            {
+                return (HttpContent)content;
+            }
+
             if (content is Stream)
             {
                 return CreateFromStream((Stream)content);
