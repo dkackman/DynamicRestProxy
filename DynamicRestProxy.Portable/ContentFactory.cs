@@ -17,16 +17,19 @@ namespace DynamicRestProxy.PortableHttpClient
             Debug.Assert(contents != null);
             Debug.Assert(contents.Any());
 
+            // if only 1 object in the contents just create as normal
             if (contents.Count() == 1)
             {
                 return Create(contents.First());
             }
 
+            // otherwise package evertyhing as multipart content
             var content = new MultipartFormDataContent();
             foreach (var o in contents.Where(o => o != null))
             {
                 content.Add(Create(o));
             }
+
             return content;
         }
 
@@ -41,45 +44,35 @@ namespace DynamicRestProxy.PortableHttpClient
 
             if (content is Stream)
             {
-                return CreateFromStream((Stream)content);
-            }
-
-            if (content is StreamInfo)
-            {
-                var info = (StreamInfo)content;
-                return CreateFromStream(info.Stream, info.MimeType);
+                return new StreamContent((Stream)content);
             }
 
             if (content is byte[])
             {
-                return CreateFromByteArray((byte[])content);
+                return new ByteArrayContent((byte[])content);
             }
 
-            return CreateFromObject(content);
-        }
+            if (content is ContentInfo)
+            {
+                return Create((ContentInfo)content);
+            }
 
-        private static HttpContent CreateFromByteArray(byte[] content)
-        {
-            Debug.Assert(content != null);
-            var streamContent = new ByteArrayContent(content);
-
-            return streamContent;
-        }
-
-        private static HttpContent CreateFromStream(Stream content, string mimeType = "application/octet-stream")
-        {
-            Debug.Assert(content != null);
-            var streamContent = new StreamContent(content);
-            streamContent.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
-
-            return streamContent;
-        }
-
-        private static HttpContent CreateFromObject(object content)
-        {
-            Debug.Assert(content != null);
             var json = JsonConvert.SerializeObject(content);
             return new StringContent(json, Encoding.UTF8, "application/json");
+        }
+
+        private static HttpContent Create(ContentInfo info)
+        {
+            // create content object as normal
+            var content = Create(info.Content);
+
+            // set any additional headers
+            if (!string.IsNullOrEmpty(info.MimeType))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue(info.MimeType);
+            }
+
+            return content;
         }
     }
 }

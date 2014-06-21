@@ -1,10 +1,4 @@
-﻿using System;
-using System.Dynamic;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net;
-
-using DynamicRestProxy.PortableHttpClient;
+﻿using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
