@@ -50,7 +50,20 @@ namespace DynamicRestProxy.PortableHttpClient
                 return CreateFromStream(info.Stream, info.MimeType);
             }
 
+            if (content is byte[])
+            {
+                return CreateFromByteArray((byte[])content);
+            }
+
             return CreateFromObject(content);
+        }
+
+        private static HttpContent CreateFromByteArray(byte[] content)
+        {
+            Debug.Assert(content != null);
+            var streamContent = new ByteArrayContent(content);
+
+            return streamContent;
         }
 
         private static HttpContent CreateFromStream(Stream content, string mimeType = "application/octet-stream")
