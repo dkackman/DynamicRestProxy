@@ -63,5 +63,43 @@ namespace Client.Google.UnitTests
                 Assert.IsNotNull(result);
             }
         }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
+        public async Task UploadString()
+        {
+            var auth = new GoogleOAuth2();
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
+
+            var defaults = new DynamicRestClientDefaults();
+            defaults.OAuthToken = _token;
+
+            dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
+
+            dynamic result = await google.upload.storage.v1.b.unit_tests.o.post("text", name: new PostUrlParam("string_object"), uploadType: new PostUrlParam("media"));
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
+        public async Task UploadInt()
+        {
+            var auth = new GoogleOAuth2();
+            _token = await auth.Authenticate(_token);
+            Assert.IsNotNull(_token, "auth failed");
+
+            var defaults = new DynamicRestClientDefaults();
+            defaults.OAuthToken = _token;
+
+            dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
+
+            dynamic result = await google.upload.storage.v1.b.unit_tests.o.post(42, name: new PostUrlParam("int_object"), uploadType: new PostUrlParam("media"));
+            Assert.IsNotNull(result);
+        }
     }
 }

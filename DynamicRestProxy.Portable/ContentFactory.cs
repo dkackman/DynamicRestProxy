@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 using Newtonsoft.Json;
 
@@ -57,6 +58,16 @@ namespace DynamicRestProxy.PortableHttpClient
                 return new ByteArrayContent((byte[])content);
             }
 
+            if (content is string)
+            {
+                return new StringContent((string)content);
+            }
+
+            if (content.GetType().GetTypeInfo().IsValueType)
+            {
+                return new StringContent(content.ToString());
+            }
+
             if (content is ContentInfo)
             {
                 return Create((ContentInfo)content);
@@ -77,7 +88,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 content.Headers.ContentType = new MediaTypeHeaderValue(info.MimeType);
             }
 
-            foreach(var kvp in info.ContentHeaders)
+            foreach (var kvp in info.ContentHeaders)
             {
                 content.Headers.Add(kvp.Key, kvp.Value);
             }
