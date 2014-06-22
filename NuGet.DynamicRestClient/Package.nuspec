@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -10,7 +10,7 @@
       A portable http rest client using dynamic objects for data transfer and endpoint url construction
     </description>
     <releaseNotes>
-      Add Stream and multipart form upload support
+      Additional content types and cotnent headers
     </releaseNotes>
     <summary>
     </summary>
