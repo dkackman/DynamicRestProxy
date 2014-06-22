@@ -77,6 +77,11 @@ namespace DynamicRestProxy.PortableHttpClient
                 content.Headers.ContentType = new MediaTypeHeaderValue(info.MimeType);
             }
 
+            foreach(var kvp in info.ContentHeaders)
+            {
+                content.Headers.Add(kvp.Key, kvp.Value);
+            }
+
             return content;
         }
     }

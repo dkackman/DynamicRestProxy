@@ -1,11 +1,12 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
     /// Holder class for a content object and meta data about that object to be set in
     /// content headers if provided
     /// </summary>
-    public class ContentInfo 
+    public class ContentInfo
     {
         /// <summary>
         /// ctor
@@ -16,7 +17,13 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             Content = content;
             MimeType = mimeType;
+            ContentHeaders = new Dictionary<string, string>();
         }
+
+        /// <summary>
+        /// Additional content headers
+        /// </summary>
+        public IDictionary<string, string> ContentHeaders { get; private set; }
 
         /// <summary>
         /// The content to send
