@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -77,9 +76,7 @@ namespace DynamicRestProxy.PortableHttpClient
             var localNamedArgs = namedArgs.Where(kvp => !(kvp.Value is PostUrlParam));
             if (method == HttpMethod.Post && localNamedArgs.Any())
             {
-                var content = new StringContent(localNamedArgs.AsQueryString(""));
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-                return content;
+                return ContentFactory.Create(localNamedArgs);
             }
 
             return null;

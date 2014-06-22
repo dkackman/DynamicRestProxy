@@ -12,6 +12,11 @@ namespace DynamicRestProxy.PortableHttpClient
 {
     static class ContentFactory
     {
+        public static HttpContent Create(IEnumerable<KeyValuePair<string, object>> args)
+        {
+            return new StringContent(args.AsQueryString(""), Encoding.UTF8, "application/x-www-form-urlencoded");
+        }
+
         public static HttpContent Create(IEnumerable<object> contents)
         {
             Debug.Assert(contents != null);
