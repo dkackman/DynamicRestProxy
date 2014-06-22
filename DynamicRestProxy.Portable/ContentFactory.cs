@@ -29,7 +29,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 return Create(contents.First());
             }
 
-            // otherwise package evertyhing as multipart content
+            // otherwise package everything as multipart content
             var content = new MultipartFormDataContent();
             foreach (var o in contents.Where(o => o != null))
             {
@@ -43,7 +43,7 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             Debug.Assert(content != null);
 
-            // check for a set of senitnal types that will serialize in a specific manner
+            // check for a set of sentinal types that will serialize in a specific manner
             if (content is HttpContent)
             {
                 return (HttpContent)content;
