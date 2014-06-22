@@ -14,7 +14,7 @@ Is currently a work in progress. Supports the GET, POST, PUT, and DELETE verbs.
 There is a [NuGet package](https://www.nuget.org/packages/DynamicRestProxy/) for the abstract base class to allow different http client libraries to be used. Current concrete implementations include: 
 - A dynamic proxy for the [RestSharp RestClient](http://restsharp.org/). 
 - A dynamic proxy for Microsoft's [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). This also has a [NuGet package](https://www.nuget.org/packages/DynamicRestClient/).
-- A dynamic rest client that reduces to a bare minimum the amount of code needed to start calling rest endpoints
+- A [dynamic rest client](https://github.com/dkackman/DynamicRestProxy/wiki/Using-the-DynamicRestClient) that reduces to a bare minimum the amount of code needed to start calling rest endpoints
 
 Example usage is on the [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) as well as supplied in the unit test projects.
 
