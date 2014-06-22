@@ -23,7 +23,7 @@ namespace DynamicRestProxy.PortableHttpClient
             Debug.Assert(contents != null);
             Debug.Assert(contents.Any());
 
-            // if only 1 object in the contents just create as normal
+            // if only 1 object in the collection, just create as normal
             if (contents.Count() == 1)
             {
                 return Create(contents.First());
@@ -43,6 +43,7 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             Debug.Assert(content != null);
 
+            // check for a set of senitnal types that will serialize in a specific manner
             if (content is HttpContent)
             {
                 return (HttpContent)content;
@@ -63,16 +64,18 @@ namespace DynamicRestProxy.PortableHttpClient
                 return new StringContent((string)content);
             }
 
-            if (content.GetType().GetTypeInfo().IsValueType)
-            {
-                return new StringContent(content.ToString());
-            }
-
             if (content is ContentInfo)
             {
                 return Create((ContentInfo)content);
             }
 
+            // value types get serialized as a string
+            if (content.GetType().GetTypeInfo().IsValueType)
+            {
+                return new StringContent(content.ToString());
+            }
+
+            // all other types get serialized as json
             var json = JsonConvert.SerializeObject(content);
             return new StringContent(json, Encoding.UTF8, "application/json");
         }

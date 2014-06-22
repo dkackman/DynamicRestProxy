@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Dynamic;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net;
 
 using DynamicRestProxy.PortableHttpClient;
 
