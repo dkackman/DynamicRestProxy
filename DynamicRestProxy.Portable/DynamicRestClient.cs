@@ -56,24 +56,22 @@ namespace DynamicRestProxy.PortableHttpClient
         /// </summary>
         protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
-            using (var client = CreateClient())
+            var builder = new RequestBuilder(this, _defaults);
+            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             {
-                var builder = new RequestBuilder(this, _defaults);
-                using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
+                // give the user code a chance to setup any other request details
+                // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client
+                if (_configureRequest != null)
                 {
-                    // give the user code a chance to setup any other request details
-                    // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client
-                    if (_configureRequest != null)
-                    {
-                        await _configureRequest(request);
-                    }
+                    await _configureRequest(request);
+                }
 
-                    using (var response = await client.SendAsync(request))
-                    {
-                        response.EnsureSuccessStatusCode();
+                using (var client = CreateClient())
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
 
-                        return await response.Deserialize();
-                    }
+                    return await response.Deserialize();
                 }
             }
         }
