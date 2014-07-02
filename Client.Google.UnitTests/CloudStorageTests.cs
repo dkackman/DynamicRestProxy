@@ -25,9 +25,11 @@ namespace Client.Google.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var defaults = new DynamicRestClientDefaults();
-            defaults.OAuthToken = _token;
-
+            var defaults = new DynamicRestClientDefaults()
+            {
+                AuthScheme = "OAuth",
+                AuthToken = _token
+            };
             dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
 
             using (var stream = new StreamInfo(File.OpenRead(@"D:\temp\test.png"), "image/png"))
@@ -47,8 +49,11 @@ namespace Client.Google.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var defaults = new DynamicRestClientDefaults();
-            defaults.OAuthToken = _token;
+            var defaults = new DynamicRestClientDefaults()
+            {
+                AuthScheme = "OAuth",
+                AuthToken = _token
+            };
 
             dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
 
@@ -71,8 +76,11 @@ namespace Client.Google.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var defaults = new DynamicRestClientDefaults();
-            defaults.OAuthToken = _token;
+            var defaults = new DynamicRestClientDefaults()
+            {
+                AuthScheme = "OAuth",
+                AuthToken = _token
+            };
 
             dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
 
@@ -90,8 +98,11 @@ namespace Client.Google.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var defaults = new DynamicRestClientDefaults();
-            defaults.OAuthToken = _token;
+            var defaults = new DynamicRestClientDefaults()
+            {
+                AuthScheme = "OAuth",
+                AuthToken = _token
+            };
 
             dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
 

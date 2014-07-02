@@ -100,9 +100,9 @@ namespace DynamicRestProxy.PortableHttpClient
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
                 }
 
-                if (!string.IsNullOrEmpty(_defaults.OAuthToken))
+                if (!string.IsNullOrEmpty(_defaults.AuthToken) && !string.IsNullOrEmpty(_defaults.AuthScheme))
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _defaults.OAuthToken);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_defaults.AuthScheme, _defaults.AuthToken);
                 }
             }
 

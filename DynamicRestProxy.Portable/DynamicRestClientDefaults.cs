@@ -27,8 +27,13 @@ namespace DynamicRestProxy.PortableHttpClient
         public IDictionary<string, string> DefaultHeaders { get; private set; }
 
         /// <summary>
-        /// OAuth token to add to all requests
+        /// Auth token to add to all requests
         /// </summary>
-        public string OAuthToken { get; set; }
+        public string AuthToken { get; set; }
+
+        /// <summary>
+        /// The Auth scheme used for AuthToken
+        /// </summary>
+        public string AuthScheme { get; set; }
     }
 }
