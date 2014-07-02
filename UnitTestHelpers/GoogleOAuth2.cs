@@ -111,7 +111,7 @@ namespace UnitTestHelpers
                     if (tokenResonse.access_token != null)
                         return tokenResonse;
                 }
-                catch(RuntimeBinderException)
+                catch (RuntimeBinderException)
                 {
                 }
 
