@@ -25,7 +25,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("profile");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -44,7 +44,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -63,7 +63,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -86,7 +86,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -120,7 +120,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 

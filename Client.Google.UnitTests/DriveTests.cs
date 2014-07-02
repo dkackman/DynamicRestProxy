@@ -25,7 +25,7 @@ namespace Client.Google.UnitTests
         [Ignore] // drive scopes don't work with device pin based oauth2 - ignore for now
         public async Task UploadFile()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 

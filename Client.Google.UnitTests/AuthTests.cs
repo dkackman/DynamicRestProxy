@@ -24,7 +24,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task AuthenticateAndGetUserName()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 

@@ -21,7 +21,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task UploadObject()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -45,7 +45,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task MultiPartUploadObject()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -72,7 +72,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task UploadString()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -94,7 +94,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task UploadInt()
         {
-            var auth = new GoogleOAuth2();
+            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 

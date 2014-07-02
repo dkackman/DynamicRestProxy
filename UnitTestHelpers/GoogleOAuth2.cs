@@ -20,8 +20,11 @@ namespace UnitTestHelpers
         // because all tests share the same access token these need to be set together
         private string _scope = "email profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/devstorage.read_write";
 
-        public GoogleOAuth2()
+        public GoogleOAuth2(string scope)
         {
+            Debug.Assert(!string.IsNullOrEmpty(scope));
+
+            _scope = scope;
         }
 
         public async Task<string> Authenticate(string token)
@@ -30,9 +33,9 @@ namespace UnitTestHelpers
                 return token;
 
             // if we have a stored token see use it
-            if (CredentialStore.ObjectExists("google.auth.json"))
+            if (CredentialStore.ObjectExists(_scope.GetHashCode() + "google.auth.json"))
             {
-                var access = CredentialStore.RetrieveObject("google.auth.json");
+                var access = CredentialStore.RetrieveObject(_scope.GetHashCode() + "google.auth.json");
 
                 // if the stored token is expired refresh it
                 if (DateTime.UtcNow >= access.expiry)
@@ -53,10 +56,10 @@ namespace UnitTestHelpers
             }
         }
 
-        private static void StoreAccess(dynamic access)
+        private void StoreAccess(dynamic access)
         {
             access.expiry = DateTime.UtcNow.Add(TimeSpan.FromSeconds(access.expires_in));
-            CredentialStore.StoreObject("google.auth.json", access);
+            CredentialStore.StoreObject(_scope.GetHashCode() + "google.auth.json", access);
         }
 
         private static async Task<dynamic> RefreshAccessToken(dynamic access)
