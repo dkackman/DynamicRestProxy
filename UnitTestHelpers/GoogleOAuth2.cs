@@ -16,8 +16,7 @@ namespace UnitTestHelpers
     /// </summary>
     public class GoogleOAuth2
     {
-        // this are the scopes used by all of the unit tests
-        // because all tests share the same access token these need to be set together
+        // the set of scopes to authorize
         private string _scope;
 
         public GoogleOAuth2(string scope)
@@ -29,31 +28,30 @@ namespace UnitTestHelpers
 
         public async Task<string> Authenticate(string token)
         {
+            // if we have a token already just use it
             if (!string.IsNullOrEmpty(token))
                 return token;
 
+            dynamic access = null;
             // if we have a stored token see use it
             if (CredentialStore.ObjectExists(_scope.GetHashCode() + ".google.auth.json"))
             {
-                var access = CredentialStore.RetrieveObject(_scope.GetHashCode() + ".google.auth.json");
+                access = CredentialStore.RetrieveObject(_scope.GetHashCode() + ".google.auth.json");
 
                 // if the stored token is expired refresh it
                 if (DateTime.UtcNow >= access.expiry)
                 {
                     access = await RefreshAccessToken(access);
-                    StoreAccess(access);
                 }
-
-                return access.access_token;
             }
             else
             {
                 // no stored token - go get a new one
-                var access = await GetNewAccessToken();
-
-                StoreAccess(access);
-                return access.access_token;
+                access = await GetNewAccessToken();
             }
+
+            StoreAccess(access);
+            return access.access_token;
         }
 
         private void StoreAccess(dynamic access)
