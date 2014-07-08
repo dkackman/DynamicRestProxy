@@ -130,23 +130,8 @@ namespace DynamicRestProxy
             return true;
         }
 
-        private void ToString(StringBuilder builder)
-        {
-            if (Parent != null)
-                Parent.ToString(builder); // go all the way up to the root and then back down
-
-            if (string.IsNullOrEmpty(Name)) // if _name is null we are the root
-            {
-                builder.Append(BaseUrl);
-            }
-            else
-            {
-                builder.Append("/").Append(Name);
-            }
-        }
-
         /// <summary>
-        /// Used to generate a complete Url for the endpoint
+        /// Used to generate a Url path for the endpoint
         /// </summary>
         /// <param name="builder"></param>
         protected void GetEndPointPath(StringBuilder builder)
@@ -164,9 +149,9 @@ namespace DynamicRestProxy
         }
 
         /// <summary>
-        /// The complete Url (minus parameters) for this endpoint
+        /// The Url path (minus parameters and base url) for this endpoint
         /// </summary>
-        /// <returns>The url</returns>
+        /// <returns>The url path not including the base url</returns>
         public string GetEndPointPath()
         {
             var builder = new StringBuilder();
@@ -180,9 +165,7 @@ namespace DynamicRestProxy
         /// <returns>The full Url of this node in the path chain</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
-            ToString(builder);
-            return builder.ToString();
+            return BaseUrl + "/"+  GetEndPointPath();
         }
     }
 }

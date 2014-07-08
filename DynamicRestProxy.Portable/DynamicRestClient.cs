@@ -30,7 +30,7 @@ namespace DynamicRestProxy.PortableHttpClient
         internal DynamicRestClient(string baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, Task> configure)
             : base(parent, name)
         {
-            _baseUrl = baseUrl;
+            _baseUrl = baseUrl.TrimEnd('/');
             _defaults = defaults ?? new DynamicRestClientDefaults(); ;
             _configureRequest = configure;
         }
