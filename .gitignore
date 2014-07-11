@@ -218,3 +218,11 @@ pip-log.txt
 /NuGet.DynamicRestClient/lib/System.Net.Http.Extensions.xml
 /NuGet.DynamicRestClient/lib/System.Net.Http.Primitives.xml
 /NuGet.DynamicRestClient/lib/System.Net.Http.xml
+NuGet.DynamicRestClient/lib/DynamicRestProxy.PortableHttpClient.dll
+NuGet.DynamicRestClient/lib/DynamicRestProxy.PortableHttpClient.dll
+NuGet.DynamicRestClient/lib/DynamicRestProxy.PortableHttpClient.XML
+NuGet.DynamicRestClient/lib/DynamicRestProxy.xml
+NuGet.DynamicRestProxy/lib/DynamicRestProxy.dll
+NuGet.DynamicRestProxy/lib/DynamicRestProxy.XML
+NuGet.DynamicRestClient/lib/DynamicRestProxy.PortableHttpClient.dll
+NuGet.DynamicRestClient/lib/DynamicRestProxy.xml

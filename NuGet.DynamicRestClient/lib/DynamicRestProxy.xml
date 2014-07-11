@@ -10,6 +10,13 @@
             Each node in a chain of proxy instances represents a specific endpoint
             </summary>
         </member>
+        <member name="M:DynamicRestProxy.RestProxy.#ctor(DynamicRestProxy.RestProxy,System.String)">
+            <summary>
+            cto
+            </summary>
+            <param name="parent">Parent</param>
+            <param name="name">Name</param>
+        </member>
         <member name="M:DynamicRestProxy.RestProxy.CreateProxyNode(DynamicRestProxy.RestProxy,System.String)">
             <summary>
             Factory method used to create instances of derived child nodes. Overrideen in derived classess to create derived instances
@@ -17,6 +24,11 @@
             <param name="parent">The parent of the newly created child</param>
             <param name="name">The name of the newly created child</param>
             <returns>Derived child instance</returns>
+        </member>
+        <member name="M:DynamicRestProxy.RestProxy.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)">
+            <summary>
+            <see cref="M:System.Dynamic.DynamicObject.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)"/>
+            </summary>
         </member>
         <member name="M:DynamicRestProxy.RestProxy.CreateVerbAsyncTask(System.String,System.Collections.Generic.IEnumerable{System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
             <summary>
@@ -26,6 +38,16 @@
             <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
             <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
             <returns>Task<dynamic> that will execute the http call and return a dynamic object with the results</dynamic></returns>
+        </member>
+        <member name="M:DynamicRestProxy.RestProxy.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)">
+            <summary>
+            <see cref="M:System.Dynamic.DynamicObject.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)"/>
+            </summary>
+        </member>
+        <member name="M:DynamicRestProxy.RestProxy.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)">
+            <summary>
+            <see cref="M:System.Dynamic.DynamicObject.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)"/>
+            </summary>
         </member>
         <member name="M:DynamicRestProxy.RestProxy.GetEndPointPath(System.Text.StringBuilder)">
             <summary>
@@ -38,6 +60,12 @@
             The complete Url (minus parameters) for this endpoint
             </summary>
             <returns>The url</returns>
+        </member>
+        <member name="M:DynamicRestProxy.RestProxy.ToString">
+            <summary>
+            <see cref="M:System.Object.ToString"/>
+            </summary>
+            <returns>The full Url of this node in the path chain</returns>
         </member>
         <member name="P:DynamicRestProxy.RestProxy.Parent">
             <summary>
