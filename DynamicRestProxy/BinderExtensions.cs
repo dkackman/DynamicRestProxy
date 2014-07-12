@@ -21,7 +21,7 @@ namespace DynamicRestProxy
             {
                 var arg = args[i + unnamedArgCount];
                 if (arg != null) // filter out null parameters
-                    ret.Add(binder.GetArgName(i), arg);
+                    ret.Add(binder.CallInfo.ArgumentNames[i], arg);
             }
             return ret;
         }
@@ -29,11 +29,6 @@ namespace DynamicRestProxy
         public static int UnnamedArgCount(this InvokeMemberBinder binder)
         {
             return binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
-        }
-
-        public static string GetArgName(this InvokeMemberBinder binder, int i)
-        {
-            return binder.CallInfo.ArgumentNames[i];
         }
 
         public static bool IsVerb(this InvokeMemberBinder binder)

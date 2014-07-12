@@ -14,10 +14,10 @@ namespace DynamicRestProxy
     public abstract class RestProxy : DynamicObject
     {
         /// <summary>
-        /// cto
+        /// ctor
         /// </summary>
-        /// <param name="parent">Parent</param>
-        /// <param name="name">Name</param>
+        /// <param name="parent"><see cref="DynamicRestProxy.RestProxy.Parent"/></param>
+        /// <param name="name"><see cref="DynamicRestProxy.RestProxy.Name"/></param>
         protected RestProxy(RestProxy parent, string name)
         {
             Parent = parent;
@@ -130,43 +130,24 @@ namespace DynamicRestProxy
             return true;
         }
 
-        private void ToString(StringBuilder builder)
-        {
-            if (Parent != null)
-                Parent.ToString(builder); // go all the way up to the root and then back down
-
-            if (string.IsNullOrEmpty(Name)) // if _name is null we are the root
-            {
-                builder.Append(BaseUrl);
-            }
-            else
-            {
-                builder.Append("/").Append(Name);
-            }
-        }
-
         /// <summary>
-        /// Used to generate a complete Url for the endpoint
+        /// Used to generate a relative Url for the endpoint 
         /// </summary>
         /// <param name="builder"></param>
         protected void GetEndPointPath(StringBuilder builder)
         {
             if (Parent != null)
-            { 
+            {
                 Parent.GetEndPointPath(builder); // go all the way up to the root and then back down
             }
 
-            builder.Append(Name);
-            if (Parent != null)
-            {
-                builder.Append("/");
-            }
+            builder.Append(Name).Append("/");
         }
 
         /// <summary>
-        /// The complete Url (minus parameters) for this endpoint
+        /// The relative Url (minus parameters) for this endpoint
         /// </summary>
-        /// <returns>The url</returns>
+        /// <returns>The relative part of the url (relative to <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>)</returns>
         public string GetEndPointPath()
         {
             var builder = new StringBuilder();
@@ -180,9 +161,14 @@ namespace DynamicRestProxy
         /// <returns>The full Url of this node in the path chain</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
-            ToString(builder);
-            return builder.ToString();
+            if (BaseUrl.EndsWith("/"))
+            {
+                return BaseUrl + GetEndPointPath();
+            }
+            else
+            {
+                return BaseUrl + "/" + GetEndPointPath();
+            }
         }
     }
 }
