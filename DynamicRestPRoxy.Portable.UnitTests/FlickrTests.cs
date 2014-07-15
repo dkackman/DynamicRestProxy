@@ -23,7 +23,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task FindUserByName()
         {
-            var key = CredentialStore.JsonKey("flickr");
+            var key = CredentialStore.RetrieveObject("flickr.key.json");
             var defaults = new DynamicRestClientDefaults();
             defaults.DefaultParameters.Add("format", "json");
             defaults.DefaultParameters.Add("api_key", key.Key);
@@ -42,7 +42,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [Ignore]
         public async Task UploadPhoto()
         {
-            var key = CredentialStore.JsonKey("flickr");
+            var key = CredentialStore.RetrieveObject("flickr.key.json");
             var defaults = new DynamicRestClientDefaults();
             defaults.DefaultParameters.Add("format", "json");
             defaults.DefaultParameters.Add("api_key", key.Key);

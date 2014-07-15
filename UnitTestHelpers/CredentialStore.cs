@@ -26,8 +26,6 @@ namespace UnitTestHelpers
         {
             AddKey("sunlight", _root + "sunlight.key.txt");
             AddKey("bing", _root + "bing.key.txt");
-            AddKey("google", _root + "google.key.json");
-            AddKey("flickr", _root + "flickr.key.json");
         }
 
         static void AddKey(string key, string keyPath)
@@ -47,11 +45,6 @@ namespace UnitTestHelpers
         public static string Key(string api)
         {
             return _keys[api];
-        }
-
-        public static dynamic JsonKey(string api)
-        {
-            return JsonConvert.DeserializeObject<ExpandoObject>(Key(api), new ExpandoObjectConverter());
         }
 
         public static bool ObjectExists(string name)

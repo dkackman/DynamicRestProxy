@@ -23,7 +23,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         [TestCategory("integration")]
         public async Task FindUserByName()
         {
-            var key = CredentialStore.JsonKey("flickr");
+            var key = CredentialStore.RetrieveObject("flickr.key.json");
 
             var client = new RestClient("https://api.flickr.com/services/rest/");
             client.AddDefaultParameter("format", "json");
@@ -43,7 +43,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         [Ignore]
         public async Task UploadPhoto()
         {
-            var key = CredentialStore.JsonKey("flickr");
+            var key = CredentialStore.RetrieveObject("flickr.key.json");
 
             var client = new RestClient("https://up.flickr.com/services/");
             client.AddDefaultParameter("format", "json");

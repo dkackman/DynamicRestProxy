@@ -62,7 +62,7 @@ namespace UnitTestHelpers
 
         private static async Task<dynamic> RefreshAccessToken(dynamic access)
         {
-            dynamic key = CredentialStore.JsonKey("google").installed;
+            dynamic key = CredentialStore.RetrieveObject("google.key.json").installed;
 
             dynamic google = new DynamicRestClient("https://accounts.google.com/o/oauth2/");
             var response = await google.token.post(client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
@@ -81,7 +81,7 @@ namespace UnitTestHelpers
         /// <returns></returns>
         private async Task<dynamic> GetNewAccessToken()
         {
-            dynamic key = CredentialStore.JsonKey("google").installed;
+            dynamic key = CredentialStore.RetrieveObject("google.key.json").installed;
 
             dynamic google = new DynamicRestClient("https://accounts.google.com/o/oauth2/");
             var response = await google.device.code.post(client_id: key.client_id, scope: _scope);
