@@ -22,31 +22,6 @@ namespace UnitTestHelpers
 
         private static string _root = @"d:\temp\"; //set this to wherever is appropriate for your keys
 
-        static CredentialStore()
-        {
-            AddKey("sunlight", _root + "sunlight.key.txt");
-            AddKey("bing", _root + "bing.key.txt");
-        }
-
-        static void AddKey(string key, string keyPath)
-        {
-            try
-            {
-                using (var file = File.OpenRead(keyPath))
-                using (var reader = new StreamReader(file))
-                    _keys.Add(key, reader.ReadToEnd());
-            }
-            catch (Exception e)
-            {
-                Debug.Assert(false, e.Message);
-            }
-        }
-
-        public static string Key(string api)
-        {
-            return _keys[api];
-        }
-
         public static bool ObjectExists(string name)
         {
             return File.Exists(_root + name);

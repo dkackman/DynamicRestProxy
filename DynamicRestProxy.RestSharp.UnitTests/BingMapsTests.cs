@@ -30,7 +30,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         public async Task CoordinateFromPostalCode()
         {
             var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
-            client.AddDefaultParameter("key", CredentialStore.Key("bing"));
+            string key = CredentialStore.RetrieveObject("bing.key.json").Key;
+
+            client.AddDefaultParameter("key", key);
 
             dynamic proxy = new RestSharpProxy(client);
             var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US");
@@ -50,7 +52,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         public async Task GetFormattedAddressFromCoordinate()
         {
             var client = new RestClient("http://dev.virtualearth.net/REST/v1/");
-            client.AddDefaultParameter("key", CredentialStore.Key("bing"));
+            string key = CredentialStore.RetrieveObject("bing.key.json").Key;
+
+            client.AddDefaultParameter("key", key);
 
             dynamic proxy = new RestSharpProxy(client);
             var result = await proxy.Locations("44.9108238220215,-93.1702041625977").get(includeEntityTypes: "Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion");

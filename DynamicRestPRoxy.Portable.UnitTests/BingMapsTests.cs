@@ -39,7 +39,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             {
                 client.BaseAddress = new Uri("http://dev.virtualearth.net/REST/v1/");
 
-                string key = CredentialStore.Key("bing");
+                string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
                 dynamic proxy = new HttpClientProxy(client);
                 var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
@@ -69,7 +69,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             {
                 client.BaseAddress = new Uri("http://dev.virtualearth.net/REST/v1/");
 
-                string key = CredentialStore.Key("bing");
+                string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
                 dynamic proxy = new HttpClientProxy(client);
                 var result = await proxy.Locations("44.9108238220215,-93.1702041625977").get(includeEntityTypes: "Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion", key: key);

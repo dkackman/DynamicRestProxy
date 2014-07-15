@@ -16,7 +16,9 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         {
             dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/");
 
-            dynamic result = await client.Locations.get(postalCode: "55116", countryRegion: "US", key: CredentialStore.Key("bing"));
+            string key = CredentialStore.RetrieveObject("bing.key.json").Key;
+
+            dynamic result = await client.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
 
             Assert.AreEqual((int)result.statusCode, 200);
             Assert.IsTrue(result.resourceSets.Count > 0);

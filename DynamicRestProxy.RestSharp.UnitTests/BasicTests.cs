@@ -23,7 +23,9 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         public async Task ExplicitGetInvoke()
         {
             var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+
+            client.AddDefaultHeader("X-APIKEY", key);
 
             dynamic proxy = new RestSharpProxy(client);
 
@@ -38,7 +40,8 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         public async Task GetMethodSegmentWithArgs()
         {
             var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+            client.AddDefaultHeader("X-APIKEY", key);
 
             dynamic proxy = new RestSharpProxy(client);
 
@@ -53,7 +56,8 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         public async Task GetMethod2PathAsProperty2Params()
         {
             var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+            client.AddDefaultHeader("X-APIKEY", key);
 
             dynamic proxy = new RestSharpProxy(client);
             var parameters = new Dictionary<string, object>()
@@ -72,7 +76,8 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         public async Task GetMethod1PathArg1Param()
         {
             var client = new RestClient("http://openstates.org/api/v1");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+            client.AddDefaultHeader("X-APIKEY", key);
 
             dynamic proxy = new RestSharpProxy(client);
 
@@ -88,7 +93,8 @@ namespace DynamicRestProxy.RestSharp.UnitTests
         public async Task EscapeParameterName()
         {
             var client = new RestClient("http://congress.api.sunlightfoundation.com");
-            client.AddDefaultHeader("X-APIKEY", CredentialStore.Key("sunlight"));
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+            client.AddDefaultHeader("X-APIKEY", key);
 
             dynamic proxy = new RestSharpProxy(client);
 

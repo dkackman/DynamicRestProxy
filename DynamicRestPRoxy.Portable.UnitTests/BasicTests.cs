@@ -31,7 +31,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             using (var client = new HttpClient(handler, true))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
-                client.DefaultRequestHeaders.Add("X-APIKEY", CredentialStore.Key("sunlight"));
+                string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+                client.DefaultRequestHeaders.Add("X-APIKEY", key);
 
                 dynamic proxy = new HttpClientProxy(client);
 
@@ -55,7 +56,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             using (var client = new HttpClient(handler, true))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
-                client.DefaultRequestHeaders.Add("X-APIKEY", CredentialStore.Key("sunlight"));
+                string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+                client.DefaultRequestHeaders.Add("X-APIKEY", key);
 
                 dynamic proxy = new HttpClientProxy(client);
 
@@ -79,7 +81,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             using (var client = new HttpClient(handler, true))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
-                client.DefaultRequestHeaders.Add("X-APIKEY", CredentialStore.Key("sunlight"));
+                string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+                client.DefaultRequestHeaders.Add("X-APIKEY", key);
 
                 dynamic proxy = new HttpClientProxy(client);
                 var parameters = new Dictionary<string, object>()
@@ -107,7 +110,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             using (var client = new HttpClient(handler, true))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
-                client.DefaultRequestHeaders.Add("X-APIKEY", CredentialStore.Key("sunlight"));
+                string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+                client.DefaultRequestHeaders.Add("X-APIKEY", key);
 
                 dynamic proxy = new HttpClientProxy(client);
 
@@ -132,7 +136,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             using (var client = new HttpClient(handler, true))
             {
                 client.BaseAddress = new Uri("http://congress.api.sunlightfoundation.com");
-                client.DefaultRequestHeaders.Add("X-APIKEY", CredentialStore.Key("sunlight"));
+                string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+                client.DefaultRequestHeaders.Add("X-APIKEY", key);
 
                 dynamic proxy = new HttpClientProxy(client);
 
