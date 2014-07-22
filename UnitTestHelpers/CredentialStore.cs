@@ -16,7 +16,7 @@ namespace UnitTestHelpers
     /// </summary>
     public static class CredentialStore
     {
-        private static string _root = @"d:\temp\"; //set this to wherever is appropriate for your keys
+        private const string _root = @"d:\temp\"; //set this to wherever is appropriate for your keys
 
         public static bool ObjectExists(string name)
         {
