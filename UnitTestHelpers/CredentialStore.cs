@@ -16,10 +16,6 @@ namespace UnitTestHelpers
     /// </summary>
     public static class CredentialStore
     {
-        //#error either load you key from a file outside of the source try like below or return it directly here
-        //#warning http://sunlightfoundation.com/api/accounts/register/
-        private static Dictionary<string, string> _keys = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
         private static string _root = @"d:\temp\"; //set this to wherever is appropriate for your keys
 
         public static bool ObjectExists(string name)
