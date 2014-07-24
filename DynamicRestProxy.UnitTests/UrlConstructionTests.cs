@@ -12,8 +12,7 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new TestProxy("http://example.com");
             dynamic chain = proxy.segment1;
 
-            string s = chain.ToString();
-            Assert.AreEqual("http://example.com/segment1", s);
+            Assert.AreEqual("http://example.com/segment1", chain);
         }
 
         [TestMethod]
@@ -23,8 +22,7 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new TestProxy("http://example.com");
             dynamic chain = proxy.segment1.segment2;
 
-            string s = chain.ToString();
-            Assert.AreEqual("http://example.com/segment1/segment2", s);
+            Assert.AreEqual("http://example.com/segment1/segment2", chain);
         }
 
         [TestMethod]
@@ -35,7 +33,7 @@ namespace DynamicRestProxy.UnitTests
             dynamic chain = proxy.segment1("escaped").segment2;
 
             string s = chain.ToString();
-            Assert.AreEqual("http://example.com/segment1/escaped/segment2", s);
+            Assert.AreEqual("http://example.com/segment1/escaped/segment2", chain);
         }
 
         [TestMethod]
@@ -45,8 +43,7 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new TestProxy("http://example.com");
             dynamic chain = proxy.segment1("escaped")("escaped2");
 
-            string s = chain.ToString();
-            Assert.AreEqual("http://example.com/segment1/escaped/escaped2", s);
+            Assert.AreEqual("http://example.com/segment1/escaped/escaped2", chain);
         }
 
         [TestMethod]
@@ -56,8 +53,7 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new TestProxy("http://example.com");
             dynamic chain = proxy.segment1("escaped")("escaped2").segment2;
 
-            string s = chain.ToString();
-            Assert.AreEqual("http://example.com/segment1/escaped/escaped2/segment2", s);
+            Assert.AreEqual("http://example.com/segment1/escaped/escaped2/segment2", chain);
         }
 
         [TestMethod]
@@ -68,8 +64,7 @@ namespace DynamicRestProxy.UnitTests
             dynamic segment1 = proxy.segment1;
             dynamic chain = segment1("escaped");
 
-            string s = chain.ToString();
-            Assert.AreEqual("http://example.com/segment1/escaped", s);
+            Assert.AreEqual("http://example.com/segment1/escaped", chain);
         }
 
         [TestMethod]
@@ -80,8 +75,7 @@ namespace DynamicRestProxy.UnitTests
             dynamic segment1 = proxy.segment1;
             dynamic chain = segment1("escaped")("escaped2").segment2;
 
-            string s = chain.ToString();
-            Assert.AreEqual("http://example.com/segment1/escaped/escaped2/segment2", s);
+            Assert.AreEqual("http://example.com/segment1/escaped/escaped2/segment2", chain);
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Dynamic;
 using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,9 +19,9 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new TestProxy("http://example.com");
             dynamic expando = await proxy.get(name: "value");
 
-            Assert.AreEqual(0, ((IEnumerable<object>)expando.UnnamedArgs).Count());
+            Assert.IsFalse(((IEnumerable<object>)expando.UnnamedArgs).Any());
 
-            var namedArgs = (IDictionary<string, object>)expando.NamedArgs;
+            IDictionary<string, object> namedArgs = expando.NamedArgs;
             Assert.IsTrue(namedArgs.ContainsKey("name"));
             Assert.AreEqual("value", namedArgs["name"]);
         }
@@ -38,7 +35,7 @@ namespace DynamicRestProxy.UnitTests
 
             Assert.AreEqual(0, ((IDictionary<string, object>)expando.NamedArgs).Count);
 
-            var unnamedArgs = (IEnumerable<object>)expando.UnnamedArgs;
+            IEnumerable<object> unnamedArgs = expando.UnnamedArgs;
 
             Assert.AreEqual("object", unnamedArgs.First().ToString());
         }
@@ -50,8 +47,8 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new TestProxy("http://example.com");
             dynamic expando = await proxy.get("object", name: "value");
 
-            var unnamedArgs = (IEnumerable<object>)expando.UnnamedArgs;
-            var namedArgs = (IDictionary<string, object>)expando.NamedArgs;
+            IEnumerable<object> unnamedArgs = expando.UnnamedArgs;
+            IDictionary<string, object> namedArgs = expando.NamedArgs;
 
             Assert.AreEqual(1, unnamedArgs.Count());
             Assert.AreEqual(1, namedArgs.Count);
@@ -69,8 +66,8 @@ namespace DynamicRestProxy.UnitTests
             dynamic proxy = new TestProxy("http://example.com");
             dynamic expando = await proxy.get();
 
-            var unnamedArgs = (IEnumerable<object>)expando.UnnamedArgs;
-            var namedArgs = (IDictionary<string, object>)expando.NamedArgs;
+            IEnumerable<object> unnamedArgs = expando.UnnamedArgs;
+            IDictionary<string, object> namedArgs = expando.NamedArgs;
 
             Assert.AreEqual(0, unnamedArgs.Count());
             Assert.AreEqual(0, namedArgs.Count);

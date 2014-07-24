@@ -199,5 +199,25 @@ namespace DynamicRestProxy
 
             return this.ToString() == obj.ToString();
         }
+
+        /// <summary>
+        /// Convert the RestProxy to its full url as a string
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static implicit operator string(RestProxy p)
+        {
+            return p != null ? p.ToString() : null;
+        }
+
+        /// <summary>
+        /// Returns an Uri represtation of the full Url
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static explicit operator Uri(RestProxy p)
+        {
+            return p != null ? new Uri(p.ToString(), UriKind.Absolute) : null;
+        }
     }
 }
