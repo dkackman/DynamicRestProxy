@@ -83,7 +83,7 @@ namespace DynamicRestProxy
         /// <param name="verb">The http verb to execute (must be get, post, put or delete)</param>
         /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
         /// <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
-        /// <returns>Task<dynamic> that will execute the http call and return a dynamic object with the results</dynamic></returns>
+        /// <returns>Task{dynamic} that will execute the http call and return a dynamic object with the results</returns>
         protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
 
         /// <summary>
@@ -165,10 +165,37 @@ namespace DynamicRestProxy
             {
                 return BaseUrl + GetEndPointPath();
             }
-            else
+
+            return BaseUrl + "/" + GetEndPointPath();
+        }
+
+        /// <summary>
+        /// <see cref="System.Object.GetHashCode"/>
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return this.ToString().GetHashCode();
+        }
+
+        /// <summary>
+        /// <see cref="System.Object.Equals"/>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>compares the complete url as a string to obj</returns>
+        public override bool Equals(object obj)
+        {
+            if (object.ReferenceEquals(obj, null))
             {
-                return BaseUrl + "/" + GetEndPointPath();
+                return false;
             }
+
+            if (object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            return this.ToString() == obj.ToString();
         }
     }
 }
