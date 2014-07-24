@@ -21,7 +21,9 @@ namespace DynamicRestProxy
             {
                 var arg = args[i + unnamedArgCount];
                 if (arg != null) // filter out null parameters
+                {
                     ret.Add(binder.CallInfo.ArgumentNames[i], arg);
+                }
             }
             return ret;
         }

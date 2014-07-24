@@ -67,7 +67,9 @@ namespace DynamicRestProxy
             Debug.Assert(args != null);
 
             if (args.Length != 1)
+            {
                 throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
+            }
 
             // this is called when the dynamic object is invoked like a delegate
             // dynamic segment1 = proxy.segment1;
