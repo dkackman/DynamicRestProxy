@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestProxy</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <title>Dynamic Rest Proxy</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -10,7 +10,7 @@
       Abstract base class library for the creation of Rest client proxies that accept and return dynamic data objects
     </description>
     <releaseNotes>
-      Initial release
+      Minor updates
     </releaseNotes>
     <summary>
       

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>1.0.3</version>
+    <version>1.0.5</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -10,7 +10,7 @@
       A portable http rest client using dynamic objects for data transfer and endpoint url construction
     </description>
     <releaseNotes>
-      bug fixes
+      Added cancellation support
     </releaseNotes>
     <summary>
     </summary>
@@ -22,11 +22,11 @@
     <copyright>Copyright Don Kackman 2014</copyright>
     <dependencies>
       <group targetFramework="portable-windows8+net45+wp8+win8+wpa81+windowsphone8+sl5">
-        <dependency id="DynamicRestProxy" version="1.0.1" />
-        <dependency id="Newtonsoft.Json" version="6.0.3" />
-        <dependency id="Microsoft.Net.Http" version="2.2.22" />
+        <dependency id="DynamicRestProxy" version="1.0.2" />
+        <dependency id="Newtonsoft.Json" version="6.0.5" />
+        <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Microsoft.Bcl" version="1.1.9" />
-        <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
+        <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
       </group>
     </dependencies>
     <references></references>
