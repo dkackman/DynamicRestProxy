@@ -20,7 +20,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
             dynamic result = await client.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
 
-            Assert.AreEqual((int)result.statusCode, 200);
+            Assert.AreEqual(200, (int)result.statusCode);
             Assert.IsTrue(result.resourceSets.Count > 0);
             Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
 

@@ -117,7 +117,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
                 var result = await proxy.bills.get(state: "mn", chamber: "upper", status: "passed_upper");
                 Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Count > 0);
+                Assert.IsTrue(result.Count > 0);
                 Assert.AreEqual("upper", (string)result[0].chamber);
             }
         }
@@ -151,7 +151,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 dynamic result = await proxy.bills.get(paramList: parameters);
 
                 Assert.IsNotNull(result);
-                Assert.IsNotNull(result.results != null);
+                Assert.IsNotNull(result.results);
                 Assert.IsTrue(result.results.Count > 0);
 
                 foreach (dynamic bill in result.results)

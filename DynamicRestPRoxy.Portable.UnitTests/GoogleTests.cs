@@ -104,7 +104,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 var list = await proxy.calendars.post(calendar);
 
                 Assert.IsNotNull(list);
-                Assert.AreEqual( "unit_testing", (string)list.summary);
+                Assert.AreEqual("unit_testing", (string)list.summary);
             }
         }
 
