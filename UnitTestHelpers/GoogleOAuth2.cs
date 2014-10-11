@@ -88,6 +88,13 @@ namespace UnitTestHelpers
 
             Debug.WriteLine((string)response.user_code);
 
+            Console.WriteLine("Requested permissions are:");
+            Console.WriteLine(_scope);
+            Console.WriteLine("");
+            Console.WriteLine("Navigate to {0} in a web browser", response.verification_url);
+            Console.WriteLine("Enter this code to authorize access: " + response.user_code);
+            Console.WriteLine("");
+
             // use clip.exe to put the user code on the clipboard
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";

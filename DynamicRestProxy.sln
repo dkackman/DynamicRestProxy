@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.UnitTests", "DynamicRestProxy.UnitTests\DynamicRestProxy.UnitTests.csproj", "{FD3A49CD-A915-4010-B4BA-A81766F0CB14}"
 EndProject
@@ -33,6 +33,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Google.UnitTests", "Client.Google.UnitTests\Client.Google.UnitTests.csproj", "{23FD9838-1477-4BF6-92C9-EBC031956F81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestHelpers", "UnitTestHelpers\UnitTestHelpers.csproj", "{A589A7BA-9E16-4AE4-B01C-8D6B0AA9CFF8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{95CADD6E-CBDA-4C58-A4FD-C7048AAA195A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleStorageConsole", "GoogleStorageConsole\GoogleStorageConsole.csproj", "{84256A60-D0CD-46BF-A95F-7040947BD56C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +80,10 @@ Global
 		{A589A7BA-9E16-4AE4-B01C-8D6B0AA9CFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A589A7BA-9E16-4AE4-B01C-8D6B0AA9CFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A589A7BA-9E16-4AE4-B01C-8D6B0AA9CFF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84256A60-D0CD-46BF-A95F-7040947BD56C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84256A60-D0CD-46BF-A95F-7040947BD56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84256A60-D0CD-46BF-A95F-7040947BD56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84256A60-D0CD-46BF-A95F-7040947BD56C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,5 +96,6 @@ Global
 		{1D805AB8-F6C8-49AB-82B8-D954B998BBE9} = {AEFFFBCB-25A7-4B27-8C5D-DFB05C310DC0}
 		{23FD9838-1477-4BF6-92C9-EBC031956F81} = {5D427DF5-A5A6-442F-9829-ADA85EF1EE61}
 		{A589A7BA-9E16-4AE4-B01C-8D6B0AA9CFF8} = {5D427DF5-A5A6-442F-9829-ADA85EF1EE61}
+		{84256A60-D0CD-46BF-A95F-7040947BD56C} = {95CADD6E-CBDA-4C58-A4FD-C7048AAA195A}
 	EndGlobalSection
 EndGlobal
