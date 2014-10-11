@@ -16,7 +16,7 @@ namespace DynamicRestProxy.PortableHttpClient
     {
         private string _baseUrl;
         private DynamicRestClientDefaults _defaults;
-        private Func<HttpRequestMessage, Task> _configureRequest;
+        private Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
 
         /// <summary>
         /// ctor
@@ -24,12 +24,12 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <param name="baseUrl">The root url for all requests</param>
         /// <param name="defaults">Default values to add to all requests</param>
         /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, Task> configure = null)
+        public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
             : this(baseUrl, null, "", defaults, configure)
         {
         }
 
-        internal DynamicRestClient(string baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, Task> configure)
+        internal DynamicRestClient(string baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
             : base(parent, name)
         {
             _baseUrl = baseUrl;
@@ -61,19 +61,21 @@ namespace DynamicRestProxy.PortableHttpClient
             var builder = new RequestBuilder(this, _defaults);
             using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             {
+                var token = unnamedArgs.FirstOfTypeOrDefault<CancellationToken>(CancellationToken.None);
+
                 // give the user code a chance to setup any other request details
                 // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client
                 if (_configureRequest != null)
                 {
-                    await _configureRequest(request);
+                    await _configureRequest(request, token);
                 }
 
                 using (var client = CreateClient())
-                using (var response = await client.SendAsync(request, unnamedArgs.FirstOfTypeOrDefault<CancellationToken>(CancellationToken.None)))
+                using (var response = await client.SendAsync(request, token))
                 {
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Deserialize();
+                    return await response.Deserialize(token);
                 }
             }
         }

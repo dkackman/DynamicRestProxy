@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -62,7 +63,7 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 response.EnsureSuccessStatusCode();
 
-                return await response.Deserialize();
+                return await response.Deserialize(CancellationToken.None);
             }
         }
     }
