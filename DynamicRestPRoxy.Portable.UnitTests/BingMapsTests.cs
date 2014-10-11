@@ -79,7 +79,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
 
                 var address = result.resourceSets[0].resources[0].address.formattedAddress;
-                Assert.AreEqual((string)address, "1012 Davern St, St Paul, MN 55116");
+                Assert.AreEqual("1012 Davern St, St Paul, MN 55116", (string)address);
             }
         }
     }

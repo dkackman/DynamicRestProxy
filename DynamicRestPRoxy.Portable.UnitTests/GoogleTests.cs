@@ -42,7 +42,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 var profile = await proxy.oauth2.v1.userinfo.get();
 
                 Assert.IsNotNull(profile);
-                Assert.AreEqual((string)profile.family_name, "Kackman");
+                Assert.AreEqual("Kackman", (string)profile.family_name);
             }
         }
 
@@ -71,7 +71,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 var list = await proxy.users.me.calendarList.get();
 
                 Assert.IsNotNull(list);
-                Assert.AreEqual((string)list.kind, "calendar#calendarList");
+                Assert.AreEqual("calendar#calendarList", (string)list.kind);
             }
         }
 
@@ -104,7 +104,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 var list = await proxy.calendars.post(calendar);
 
                 Assert.IsNotNull(list);
-                Assert.AreEqual((string)list.summary, "unit_testing");
+                Assert.AreEqual( "unit_testing", (string)list.summary);
             }
         }
 

@@ -38,7 +38,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
                 dynamic result = await proxy.metadata.mn.get();
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.name == "Minnesota");
+                Assert.AreEqual("Minnesota", result.name);
             }
         }
 
@@ -63,7 +63,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
                 var result = await proxy.bills.mn("2013s1")("SF 1").get();
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.id == "MNB00017167");
+                Assert.AreEqual("MNB00017167", result.id);
             }
         }
 
@@ -118,7 +118,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 var result = await proxy.bills.get(state: "mn", chamber: "upper", status: "passed_upper");
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.Count > 0);
-                Assert.IsTrue(result[0].chamber == "upper");
+                Assert.AreEqual("upper", (string)result[0].chamber);
             }
         }
 

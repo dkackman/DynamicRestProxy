@@ -39,7 +39,7 @@ namespace Client.Google.UnitTests
             var profile = await google.oauth2.v1.userinfo.get();
 
             Assert.IsNotNull(profile);
-            Assert.AreEqual((string)profile.family_name, "Kackman");
+            Assert.AreEqual("Kackman", (string)profile.family_name);
         }
     }
 }
