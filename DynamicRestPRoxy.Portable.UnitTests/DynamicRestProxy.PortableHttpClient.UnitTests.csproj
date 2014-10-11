@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="BasicTests.cs" />
     <Compile Include="BingMapsTests.cs" />
+    <Compile Include="CancellationTests.cs" />
     <Compile Include="DynamicClientTests.cs" />
     <Compile Include="FlickrTests.cs" />
     <Compile Include="GoogleTests.cs" />

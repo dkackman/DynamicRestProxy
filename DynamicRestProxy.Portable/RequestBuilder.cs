@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Threading;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -34,7 +35,8 @@ namespace DynamicRestProxy.PortableHttpClient
                 request.Headers.TransferEncodingChunked = handler.SupportsTransferEncodingChunked();
             }
 
-            var content = CreateContent(method, unnamedArgs, allNamedArgs);
+            // filter out a cancellationtoken if passed
+            var content = CreateContent(method, unnamedArgs.Where(arg => !(arg is CancellationToken)), allNamedArgs);
             if (content != null)
             {
                 request.Content = content;

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -67,7 +69,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 }
 
                 using (var client = CreateClient())
-                using (var response = await client.SendAsync(request))
+                using (var response = await client.SendAsync(request, unnamedArgs.FirstOfTypeOrDefault<CancellationToken>(CancellationToken.None)))
                 {
                     response.EnsureSuccessStatusCode();
 
