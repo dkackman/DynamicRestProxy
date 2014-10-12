@@ -20,7 +20,7 @@ namespace DynamicRestProxy.PortableHttpClient
             var builder = new StringBuilder(prepend);
 
             var separator = "";
-            foreach(var kvp in parameters.Where(kvp => kvp.Value != null))
+            foreach (var kvp in parameters.Where(kvp => kvp.Value != null))
             {
                 if (kvp.Value is IDictionary<string, object>)
                 {
