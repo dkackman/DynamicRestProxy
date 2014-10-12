@@ -1,18 +1,15 @@
 ﻿using System.Net;
 using System.Linq;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
     static class Extensions
     {
-        public static T FirstOfTypeOrDefault<T>(this IEnumerable source, T def)
+        public static T FirstOrDefault<T>(this IEnumerable<T> source, T def)
         {
-            var typed = source.OfType<T>();
-
-            return typed.Any() ? typed.First() : def;
+            return source.Any() ? source.First() : def;
         }
 
         public static string AsQueryString(this IEnumerable<KeyValuePair<string, object>> parameters, string prepend = "?")

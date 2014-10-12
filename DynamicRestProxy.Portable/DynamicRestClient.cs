@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -60,7 +61,7 @@ namespace DynamicRestProxy.PortableHttpClient
             var builder = new RequestBuilder(this, _defaults);
             using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             {
-                var token = unnamedArgs.FirstOfTypeOrDefault<CancellationToken>(CancellationToken.None);
+                var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
 
                 // give the user code a chance to setup any other request details
                 // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client

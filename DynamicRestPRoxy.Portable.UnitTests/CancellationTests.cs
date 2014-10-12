@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -48,13 +46,12 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         {
             using (var source = new CancellationTokenSource())
             {
-                var oauth = new GoogleOAuth2("email profile");
-
                 // the cancellation token here is the one we passed in below
                 dynamic client = new DynamicRestClient("https://www.googleapis.com/oauth2/v1/userinfo", null, async (request, cancelToken) =>
                 {
                     Assert.AreEqual(source.Token, cancelToken);
 
+                    var oauth = new GoogleOAuth2("email profile");
                     var authToken = await oauth.Authenticate("", cancelToken);
                     request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", authToken);
                 });
