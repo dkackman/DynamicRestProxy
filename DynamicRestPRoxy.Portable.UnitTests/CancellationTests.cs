@@ -2,6 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -23,7 +26,42 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             {
                 // run request on a different thread and do not await thread
                 Task t = client.Locations.get(source.Token, postalCode: "55116", countryRegion: "US", key: key);
-                
+
+                // cancel on unit test thread
+                source.Cancel();
+
+                try
+                {
+                    // this will throw
+                    Task.WaitAll(t);
+                    Assert.Fail("Task was not cancelled");
+                }
+                catch (AggregateException e)
+                {
+                    Assert.IsTrue(e.InnerExceptions.OfType<TaskCanceledException>().Any());
+                }
+            }
+        }
+
+        [TestMethod]
+        public void CancelPassesToConfigurationCallback()
+        {
+            using (var source = new CancellationTokenSource())
+            {
+                var oauth = new GoogleOAuth2("email profile");
+
+                // the cancellation token here is the one we passed in below
+                dynamic client = new DynamicRestClient("https://www.googleapis.com/oauth2/v1/userinfo", null, async (request, cancelToken) =>
+                {
+                    Assert.AreEqual(source.Token, cancelToken);
+
+                    var authToken = await oauth.Authenticate("", cancelToken);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", authToken);
+                });
+
+                // run request on a different thread and do not await thread
+                Task t = client.oauth2.v1.userinfo.get(source.Token);
+
                 // cancel on unit test thread
                 source.Cancel();
 

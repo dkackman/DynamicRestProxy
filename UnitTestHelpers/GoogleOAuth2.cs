@@ -28,6 +28,11 @@ namespace UnitTestHelpers
 
         public async Task<string> Authenticate(string token)
         {
+            return await Authenticate(token, CancellationToken.None);
+        }
+
+        public async Task<string> Authenticate(string token, CancellationToken cancelToken)
+        {
             // if we have a token already just use it
             if (!string.IsNullOrEmpty(token))
                 return token;
@@ -41,13 +46,13 @@ namespace UnitTestHelpers
                 // if the stored token is expired refresh it
                 if (DateTime.UtcNow >= access.expiry)
                 {
-                    access = await RefreshAccessToken(access);
+                    access = await RefreshAccessToken(access, cancelToken);
                 }
             }
             else
             {
                 // no stored token - go get a new one
-                access = await GetNewAccessToken();
+                access = await GetNewAccessToken(cancelToken);
             }
 
             StoreAccess(access);
@@ -60,12 +65,12 @@ namespace UnitTestHelpers
             CredentialStore.StoreObject(_scope.GetHashCode() + ".google.auth.json", access);
         }
 
-        private static async Task<dynamic> RefreshAccessToken(dynamic access)
+        private static async Task<dynamic> RefreshAccessToken(dynamic access, CancellationToken cancelToken)
         {
             dynamic key = CredentialStore.RetrieveObject("google.key.json").installed;
 
             dynamic google = new DynamicRestClient("https://accounts.google.com/o/oauth2/");
-            var response = await google.token.post(client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
+            var response = await google.token.post(cancelToken, client_id: key.client_id, client_secret: key.client_secret, refresh_token: access.refresh_token, grant_type: "refresh_token");
 
             response.refresh_token = access.refresh_token; // the new access token doesn't have a new refresh token so move our current one here for long term storage
             return response;
@@ -79,12 +84,12 @@ namespace UnitTestHelpers
         /// This should only need to be done once because the access token will be stored and refreshed for future test runs
         /// </summary>
         /// <returns></returns>
-        private async Task<dynamic> GetNewAccessToken()
+        private async Task<dynamic> GetNewAccessToken(CancellationToken cancelToken)
         {
             dynamic key = CredentialStore.RetrieveObject("google.key.json").installed;
 
             dynamic google = new DynamicRestClient("https://accounts.google.com/o/oauth2/");
-            var response = await google.device.code.post(client_id: key.client_id, scope: _scope);
+            var response = await google.device.code.post(cancelToken, client_id: key.client_id, scope: _scope);
 
             Debug.WriteLine((string)response.user_code);
 
@@ -113,7 +118,7 @@ namespace UnitTestHelpers
             while (time < expiration)
             {
                 Thread.Sleep((int)interval * 1000);
-                dynamic tokenResonse = await google.token.post(client_id: key.client_id, client_secret: key.client_secret, code: response.device_code, grant_type: "http://oauth.net/grant_type/device/1.0");
+                dynamic tokenResonse = await google.token.post(cancelToken, client_id: key.client_id, client_secret: key.client_secret, code: response.device_code, grant_type: "http://oauth.net/grant_type/device/1.0");
                 try
                 {
                     if (tokenResonse.access_token != null)
