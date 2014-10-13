@@ -47,15 +47,16 @@ namespace UnitTestHelpers
                 if (DateTime.UtcNow >= access.expiry)
                 {
                     access = await RefreshAccessToken(access, cancelToken);
+                    StoreAccess(access);
                 }
             }
             else
             {
                 // no stored token - go get a new one
                 access = await GetNewAccessToken(cancelToken);
+                StoreAccess(access);
             }
 
-            StoreAccess(access);
             return access.access_token;
         }
 
