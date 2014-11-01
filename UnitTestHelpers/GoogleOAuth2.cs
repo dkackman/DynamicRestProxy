@@ -38,7 +38,7 @@ namespace UnitTestHelpers
                 return token;
 
             dynamic access = null;
-            // if we have a stored token see use it
+            // if we have a stored token use it
             if (CredentialStore.ObjectExists(_scope.GetHashCode() + ".google.auth.json"))
             {
                 access = CredentialStore.RetrieveObject(_scope.GetHashCode() + ".google.auth.json");
