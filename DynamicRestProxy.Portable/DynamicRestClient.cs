@@ -99,6 +99,13 @@ namespace DynamicRestProxy.PortableHttpClient
 
             if (_defaults != null)
             {
+                ProductInfoHeaderValue productHeader = null;
+                if (!string.IsNullOrEmpty(_defaults.UserAgent) && ProductInfoHeaderValue.TryParse(_defaults.UserAgent, out productHeader))
+                {
+                    client.DefaultRequestHeaders.UserAgent.Clear();
+                    client.DefaultRequestHeaders.UserAgent.Add(productHeader);
+                }
+                
                 foreach (var kvp in _defaults.DefaultHeaders)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);

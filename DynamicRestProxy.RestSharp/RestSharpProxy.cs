@@ -37,7 +37,7 @@ namespace DynamicRestProxy.RestSharp
         {
             get
             {
-                return _client != null ? _client.BaseUrl : "";
+                return _client != null ? _client.BaseUrl.ToString() : "";
             }
         }
 
