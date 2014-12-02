@@ -30,11 +30,6 @@ namespace DynamicRestProxy.PortableHttpClient
             request.Method = method;
             request.RequestUri = MakeUri(method, allNamedArgs);
 
-            using (var handler = new HttpClientHandler())
-            {
-                request.Headers.TransferEncodingChunked = handler.SupportsTransferEncodingChunked();
-            }
-
             // filter out a cancellationtoken if passed
             var content = CreateContent(method, unnamedArgs.Where(arg => !(arg is CancellationToken)), allNamedArgs);
             if (content != null)
