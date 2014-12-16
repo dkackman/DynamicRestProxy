@@ -10,8 +10,8 @@ namespace DynamicRestProxy.PortableHttpClient
 {
     class RequestBuilder
     {
-        private RestProxy _proxy;
-        private DynamicRestClientDefaults _defaults;
+        private readonly RestProxy _proxy;
+        private readonly DynamicRestClientDefaults _defaults;
 
         public RequestBuilder(RestProxy proxy, DynamicRestClientDefaults defaults)
         {
@@ -102,7 +102,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 return new HttpMethod("PATCH");
             }
 
-            throw new InvalidOperationException("Unknown http verb:" + verb);
+            throw new InvalidOperationException("Unknown http verb: " + verb);
         }
     }
 }
