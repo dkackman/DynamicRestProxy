@@ -63,7 +63,7 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 response.EnsureSuccessStatusCode();
 
-                return await response.Deserialize(CancellationToken.None);
+                return await response.Deserialize();
             }
         }
     }
