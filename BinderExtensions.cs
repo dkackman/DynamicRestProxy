@@ -6,7 +6,7 @@ namespace DynamicRestProxy
 {
     static class BinderExtensions
     {
-        private static readonly string[] _verbs = new string[] { "post", "get", "delete", "put", "patch" }; // currently supported verbs
+        internal static readonly string[] _verbs = new string[] { "post", "get", "delete", "put", "patch" }; // currently supported verbs
 
         public static IEnumerable<object> GetUnnamedArgs(this InvokeMemberBinder binder, object[] args)
         {

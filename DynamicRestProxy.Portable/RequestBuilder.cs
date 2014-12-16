@@ -17,11 +17,10 @@ namespace DynamicRestProxy.PortableHttpClient
 
         static RequestBuilder()
         {
-            _methods.Add("get", HttpMethod.Get);
-            _methods.Add("put", HttpMethod.Put);
-            _methods.Add("post", HttpMethod.Post);
-            _methods.Add("delete", HttpMethod.Delete);
-            _methods.Add("patch", new HttpMethod("PATCH"));
+            foreach(var verb in BinderExtensions._verbs)
+            {
+                _methods.Add(verb, new HttpMethod(verb.ToUpperInvariant()));
+            }
         }
 
         public RequestBuilder(RestProxy proxy, DynamicRestClientDefaults defaults)
