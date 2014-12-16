@@ -33,7 +33,7 @@ namespace DynamicRestProxy.PortableHttpClient
             : base(parent, name)
         {
             _baseUrl = baseUrl;
-            _defaults = defaults ?? new DynamicRestClientDefaults(); ;
+            _defaults = defaults ?? new DynamicRestClientDefaults();
             _configureRequest = configure;
         }
 
