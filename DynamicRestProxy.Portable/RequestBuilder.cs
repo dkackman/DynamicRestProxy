@@ -97,6 +97,10 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 return HttpMethod.Put;
             }
+            if (verb == "patch")
+            {
+                return new HttpMethod("PATCH");
+            }
 
             throw new InvalidOperationException("Unknown http verb:" + verb);
         }
