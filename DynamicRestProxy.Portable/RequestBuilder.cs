@@ -13,6 +13,17 @@ namespace DynamicRestProxy.PortableHttpClient
         private readonly RestProxy _proxy;
         private readonly DynamicRestClientDefaults _defaults;
 
+        private static readonly IDictionary<string, HttpMethod> _methods = new Dictionary<string, HttpMethod>();
+
+        static RequestBuilder()
+        {
+            _methods.Add("get", HttpMethod.Get);
+            _methods.Add("put", HttpMethod.Put);
+            _methods.Add("post", HttpMethod.Post);
+            _methods.Add("delete", HttpMethod.Delete);
+            _methods.Add("patch", new HttpMethod("PATCH"));
+        }
+
         public RequestBuilder(RestProxy proxy, DynamicRestClientDefaults defaults)
         {
             Debug.Assert(proxy != null);
@@ -22,7 +33,11 @@ namespace DynamicRestProxy.PortableHttpClient
 
         public HttpRequestMessage CreateRequest(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
-            var method = GetMethod(verb);
+            HttpMethod method = null;
+            if (!_methods.TryGetValue(verb, out method))
+            {
+                throw new InvalidOperationException("Unrecognized verb: " + verb);
+            }
 
             var allNamedArgs = namedArgs.Concat(_defaults.DefaultParameters);
 
@@ -77,32 +92,6 @@ namespace DynamicRestProxy.PortableHttpClient
             }
 
             return null;
-        }
-
-        private static HttpMethod GetMethod(string verb)
-        {
-            if (verb == "get")
-            {
-                return HttpMethod.Get;
-            }
-            if (verb == "post")
-            {
-                return HttpMethod.Post;
-            }
-            if (verb == "delete")
-            {
-                return HttpMethod.Delete;
-            }
-            if (verb == "put")
-            {
-                return HttpMethod.Put;
-            }
-            if (verb == "patch")
-            {
-                return new HttpMethod("PATCH");
-            }
-
-            throw new InvalidOperationException("Unknown http verb: " + verb);
         }
     }
 }
