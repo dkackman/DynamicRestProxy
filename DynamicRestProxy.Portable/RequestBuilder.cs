@@ -17,7 +17,7 @@ namespace DynamicRestProxy.PortableHttpClient
 
         static RequestBuilder()
         {
-            foreach(var verb in BinderExtensions._verbs)
+            foreach (var verb in BinderExtensions._verbs)
             {
                 _methods.Add(verb, new HttpMethod(verb.ToUpperInvariant()));
             }
