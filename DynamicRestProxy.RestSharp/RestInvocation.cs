@@ -8,7 +8,7 @@ namespace DynamicRestProxy
 {
     class RestInvocation
     {
-        private IRestClient _client;
+        private readonly IRestClient _client;
 
         public RestInvocation(IRestClient client, string verb)
         {
@@ -38,6 +38,10 @@ namespace DynamicRestProxy
             else if (Verb == "put")
             {
                 return await _client.ExecuteDynamicTaskAsync(request, Method.PUT);
+            }
+            else if (Verb == "patch")
+            {
+                return await _client.ExecuteDynamicTaskAsync(request, Method.PATCH);
             }
 
             Debug.Assert(false, "unsupported verb");
