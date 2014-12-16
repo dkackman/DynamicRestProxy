@@ -90,10 +90,6 @@
       <Project>{272daae2-04e7-47a4-9a79-66e5f7802aba}</Project>
       <Name>DynamicRestProxy.RestSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
-      <Project>{13073c29-a780-4f21-8544-80f0b51dac8d}</Project>
-      <Name>DynamicRestProxy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UnitTestHelpers\UnitTestHelpers.csproj">
       <Project>{a589a7ba-9e16-4ae4-b01c-8d6b0aa9cff8}</Project>
       <Name>UnitTestHelpers</Name>

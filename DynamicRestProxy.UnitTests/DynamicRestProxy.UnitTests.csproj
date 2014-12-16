@@ -62,7 +62,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BinderExtensions.cs" />
     <Compile Include="ParameterPassingTests.cs" />
+    <Compile Include="RestProxy.cs" />
     <Compile Include="TestProxy.cs" />
     <Compile Include="UrlConstructionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,12 +72,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
-      <Project>{13073c29-a780-4f21-8544-80f0b51dac8d}</Project>
-      <Name>DynamicRestProxy</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

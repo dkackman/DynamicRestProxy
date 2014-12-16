@@ -43,6 +43,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\BinderExtensions.cs">
+      <Link>BinderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RestProxy.cs">
+      <Link>RestProxy.cs</Link>
+    </Compile>
     <Compile Include="ContentFactory.cs" />
     <Compile Include="ContentInfo.cs" />
     <Compile Include="DynamicRestClientDefaults.cs" />
@@ -68,12 +74,6 @@
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DynamicRestProxy\DynamicRestProxy.csproj">
-      <Project>{13073c29-a780-4f21-8544-80f0b51dac8d}</Project>
-      <Name>DynamicRestProxy</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
