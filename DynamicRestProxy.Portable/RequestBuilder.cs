@@ -40,9 +40,11 @@ namespace DynamicRestProxy.PortableHttpClient
 
             var allNamedArgs = namedArgs.Concat(_defaults.DefaultParameters);
 
-            var request = new HttpRequestMessage();
-            request.Method = method;
-            request.RequestUri = MakeUri(method, allNamedArgs);
+            var request = new HttpRequestMessage()
+            {
+                Method = method,
+                RequestUri = MakeUri(method, allNamedArgs)
+            };
 
             // filter out a cancellationtoken if passed
             var content = CreateContent(method, unnamedArgs.Where(arg => !(arg is CancellationToken)), allNamedArgs);
