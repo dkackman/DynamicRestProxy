@@ -60,7 +60,7 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             var builder = new RequestBuilder(this, _defaults);
 
-            // filter any CancellationTokens out of the unamed args as those are not intended as content
+            // filter any CancellationTokens out of the unnamed args as those are not intended as content
             using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken)), namedArgs))
             {
                 var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
