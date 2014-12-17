@@ -32,14 +32,12 @@ namespace DynamicRestProxy.PortableHttpClient
 
         public HttpRequestMessage CreateRequest(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
-            HttpMethod method = null;
-            if (!_methods.TryGetValue(verb, out method))
-            {
-                throw new InvalidOperationException("Unrecognized verb: " + verb);
-            }
+            // the way the base class and this class's static contructor use BinderExtensions._verbs should prevent an unkown verb from reaching here
+            Debug.Assert(_methods.ContainsKey(verb), "unrecognized verb. check the BinderExtensions _verbs array");
 
             var allNamedArgs = namedArgs.Concat(_defaults.DefaultParameters);
 
+            var method = _methods[verb];
             var request = new HttpRequestMessage()
             {
                 Method = method,
