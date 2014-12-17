@@ -46,11 +46,21 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <returns></returns>
         public override bool Equals(object obj)
         {
+            PostUrlParam p = obj as PostUrlParam;
+
+            // if obj is a PostUrlParam, compare values
+            if (p != null)
+            {
+                return p.Value == Value;
+            }
+
+            // compare everything else to Value
             if (Value != null)
             {
                 return Value.Equals(obj);
             }
 
+            // Value is null so we are equal if obj is too
             return object.ReferenceEquals(obj, null);
         }
     }
