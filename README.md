@@ -3,7 +3,7 @@ DynamicRestProxy
 
 A rest client proxy using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
 
-This is a set of classes that wrap a concrete implementation of http client communication with a [DyamicObject](http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx). The wrapper translates dyanmic method invocations and endpoint paths into REST requests. 
+This is a set of classes that wrap a concrete implementation of http client communication with a [DynamicObject](http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx). The wrapper translates dyanmic method invocations and endpoint paths into REST requests. 
 
 All requests are asynynchronous and return dyanmic objects.
 
