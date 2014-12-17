@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Threading;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -45,7 +44,7 @@ namespace DynamicRestProxy.PortableHttpClient
             };
 
             // filter out a cancellationtoken if passed
-            var content = CreateContent(method, unnamedArgs.Where(arg => !(arg is CancellationToken)), allNamedArgs);
+            var content = CreateContent(method, unnamedArgs, allNamedArgs);
             if (content != null)
             {
                 request.Content = content;

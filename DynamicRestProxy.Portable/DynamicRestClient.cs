@@ -59,7 +59,9 @@ namespace DynamicRestProxy.PortableHttpClient
         protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
             var builder = new RequestBuilder(this, _defaults);
-            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
+
+            // filter any CancellationTokens out of the unamed args as those are not intended as content
+            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken)), namedArgs))
             {
                 var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
 
