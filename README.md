@@ -9,7 +9,7 @@ All requests are asynynchronous and return dynamic objects.
 
 The intent is to make it easier to access REST API's from C# without needing to create strongly typed API wrappers and numerous static POCO types for basic DTO responses. 
 
-So a simple GET statement is as simple as:
+So a GET statement can be as simple as:
 
     dynamic google = new DynamicRestClient("https://www.googleapis.com/");
     dynamic bucket = await google.storage.v1.b("uspto-pair").get();
