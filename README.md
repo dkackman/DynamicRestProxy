@@ -9,6 +9,12 @@ All requests are asynynchronous and return dynamic objects.
 
 The intent is to make it easier to access REST API's from C# without needing to create strongly typed API wrappers and numerous static POCO types for basic DTO responses. 
 
+So a simple GET statement is as simple as:
+
+    dynamic google = new DynamicRestClient("https://www.googleapis.com/");
+    dynamic bucket = await google.storage.v1.b("uspto-pair").get();
+    Console.WriteLine(bucket.location);
+
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
 There is a [NuGet package](https://www.nuget.org/packages/DynamicRestProxy/) for the abstract base class to allow different http client libraries to be used. Current concrete implementations include: 
