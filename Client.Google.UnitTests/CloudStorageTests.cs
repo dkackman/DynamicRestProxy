@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Linq;
+using System.IO;
 using System.Dynamic;
 using System.Threading.Tasks;
 
@@ -14,6 +15,23 @@ namespace Client.Google.UnitTests
     public class CloudStorageTests
     {
         private static string _token = null;
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
+        public async Task GetPublicBucket()
+        {
+            dynamic google = new DynamicRestClient("https://www.googleapis.com/");
+            dynamic bucket = google.storage.v1.b("uspto-pair");
+
+            dynamic metaData = await bucket.get();
+            Assert.IsNotNull(metaData);
+
+            dynamic objects = await bucket.o.get();
+            Assert.IsNotNull(objects);
+            Assert.IsTrue(objects.items.Count > 0);
+        }
 
         [TestMethod]
         [TestCategory("portable-client")]
