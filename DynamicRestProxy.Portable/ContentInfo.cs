@@ -3,7 +3,7 @@
 namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
-    /// Holder class for a content object and meta data about that object to be set in
+    /// Holder class for a content object and metadata about that object to be set in
     /// content headers if provided
     /// </summary>
     public class ContentInfo

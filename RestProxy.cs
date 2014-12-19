@@ -46,12 +46,12 @@ namespace DynamicRestProxy
         }
 
         /// <summary>
-        /// The base Url of the endpoint. Overridden in derived classess to allow specific rest client to deteremine how it is stored
+        /// The base Url of the endpoint. Overridden in derived classes to allow specific rest client to determine how it is stored
         /// </summary>
         protected abstract string BaseUrl { get; }
 
         /// <summary>
-        /// Factory method used to create instances of derived child nodes. Overrideen in derived classess to create derived instances
+        /// Factory method used to create instances of derived child nodes. Overriden in derived classes to create derived instances
         /// </summary>
         /// <param name="parent">The parent of the newly created child</param>
         /// <param name="name">The name of the newly created child</param>
