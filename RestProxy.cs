@@ -181,7 +181,7 @@ namespace DynamicRestProxy
         }
 
         /// <summary>
-        /// <see cref="System.Object.Equals"/>
+        /// <see cref="System.Object.Equals(System.Object)"/>
         /// </summary>
         /// <param name="obj"></param>
         /// <returns>compares the complete url as a string to obj</returns>

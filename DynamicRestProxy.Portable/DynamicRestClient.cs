@@ -14,9 +14,9 @@ namespace DynamicRestProxy.PortableHttpClient
     /// </summary>
     public class DynamicRestClient : RestProxy
     {
-        private string _baseUrl;
-        private DynamicRestClientDefaults _defaults;
-        private Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
+        private readonly string _baseUrl;
+        private readonly DynamicRestClientDefaults _defaults;
+        private readonly Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
 
         /// <summary>
         /// ctor
