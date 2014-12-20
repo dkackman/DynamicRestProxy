@@ -75,6 +75,7 @@
     <Compile Include="FlickrTests.cs" />
     <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FrameworkToolsUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicRestProxy.Portable\DynamicRestProxy.PortableHttpClient.csproj">
