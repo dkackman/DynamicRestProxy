@@ -65,9 +65,6 @@ namespace DynamicRestProxy
         /// </summary>
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
-            Debug.Assert(binder != null);
-            Debug.Assert(args != null);
-
             if (args.Length != 1)
             {
                 throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
@@ -95,11 +92,9 @@ namespace DynamicRestProxy
         /// </summary>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            Debug.Assert(binder != null);
-            Debug.Assert(args != null);
-
             if (binder.IsVerb())
             {
+                // dig the generic type aregument out of the binder
                 var t = binder.GetGenericTypeArguments().FirstOrDefault();
 
                 if (t == null)
@@ -110,10 +105,9 @@ namespace DynamicRestProxy
                 }
                 else
                 {
-                    // we got a type argument (like this client.get<int>();)
-                    // - dig the generiic type out of the binder
-                    // - make and invoke the correct generic implementaiton of the create method
-                    var methodInfo = this.GetType().GetRuntimeMethod("CreateVerbAsyncTask", new Type[] { typeof(string), typeof(IEnumerable<object>), typeof(IDictionary<string, object>) });
+                    // we got a type argument (like this: client.get<SomeType>();)
+                    // - make and invoke the generic implementaiton of the CreateVerbAsyncTask method
+                    var methodInfo = this.GetType().GetTypeInfo().GetDeclaredMethod("CreateVerbAsyncTask");
                     var method = methodInfo.MakeGenericMethod(t);
                     result = method.Invoke(this, new object[] { binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args) }); 
                 }
@@ -134,13 +128,16 @@ namespace DynamicRestProxy
             return true;
         }
 
+        //private MethodInfo GetMethod()
+        //{
+        //    this.GetType().GetTypeInfo().
+        //}
+
         /// <summary>
         /// <see cref="System.Dynamic.DynamicObject.TryGetMember(GetMemberBinder, out object)"/>
         /// </summary>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            Debug.Assert(binder != null);
-
             // this gets invoked when a dynamic property is accessed
             // example: proxy.locations will invoke here with a binder named locations
             // each dynamic property is treated as a url segment

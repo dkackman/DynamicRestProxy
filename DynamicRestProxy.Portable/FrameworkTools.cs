@@ -1,39 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Dynamic;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace DynamicRestProxy
 {
     static class FrameworkTools
     {
-        private static readonly bool _isMono = Type.GetType("Mono.Runtime") != null;
+        private static FieldInfo _genericTypeArgumentsField;
 
         /// <summary>Extension method allowing to easyly extract generic type arguments from <see cref="InvokeMemberBinder"/>.</summary>
         /// <param name="binder">Binder from which get type arguments.</param>
         /// <returns>List of types passed as generic parameters.</returns>
-        public static IList<Type> GetGenericTypeArguments(this InvokeMemberBinder binder)
+        public static IEnumerable<Type> GetGenericTypeArguments(this InvokeMemberBinder binder)
         {
-            if (_genericTypeField == null)
+            if (_genericTypeArgumentsField == null)
             {
-                _genericTypeField = _isMono ? binder.GetType().GetField("typeArguments") : binder.GetType().GetField("m_typeArguments");
+                string fieldName = Type.GetType("Mono.Runtime") != null ? "typeArguments" : "m_typeArguments";
+                _genericTypeArgumentsField = binder.GetType().GetTypeInfo().GetDeclaredField(fieldName);
             }
 
-            if (_genericTypeField != null)
+            if (_genericTypeArgumentsField != null)
             {
-                return _genericTypeField.GetValue(binder) as IList<Type>;
+                return _genericTypeArgumentsField.GetValue(binder) as IEnumerable<Type> ?? new List<Type>();
             }
 
-            // Sadly return null if failed.
-            return null;
+            Debug.Assert(false, "Retreiveing the private collection of generic type arguments failed");
+            // Sadly return empty collection if failed.
+            return new List<Type>();
         }
 
-        private static FieldInfo _genericTypeField;
-
-        private static FieldInfo GetField(this Type t, string name)
-        {
-            return t.GetTypeInfo().DeclaredFields.First(f => f.Name == name);
-        }
     }
 }

@@ -17,18 +17,21 @@ namespace DynamicRestProxy.PortableHttpClient
 
             if (!string.IsNullOrEmpty(content))
             {
+                // if the return type is object return a dynamic object
                 if (typeof(T) == typeof(object))
                 {
-                    return Deserialize(content);
+                    return DeserializeToDynamic(content);
                 }
-
+                
+                // otherwise deserialize to the return type
                 return JsonConvert.DeserializeObject<T>(content);
             }
 
+            // no content - return default
             return default(T);
         }
 
-        static dynamic Deserialize(string content)
+        static dynamic DeserializeToDynamic(string content)
         {
             Debug.Assert(!string.IsNullOrEmpty(content));
 
