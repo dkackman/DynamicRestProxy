@@ -73,7 +73,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 {
                     await _configureRequest(request, token);
                 }
-
+                
                 using (var client = CreateClient())
                 using (var response = await client.SendAsync(request, token))
                 {

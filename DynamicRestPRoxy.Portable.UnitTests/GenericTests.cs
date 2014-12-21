@@ -13,7 +13,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         public string id { get; set; }
         public string selfLink { get; set; }
         public string name { get; set; }
-        public string timeCreated { get; set; }
+        public DateTime timeCreated { get; set; }
         public int metageneration { get; set; }
         public string location { get; set; }
         public string storageClass { get; set; }

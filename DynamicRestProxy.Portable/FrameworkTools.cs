@@ -27,7 +27,7 @@ namespace DynamicRestProxy
                 return _genericTypeArgumentsField.GetValue(binder) as IEnumerable<Type> ?? new List<Type>();
             }
 
-            Debug.Assert(false, "Retreiveing the private collection of generic type arguments failed");
+            Debug.Assert(false, "Retrieving the private collection of generic type arguments failed");
             // Sadly return empty collection if failed.
             return new List<Type>();
         }
