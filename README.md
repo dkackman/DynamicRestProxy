@@ -24,7 +24,6 @@ Or if you insist on static DTO types, a generic type argument can be supplied (d
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
 There is a [NuGet package](https://www.nuget.org/packages/DynamicRestProxy/) for the abstract base class to allow different http client libraries to be used. Current concrete implementations include: 
-- A dynamic proxy for the [RestSharp RestClient](http://restsharp.org/). 
 - A dynamic proxy for Microsoft's [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). This also has a [NuGet package](https://www.nuget.org/packages/DynamicRestClient/).
 - A [dynamic rest client](https://github.com/dkackman/DynamicRestProxy/wiki/Using-the-DynamicRestClient) that reduces to a bare minimum the amount of code needed to start calling rest endpoints
 
