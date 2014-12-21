@@ -127,11 +127,6 @@ namespace DynamicRestProxy
             return true;
         }
 
-        //private MethodInfo GetMethod()
-        //{
-        //    this.GetType().GetTypeInfo().
-        //}
-
         /// <summary>
         /// <see cref="System.Dynamic.DynamicObject.TryGetMember(GetMemberBinder, out object)"/>
         /// </summary>

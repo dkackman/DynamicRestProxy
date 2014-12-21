@@ -7,7 +7,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// Wrapper class for a stream that relates the stream to metadata (MIME type)
     /// about the stream so metadata can be added to content headers
     /// </summary>
-    public class StreamInfo : ContentInfo, IDisposable
+    public sealed class StreamInfo : ContentInfo, IDisposable
     {
         /// <summary>
         /// Constructor
