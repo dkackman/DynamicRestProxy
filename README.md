@@ -1,5 +1,6 @@
 DynamicRestProxy
 ================
+[NuGet package](https://www.nuget.org/packages/DynamicRestClient/)
 
 A rest client proxy using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
 
@@ -23,12 +24,11 @@ Or if you insist on static DTO types, a generic type argument can be supplied (d
 
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
-There is a [NuGet package](https://www.nuget.org/packages/DynamicRestProxy/) for the abstract base class to allow different http client libraries to be used. Current concrete implementations include: 
-- A dynamic proxy for Microsoft's [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). This also has a [NuGet package](https://www.nuget.org/packages/DynamicRestClient/).
+This package includes:
+- A dynamic proxy for Microsoft's [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). 
 - A [dynamic rest client](https://github.com/dkackman/DynamicRestProxy/wiki/Using-the-DynamicRestClient) that reduces to a bare minimum the amount of code needed to start calling rest endpoints
 
 Example usage is on the [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) as well as supplied in the unit test projects.
-
 
 If you try to run the unit tests take a close look at the CredentialStore class in the unit test project. It's pretty straighforward and you can use it to supply your own api keys while keeping them out of the code.
 
