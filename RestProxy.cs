@@ -104,11 +104,15 @@ namespace DynamicRestProxy
 
                 if (t == null)
                 {
+                    // no generic argument - return result deserialized as dynamic
                     // parse out the details of the invocation and have the derived class create a Task
                     result = CreateVerbAsyncTask<dynamic>(binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args));
                 }
                 else
                 {
+                    // we got a type argument (like this client.get<int>();)
+                    // - dig the generiic type out of the binder
+                    // - make and invoke the correct generic implementaiton of the create method
                     var methodInfo = this.GetType().GetRuntimeMethod("CreateVerbAsyncTask", new Type[] { typeof(string), typeof(IEnumerable<object>), typeof(IDictionary<string, object>) });
                     var method = methodInfo.MakeGenericMethod(t);
                     result = method.Invoke(this, new object[] { binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args) }); 

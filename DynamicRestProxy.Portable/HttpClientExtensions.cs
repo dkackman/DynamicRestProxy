@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Dynamic;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
