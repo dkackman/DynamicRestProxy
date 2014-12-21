@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -39,9 +40,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>
         /// </summary>
-        protected override string BaseUrl
+        protected override Uri BaseUrl
         {
-            get { return _client.BaseAddress.ToString(); }
+            get { return _client.BaseAddress; }
         }
 
         /// <summary>

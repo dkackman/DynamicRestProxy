@@ -16,7 +16,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// </summary>
     public class DynamicRestClient : RestProxy
     {
-        private readonly string _baseUrl;
+        private readonly Uri _baseUrl;
         private readonly DynamicRestClientDefaults _defaults;
         private readonly Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
 
@@ -27,11 +27,22 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <param name="defaults">Default values to add to all requests</param>
         /// <param name="configure">A callback function that will be called just before any request is sent</param>
         public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
+            : this(new Uri(baseUrl, UriKind.Absolute), defaults, configure)
+        {
+        }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="baseUrl">The root url for all requests</param>
+        /// <param name="defaults">Default values to add to all requests</param>
+        /// <param name="configure">A callback function that will be called just before any request is sent</param>
+        public DynamicRestClient(Uri baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
             : this(baseUrl, null, "", defaults, configure)
         {
         }
 
-        internal DynamicRestClient(string baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
+        internal DynamicRestClient(Uri baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
             : base(parent, name)
         {
             _baseUrl = baseUrl;
@@ -42,7 +53,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>
         /// </summary>
-        protected override string BaseUrl
+        protected override Uri BaseUrl
         {
             get { return _baseUrl; }
         }
@@ -73,7 +84,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 {
                     await _configureRequest(request, token);
                 }
-                
+
                 using (var client = CreateClient())
                 using (var response = await client.SendAsync(request, token))
                 {
@@ -95,7 +106,7 @@ namespace DynamicRestProxy.PortableHttpClient
 
             var client = new HttpClient(handler, true);
 
-            client.BaseAddress = new Uri(_baseUrl, UriKind.Absolute);
+            client.BaseAddress = _baseUrl;
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));

@@ -38,10 +38,10 @@ namespace DynamicRestProxy.PortableHttpClient
             var converter = new ExpandoObjectConverter();
             if (content.StartsWith("[")) // when the result is a list we need to tell JSonConvert
             {
-                return JsonConvert.DeserializeObject<List<dynamic>>(content);
+                return JsonConvert.DeserializeObject<List<dynamic>>(content, converter);
             }
 
-            return JsonConvert.DeserializeObject<ExpandoObject>(content);
+            return JsonConvert.DeserializeObject<ExpandoObject>(content, converter);
         }
     }
 }

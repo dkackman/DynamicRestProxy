@@ -49,7 +49,7 @@ namespace DynamicRestProxy
         /// <summary>
         /// The base Url of the endpoint. Overridden in derived classes to allow specific rest client to determine how it is stored
         /// </summary>
-        protected abstract string BaseUrl { get; }
+        protected abstract Uri BaseUrl { get; }
 
         /// <summary>
         /// Factory method used to create instances of derived child nodes. Overriden in derived classes to create derived instances
@@ -171,12 +171,13 @@ namespace DynamicRestProxy
         /// <returns>The full Url of this node in the path chain</returns>
         public override string ToString()
         {
-            if (BaseUrl.EndsWith("/"))
+            string uri = BaseUrl.ToString();
+            if (uri.EndsWith("/"))
             {
-                return BaseUrl + GetEndPointPath();
+                return uri + GetEndPointPath();
             }
 
-            return BaseUrl + "/" + GetEndPointPath();
+            return uri + "/" + GetEndPointPath();
         }
 
         /// <summary>
@@ -211,21 +212,21 @@ namespace DynamicRestProxy
         /// <summary>
         /// Convert the RestProxy to its full url as a string
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="proxy"></param>
         /// <returns></returns>
-        public static implicit operator string(RestProxy p)
+        public static implicit operator string(RestProxy proxy)
         {
-            return p != null ? p.ToString() : null;
+            return proxy != null ? proxy.ToString() : null;
         }
 
         /// <summary>
         /// Returns an Uri represtation of the full Url
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="proxy"></param>
         /// <returns></returns>
-        public static explicit operator Uri(RestProxy p)
+        public static explicit operator Uri(RestProxy proxy)
         {
-            return p != null ? new Uri(p.ToString(), UriKind.Absolute) : null;
+            return proxy != null ? new Uri(proxy.ToString(), UriKind.Absolute) : null;
         }
     }
 }
