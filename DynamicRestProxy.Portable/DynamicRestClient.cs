@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
+using Newtonsoft.Json;
+
 namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
@@ -60,8 +62,8 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             var builder = new RequestBuilder(this, _defaults);
 
-            // filter any CancellationTokens out of the unnamed args as those are not intended as content
-            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken)), namedArgs))
+            // filter any CancellationTokens and JsonSerializerSettings out of the unnamed args as those are not intended as content
+            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken || arg is JsonSerializerSettings)), namedArgs))
             {
                 var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
 
@@ -77,7 +79,8 @@ namespace DynamicRestProxy.PortableHttpClient
                 {
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Deserialize<T>();
+                    // forward the JsonSerializationSettings on if passed
+                    return await response.Deserialize<T>(unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance());
                 }
             }
         }
@@ -98,7 +101,7 @@ namespace DynamicRestProxy.PortableHttpClient
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
-            
+
             if (handler.SupportsTransferEncodingChunked())
             {
                 client.DefaultRequestHeaders.TransferEncodingChunked = true;
@@ -112,7 +115,7 @@ namespace DynamicRestProxy.PortableHttpClient
                     client.DefaultRequestHeaders.UserAgent.Clear();
                     client.DefaultRequestHeaders.UserAgent.Add(productHeader);
                 }
-                
+
                 foreach (var kvp in _defaults.DefaultHeaders)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);

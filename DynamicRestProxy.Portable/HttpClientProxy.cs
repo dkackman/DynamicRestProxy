@@ -2,9 +2,10 @@
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+
+using Newtonsoft.Json;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -27,8 +28,6 @@ namespace DynamicRestProxy.PortableHttpClient
         internal HttpClientProxy(HttpClient client, RestProxy parent, string name)
             : base(parent, name)
         {
-            Debug.Assert(client != null);
-
             _client = client;
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -59,12 +58,14 @@ namespace DynamicRestProxy.PortableHttpClient
         protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
             var builder = new RequestBuilder(this, new DynamicRestClientDefaults());
-            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken)), namedArgs))
-            using (var response = await _client.SendAsync(request))
+            var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
+
+            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken || arg is JsonSerializerSettings)), namedArgs))
+            using (var response = await _client.SendAsync(request, token))
             {
                 response.EnsureSuccessStatusCode();
 
-                return await response.Deserialize<T>();
+                return await response.Deserialize<T>(unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance());
             }
         }
     }

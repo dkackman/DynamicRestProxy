@@ -11,7 +11,7 @@ namespace DynamicRestProxy.PortableHttpClient
 {
     static class HttpClientExtensions
     {
-        public async static Task<T> Deserialize<T>(this HttpResponseMessage response)
+        public async static Task<T> Deserialize<T>(this HttpResponseMessage response, JsonSerializerSettings settings)
         {
             var content = await response.Content.ReadAsStringAsync();
 
@@ -22,9 +22,9 @@ namespace DynamicRestProxy.PortableHttpClient
                 {
                     return DeserializeToDynamic(content);
                 }
-                
+
                 // otherwise deserialize to the return type
-                return JsonConvert.DeserializeObject<T>(content);
+                return JsonConvert.DeserializeObject<T>(content, settings);
             }
 
             // no content - return default

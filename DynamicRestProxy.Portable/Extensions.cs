@@ -7,6 +7,11 @@ namespace DynamicRestProxy
 {
     static class Extensions
     {
+        public static T FirstOrNewInstance<T>(this IEnumerable<T> source) where T : new()
+        {
+            return source.Any() ? source.First() : new T();
+        }
+
         public static T FirstOrDefault<T>(this IEnumerable<T> source, T def)
         {
             return source.Any() ? source.First() : def;
