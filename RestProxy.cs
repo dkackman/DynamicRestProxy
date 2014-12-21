@@ -91,11 +91,12 @@ namespace DynamicRestProxy
         /// </summary>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            if (binder.IsVerb())
+            if (binder.IsVerb()) // the method name is one of our http verbs - invoke as such
             {
-                // dig the generic type aregument out of the binder
+                // dig the generic type argument out of the binder
                 var t = binder.GetGenericTypeArguments().FirstOrDefault();
 
+                // if no generic type argument provided no need for late bound method dispatch
                 if (t == null)
                 {
                     // no generic argument - return result deserialized as dynamic
@@ -111,7 +112,7 @@ namespace DynamicRestProxy
                     result = method.Invoke(this, new object[] { binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args) }); 
                 }
             }
-            else
+            else // otherwise the method is yet another uri segment
             {
                 if (args.Length != 1)
                     throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
