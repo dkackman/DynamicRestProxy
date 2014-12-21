@@ -13,18 +13,39 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         public void GetDynamicGenericArguments()
         {
             dynamic d = new Dyn();
-            Type t = d.Member<int>();
+            Type t = d.Generic<int>();
 
             Assert.AreEqual(t, typeof(int));
         }
 
+        [TestMethod]
+        public void NonGenericMemberReturnsNullTypeArg()
+        {
+            dynamic d = new Dyn();
+            Type t = d.NonGeneric();
+
+            Assert.IsNull(t);
+        }
 
         class Dyn : DynamicObject
         {
             public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
             {
-                var types = binder.GetGenericTypeArguments();
-                result = types.FirstOrDefault();
+                if (binder.Name == "Generic")
+                {
+                    var types = binder.GetGenericTypeArguments();
+                    result = types.FirstOrDefault();
+                }
+                else if (binder.Name == "NonGeneric")
+                {
+                    var types = binder.GetGenericTypeArguments();
+                    result = types.FirstOrDefault();
+                }
+                else
+                {
+                    result = null;
+                }
+
                 return true;
             }
         }

@@ -56,7 +56,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
         /// </summary>
-        protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
             var builder = new RequestBuilder(this, new DynamicRestClientDefaults());
             using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken)), namedArgs))
@@ -64,7 +64,7 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 response.EnsureSuccessStatusCode();
 
-                return await response.Deserialize();
+                return await response.Deserialize<T>();
             }
         }
     }

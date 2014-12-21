@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Dynamic;
 
-namespace DynamicRestProxy.PortableHttpClient
+namespace DynamicRestProxy
 {
     static class FrameworkTools
     {

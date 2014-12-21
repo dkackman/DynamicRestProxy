@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using System.Dynamic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace DynamicRestProxy
 {
@@ -86,7 +88,7 @@ namespace DynamicRestProxy
         /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
         /// <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
         /// <returns>Task{dynamic} that will execute the http call and return a dynamic object with the results</returns>
-        protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
+        protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
 
         /// <summary>
         /// <see cref="System.Dynamic.DynamicObject.TryInvokeMember(InvokeMemberBinder, object[], out object)"/>
@@ -98,8 +100,19 @@ namespace DynamicRestProxy
 
             if (binder.IsVerb())
             {
-                // parse out the details of the invocation and have the derived class create a Task
-                result = CreateVerbAsyncTask(binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args));
+                var t = binder.GetGenericTypeArguments().FirstOrDefault();
+
+                if (t == null)
+                {
+                    // parse out the details of the invocation and have the derived class create a Task
+                    result = CreateVerbAsyncTask<dynamic>(binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args));
+                }
+                else
+                {
+                    var methodInfo = this.GetType().GetRuntimeMethod("CreateVerbAsyncTask", new Type[] { typeof(string), typeof(IEnumerable<object>), typeof(IDictionary<string, object>) });
+                    var method = methodInfo.MakeGenericMethod(t);
+                    result = method.Invoke(this, new object[] { binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args) }); 
+                }
             }
             else
             {
