@@ -69,29 +69,27 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
         /// </summary>
-        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
             var builder = new RequestBuilder(this, _defaults);
 
             // filter any CancellationTokens and JsonSerializerSettings out of the unnamed args as those are not intended as content
-            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken || arg is JsonSerializerSettings)), namedArgs))
+            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             {
-                var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
-
                 // give the user code a chance to setup any other request details
                 // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client
                 if (_configureRequest != null)
                 {
-                    await _configureRequest(request, token);
+                    await _configureRequest(request, cancelToken);
                 }
 
                 using (var client = CreateClient())
-                using (var response = await client.SendAsync(request, token))
+                using (var response = await client.SendAsync(request, cancelToken))
                 {
                     response.EnsureSuccessStatusCode();
 
                     // forward the JsonSerializationSettings on if passed
-                    return await response.Deserialize<T>(unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance());
+                    return await response.Deserialize<T>(serializationSettings);
                 }
             }
         }

@@ -56,17 +56,16 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
         /// </summary>
-        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
             var builder = new RequestBuilder(this, new DynamicRestClientDefaults());
-            var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
 
-            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken || arg is JsonSerializerSettings)), namedArgs))
-            using (var response = await _client.SendAsync(request, token))
+            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
+            using (var response = await _client.SendAsync(request, cancelToken))
             {
                 response.EnsureSuccessStatusCode();
 
-                return await response.Deserialize<T>(unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance());
+                return await response.Deserialize<T>(serializationSettings);
             }
         }
     }

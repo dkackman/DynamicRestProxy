@@ -2,9 +2,12 @@
 using System.Text;
 using System.Linq;
 using System.Dynamic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Reflection;
+
+using Newtonsoft.Json;
 
 namespace DynamicRestProxy
 {
@@ -14,6 +17,8 @@ namespace DynamicRestProxy
     /// </summary>
     public abstract class RestProxy : DynamicObject
     {
+        private static readonly Type[] _reservedTypes = new Type[] { typeof(CancellationToken), typeof(JsonSerializerSettings), typeof(Type) };
+
         /// <summary>
         /// ctor
         /// </summary>
@@ -84,7 +89,7 @@ namespace DynamicRestProxy
         /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
         /// <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
         /// <returns>Task{dynamic} that will execute the http call and return a dynamic object with the results</returns>
-        protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
+        protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettins);
 
         /// <summary>
         /// <see cref="System.Dynamic.DynamicObject.TryInvokeMember(InvokeMemberBinder, object[], out object)"/>
@@ -94,14 +99,24 @@ namespace DynamicRestProxy
             if (binder.IsVerb()) // the method name is one of our http verbs - invoke as such
             {
                 // dig the generic type argument out of the binder
-                var t = binder.GetGenericTypeArguments().FirstOrDefault();
+                var t = binder.GetGenericTypeArguments().FirstOrDefault(); // evil exists within that method
+
+                var unnamedArgs = binder.GetUnnamedArgs(args);
+
+                // filter our sentinal types out of the unnamed args to be passed on the request
+                var requestArgs = unnamedArgs.Where(arg => !_reservedTypes.Contains(arg.GetType()));
+
+                // these are the objects that can be passed as unnamed args that we use intenrally and do not pass to teh request
+                var cancelToken = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
+                var serializationSettings = unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance();
+                var type = unnamedArgs.OfType<Type>().FirstOrDefault();
 
                 // if no generic type argument provided no need for late bound method dispatch
                 if (t == null)
                 {
                     // no generic argument - return result deserialized as dynamic
                     // parse out the details of the invocation and have the derived class create a Task
-                    result = CreateVerbAsyncTask<dynamic>(binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args));
+                    result = CreateVerbAsyncTask<dynamic>(binder.Name, requestArgs, binder.GetNamedArgs(args), cancelToken, serializationSettings);
                 }
                 else
                 {
@@ -109,7 +124,7 @@ namespace DynamicRestProxy
                     // - make and invoke the generic implementaiton of the CreateVerbAsyncTask method
                     var methodInfo = this.GetType().GetTypeInfo().GetDeclaredMethod("CreateVerbAsyncTask");
                     var method = methodInfo.MakeGenericMethod(t);
-                    result = method.Invoke(this, new object[] { binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args) }); 
+                    result = method.Invoke(this, new object[] { binder.Name, requestArgs, binder.GetNamedArgs(args), cancelToken, serializationSettings });
                 }
             }
             else // otherwise the method is yet another uri segment
