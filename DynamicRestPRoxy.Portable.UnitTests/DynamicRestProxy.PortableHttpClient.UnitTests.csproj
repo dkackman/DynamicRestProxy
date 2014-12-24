@@ -76,7 +76,7 @@
     <Compile Include="GoogleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FrameworkToolsUnitTests.cs" />
-    <Compile Include="GenericTests.cs" />
+    <Compile Include="TypedDeserilzationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicRestProxy.Portable\DynamicRestProxy.PortableHttpClient.csproj">

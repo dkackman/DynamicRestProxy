@@ -9,9 +9,11 @@ namespace DynamicRestProxy
 {
     static class BinderExtensions
     {
+#if EXPERIMENTAL_GENERICS
         // this is private field of the InvokeMemberBinder base class that is used to access
         // the generic type arguments
         private static FieldInfo _typeArgumentsField;
+#endif
 
         private static readonly object _sync = new object();
 
@@ -47,6 +49,7 @@ namespace DynamicRestProxy
             return _verbs.Contains(binder.Name);
         }
 
+#if EXPERIMENTAL_GENERICS
         /// <summary>Extension method allowing to easyly extract generic type arguments from <see cref="InvokeMemberBinder"/>.</summary>
         /// <param name="binder">Binder from which get type arguments.</param>
         /// <returns>List of types passed as generic parameters.</returns>
@@ -74,5 +77,6 @@ namespace DynamicRestProxy
             // Sadly return empty collection if failed.
             return new List<Type>();
         }    
+#endif
     }
 }

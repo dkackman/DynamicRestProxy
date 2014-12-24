@@ -21,8 +21,10 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     }
 
     [TestClass]
-    public class GenericTests
+    public class TypedDeserilzationTests
     {
+#if EXPERIMENTAL_GENERICS
+
         [TestMethod]
         public async Task DeserializeToGenericType()
         {
@@ -30,6 +32,18 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             dynamic bucket = google.storage.v1.b("uspto-pair");
 
             Bucket metaData = await bucket.get<Bucket>();
+            Assert.IsNotNull(metaData);
+            Assert.AreEqual(metaData.name, "uspto-pair");
+        }
+#endif
+
+        [TestMethod]
+        public async Task DeserializeToStaticType()
+        {
+            dynamic google = new DynamicRestClient("https://www.googleapis.com/");
+            dynamic bucket = google.storage.v1.b("uspto-pair");
+
+            Bucket metaData = await bucket.get(typeof(Bucket));
             Assert.IsNotNull(metaData);
             Assert.AreEqual(metaData.name, "uspto-pair");
         }
