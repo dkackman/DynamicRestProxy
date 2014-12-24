@@ -17,7 +17,9 @@ namespace DynamicRestProxy
     /// </summary>
     public abstract class RestProxy : DynamicObject
     {
-        private static readonly Type[] _reservedTypes = new Type[] { typeof(CancellationToken), typeof(JsonSerializerSettings) };//, typeof(Type), typeof(System.RuntimeType) };
+        // objects of these types, when pass to a verb invocation as unnamed arguments, 
+        // will signal particualr behavior rather than get passed as content
+        private static readonly TypeInfo[] _reservedTypes = new TypeInfo[] { typeof(CancellationToken).GetTypeInfo(), typeof(JsonSerializerSettings).GetTypeInfo(), typeof(Type).GetTypeInfo() };
 
         /// <summary>
         /// ctor
@@ -101,8 +103,9 @@ namespace DynamicRestProxy
                 var unnamedArgs = binder.GetUnnamedArgs(args);
 
                 // filter our sentinal types out of the unnamed args to be passed on the request
-                var requestArgs = unnamedArgs.Where(arg => !_reservedTypes.Contains(arg.GetType()) && !(arg is Type));
-                // these are the objects that can be passed as unnamed args that we use intenrally and do not pass to teh request
+                var requestArgs = unnamedArgs.Where(arg => !arg.IsOfType(_reservedTypes));
+
+                // these are the objects that can be passed as unnamed args that we use intenrally and do not pass to the request
                 var cancelToken = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
                 var serializationSettings = unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance();
 #if EXPERIMENTAL_GENERICS
@@ -112,17 +115,17 @@ namespace DynamicRestProxy
 #else
                 var returnType = unnamedArgs.OfType<Type>().FirstOrDefault();
 #endif
-                // if no generic type argument provided no need for late bound method dispatch
+                // if no return type argument provided there is no need for late bound method dispatch
                 if (returnType == null)
                 {
-                    // no generic argument - return result deserialized as dynamic
+                    // no return type argumentso return result deserialized as dynamic
                     // parse out the details of the invocation and have the derived class create a Task
                     result = CreateVerbAsyncTask<dynamic>(binder.Name, requestArgs, binder.GetNamedArgs(args), cancelToken, serializationSettings);
                 }
                 else
                 {
-                    // we got a type argument (like this: client.get<SomeType>();)
-                    // - make and invoke the generic implementaiton of the CreateVerbAsyncTask method
+                    // we got a type argument (like this if experimental: client.get<SomeType>(); or like this normally: client.get(typeof(SomeType)); )
+                    // make and invoke the generic implementaiton of the CreateVerbAsyncTask method
                     var methodInfo = this.GetType().GetTypeInfo().GetDeclaredMethod("CreateVerbAsyncTask");
                     var method = methodInfo.MakeGenericMethod(returnType);
                     result = method.Invoke(this, new object[] { binder.Name, requestArgs, binder.GetNamedArgs(args), cancelToken, serializationSettings });
