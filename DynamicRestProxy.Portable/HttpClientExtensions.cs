@@ -20,7 +20,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 // if the return type is object return a dynamic object
                 if (typeof(T) == typeof(object))
                 {
-                    return DeserializeToDynamic(content);
+                    return DeserializeToDynamic(content, settings);
                 }
 
                 // otherwise deserialize to the return type
@@ -31,17 +31,17 @@ namespace DynamicRestProxy.PortableHttpClient
             return default(T);
         }
 
-        static dynamic DeserializeToDynamic(string content)
+        static dynamic DeserializeToDynamic(string content, JsonSerializerSettings settings)
         {
             Debug.Assert(!string.IsNullOrEmpty(content));
 
-            var converter = new ExpandoObjectConverter();
+            settings.Converters.Add(new ExpandoObjectConverter());
             if (content.StartsWith("[")) // when the result is a list we need to tell JSonConvert
             {
-                return JsonConvert.DeserializeObject<List<dynamic>>(content, converter);
+                return JsonConvert.DeserializeObject<List<dynamic>>(content, settings);
             }
 
-            return JsonConvert.DeserializeObject<ExpandoObject>(content, converter);
+            return JsonConvert.DeserializeObject<ExpandoObject>(content, settings);
         }
     }
 }
