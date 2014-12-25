@@ -20,7 +20,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 // if the return type is object return a dynamic object
                 if (typeof(T) == typeof(object))
                 {
-                    return DeserializeToDynamic(content, settings);
+                    return DeserializeToDynamic(content.Trim(), settings);
                 }
 
                 // otherwise deserialize to the return type

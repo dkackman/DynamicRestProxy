@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using DynamicRestProxy.PortableHttpClient;
+using DynamicRestProxy.RestSharp;
 
-namespace DynamicRestProxy.PortableHttpClient.UnitTests
+namespace DynamicRestProxy.RestSharp.UnitTests
 {
     public class Bucket
     {
@@ -23,28 +23,12 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     [TestClass]
     public class TypedDeserilzationTests
     {
-#if EXPERIMENTAL_GENERICS
-
         [TestMethod]
-        [TestCategory("integration")]
-        [TestCategory("portable")]
-        public async Task DeserializeToGenericType()
-        {
-            dynamic google = new DynamicRestClient("https://www.googleapis.com/");
-            dynamic bucket = google.storage.v1.b("uspto-pair");
-
-            Bucket metaData = await bucket.get<Bucket>();
-            Assert.IsNotNull(metaData);
-            Assert.AreEqual(metaData.name, "uspto-pair");
-        }
-#endif
-
-        [TestMethod]
-        [TestCategory("portable")]
+        [TestCategory("RestSharp")]
         [TestCategory("integration")]
         public async Task DeserializeToStaticType()
         {
-            dynamic google = new DynamicRestClient("https://www.googleapis.com/");
+            dynamic google = new RestSharpProxy("https://www.googleapis.com/");
             dynamic bucket = google.storage.v1.b("uspto-pair");
 
             Bucket metaData = await bucket.get(typeof(Bucket));

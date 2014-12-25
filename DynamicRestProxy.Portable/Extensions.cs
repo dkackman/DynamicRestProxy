@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
@@ -10,32 +9,6 @@ namespace DynamicRestProxy
 {
     static class Extensions
     {
-        public static bool IsOfType(this object o, IEnumerable<TypeInfo> types)
-        {
-            Debug.Assert(o != null);
-
-            var typeInfo = o.GetType().GetTypeInfo();
-            foreach (var t in types)
-            {
-                if (t.IsAssignableFrom(typeInfo))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static T FirstOrNewInstance<T>(this IEnumerable<T> source) where T : new()
-        {
-            return source.Any() ? source.First() : new T();
-        }
-
-        public static T FirstOrDefault<T>(this IEnumerable<T> source, T def)
-        {
-            return source.Any() ? source.First() : def;
-        }
-
         public static string AsQueryString(this IEnumerable<KeyValuePair<string, object>> parameters, string prepend = "?")
         {
             if (!parameters.Any())
