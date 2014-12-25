@@ -12,15 +12,7 @@ namespace DynamicRestProxy.PortableHttpClient
         private readonly RestProxy _proxy;
         private readonly DynamicRestClientDefaults _defaults;
 
-        private static readonly IDictionary<string, HttpMethod> _methods = new Dictionary<string, HttpMethod>();
-
-        static RequestBuilder()
-        {
-            foreach (var verb in BinderExtensions._verbs)
-            {
-                _methods.Add(verb, new HttpMethod(verb.ToUpperInvariant()));
-            }
-        }
+        private static readonly IDictionary<string, HttpMethod> _methods = BinderExtensions._verbs.ToDictionary(verb => verb, verb => new HttpMethod(verb.ToUpperInvariant()));
 
         public RequestBuilder(RestProxy proxy, DynamicRestClientDefaults defaults)
         {

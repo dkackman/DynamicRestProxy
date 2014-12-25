@@ -8,7 +8,7 @@ namespace DynamicRestProxy.PortableHttpClient
     public sealed class PostUrlParam
     {
         /// <summary>
-        /// The paramter's value
+        /// The parameter's value
         /// </summary>
         public object Value { get; private set; }
 
@@ -33,7 +33,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="System.Object.GetHashCode"/>
         /// </summary>
-        /// <returns>the hascode of Value</returns>
+        /// <returns>the hashcode of Value</returns>
         public override int GetHashCode()
         {
             return Value != null ? Value.GetHashCode() : 0;

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using System.Dynamic;
-using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Reflection;
+
+using Newtonsoft.Json;
 
 namespace DynamicRestProxy
 {
@@ -13,6 +17,10 @@ namespace DynamicRestProxy
     /// </summary>
     public abstract class RestProxy : DynamicObject
     {
+        // objects of these types, when pass to a verb invocation as unnamed arguments, 
+        // will signal particualr behavior rather than get passed as content
+        private static readonly TypeInfo[] _reservedTypes = new TypeInfo[] { typeof(CancellationToken).GetTypeInfo(), typeof(JsonSerializerSettings).GetTypeInfo(), typeof(Type).GetTypeInfo() };
+
         /// <summary>
         /// ctor
         /// </summary>
@@ -46,12 +54,12 @@ namespace DynamicRestProxy
         }
 
         /// <summary>
-        /// The base Url of the endpoint. Overridden in derived classess to allow specific rest client to deteremine how it is stored
+        /// The base Url of the endpoint. Overridden in derived classes to allow specific rest client to determine how it is stored
         /// </summary>
-        protected abstract string BaseUrl { get; }
+        protected abstract Uri BaseUrl { get; }
 
         /// <summary>
-        /// Factory method used to create instances of derived child nodes. Overrideen in derived classess to create derived instances
+        /// Factory method used to create instances of derived child nodes. Overriden in derived classes to create derived instances
         /// </summary>
         /// <param name="parent">The parent of the newly created child</param>
         /// <param name="name">The name of the newly created child</param>
@@ -63,9 +71,6 @@ namespace DynamicRestProxy
         /// </summary>
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
-            Debug.Assert(binder != null);
-            Debug.Assert(args != null);
-
             if (args.Length != 1)
             {
                 throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
@@ -86,22 +91,47 @@ namespace DynamicRestProxy
         /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
         /// <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
         /// <returns>Task{dynamic} that will execute the http call and return a dynamic object with the results</returns>
-        protected abstract Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs);
+        protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings);
 
         /// <summary>
         /// <see cref="System.Dynamic.DynamicObject.TryInvokeMember(InvokeMemberBinder, object[], out object)"/>
         /// </summary>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            Debug.Assert(binder != null);
-            Debug.Assert(args != null);
-
-            if (binder.IsVerb())
+            if (binder.IsVerb()) // the method name is one of our http verbs - invoke as such
             {
-                // parse out the details of the invocation and have the derived class create a Task
-                result = CreateVerbAsyncTask(binder.Name, binder.GetUnnamedArgs(args), binder.GetNamedArgs(args));
+                var unnamedArgs = binder.GetUnnamedArgs(args);
+
+                // filter our sentinal types out of the unnamed args to be passed on the request
+                var requestArgs = unnamedArgs.Where(arg => !arg.IsOfType(_reservedTypes));
+
+                // these are the objects that can be passed as unnamed args that we use intenrally and do not pass to the request
+                var cancelToken = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
+                var serializationSettings = unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance();
+#if EXPERIMENTAL_GENERICS
+
+                // dig the generic type argument out of the binder
+                var returnType = binder.GetGenericTypeArguments().FirstOrDefault(); // evil exists within that method
+#else
+                var returnType = unnamedArgs.OfType<Type>().FirstOrDefault();
+#endif
+                // if no return type argument provided there is no need for late bound method dispatch
+                if (returnType == null)
+                {
+                    // no return type argumentso return result deserialized as dynamic
+                    // parse out the details of the invocation and have the derived class create a Task
+                    result = CreateVerbAsyncTask<dynamic>(binder.Name, requestArgs, binder.GetNamedArgs(args), cancelToken, serializationSettings);
+                }
+                else
+                {
+                    // we got a type argument (like this if experimental: client.get<SomeType>(); or like this normally: client.get(typeof(SomeType)); )
+                    // make and invoke the generic implementaiton of the CreateVerbAsyncTask method
+                    var methodInfo = this.GetType().GetTypeInfo().GetDeclaredMethod("CreateVerbAsyncTask");
+                    var method = methodInfo.MakeGenericMethod(returnType);
+                    result = method.Invoke(this, new object[] { binder.Name, requestArgs, binder.GetNamedArgs(args), cancelToken, serializationSettings });
+                }
             }
-            else
+            else // otherwise the method is yet another uri segment
             {
                 if (args.Length != 1)
                     throw new InvalidOperationException("The segment escape sequence must have exactly 1 unnamed parameter");
@@ -122,8 +152,6 @@ namespace DynamicRestProxy
         /// </summary>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-            Debug.Assert(binder != null);
-
             // this gets invoked when a dynamic property is accessed
             // example: proxy.locations will invoke here with a binder named locations
             // each dynamic property is treated as a url segment
@@ -163,12 +191,13 @@ namespace DynamicRestProxy
         /// <returns>The full Url of this node in the path chain</returns>
         public override string ToString()
         {
-            if (BaseUrl.EndsWith("/"))
+            string uri = BaseUrl.ToString();
+            if (uri.EndsWith("/"))
             {
-                return BaseUrl + GetEndPointPath();
+                return uri + GetEndPointPath();
             }
 
-            return BaseUrl + "/" + GetEndPointPath();
+            return uri + "/" + GetEndPointPath();
         }
 
         /// <summary>
@@ -203,21 +232,21 @@ namespace DynamicRestProxy
         /// <summary>
         /// Convert the RestProxy to its full url as a string
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="proxy"></param>
         /// <returns></returns>
-        public static implicit operator string(RestProxy p)
+        public static implicit operator string(RestProxy proxy)
         {
-            return p != null ? p.ToString() : null;
+            return proxy != null ? proxy.ToString() : null;
         }
 
         /// <summary>
         /// Returns an Uri represtation of the full Url
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="proxy"></param>
         /// <returns></returns>
-        public static explicit operator Uri(RestProxy p)
+        public static explicit operator Uri(RestProxy proxy)
         {
-            return p != null ? new Uri(p.ToString(), UriKind.Absolute) : null;
+            return proxy != null ? new Uri(proxy.ToString(), UriKind.Absolute) : null;
         }
     }
 }

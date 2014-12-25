@@ -1,10 +1,11 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
+
+using Newtonsoft.Json;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -27,8 +28,6 @@ namespace DynamicRestProxy.PortableHttpClient
         internal HttpClientProxy(HttpClient client, RestProxy parent, string name)
             : base(parent, name)
         {
-            Debug.Assert(client != null);
-
             _client = client;
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -40,9 +39,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>
         /// </summary>
-        protected override string BaseUrl
+        protected override Uri BaseUrl
         {
-            get { return _client.BaseAddress.ToString(); }
+            get { return _client.BaseAddress; }
         }
 
         /// <summary>
@@ -56,15 +55,16 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
         /// </summary>
-        protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
             var builder = new RequestBuilder(this, new DynamicRestClientDefaults());
-            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken)), namedArgs))
-            using (var response = await _client.SendAsync(request))
+
+            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
+            using (var response = await _client.SendAsync(request, cancelToken))
             {
                 response.EnsureSuccessStatusCode();
 
-                return await response.Deserialize();
+                return await response.Deserialize<T>(serializationSettings);
             }
         }
     }

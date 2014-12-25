@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+
+using Newtonsoft.Json;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -14,7 +15,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// </summary>
     public class DynamicRestClient : RestProxy
     {
-        private readonly string _baseUrl;
+        private readonly Uri _baseUrl;
         private readonly DynamicRestClientDefaults _defaults;
         private readonly Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
 
@@ -25,11 +26,22 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <param name="defaults">Default values to add to all requests</param>
         /// <param name="configure">A callback function that will be called just before any request is sent</param>
         public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
+            : this(new Uri(baseUrl, UriKind.Absolute), defaults, configure)
+        {
+        }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="baseUrl">The root url for all requests</param>
+        /// <param name="defaults">Default values to add to all requests</param>
+        /// <param name="configure">A callback function that will be called just before any request is sent</param>
+        public DynamicRestClient(Uri baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
             : this(baseUrl, null, "", defaults, configure)
         {
         }
 
-        internal DynamicRestClient(string baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
+        internal DynamicRestClient(Uri baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
             : base(parent, name)
         {
             _baseUrl = baseUrl;
@@ -40,7 +52,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>
         /// </summary>
-        protected override string BaseUrl
+        protected override Uri BaseUrl
         {
             get { return _baseUrl; }
         }
@@ -56,28 +68,27 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
         /// </summary>
-        protected async override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
             var builder = new RequestBuilder(this, _defaults);
 
-            // filter any CancellationTokens out of the unnamed args as those are not intended as content
-            using (var request = builder.CreateRequest(verb, unnamedArgs.Where(arg => !(arg is CancellationToken)), namedArgs))
+            // filter any CancellationTokens and JsonSerializerSettings out of the unnamed args as those are not intended as content
+            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             {
-                var token = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
-
                 // give the user code a chance to setup any other request details
                 // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client
                 if (_configureRequest != null)
                 {
-                    await _configureRequest(request, token);
+                    await _configureRequest(request, cancelToken);
                 }
 
                 using (var client = CreateClient())
-                using (var response = await client.SendAsync(request, token))
+                using (var response = await client.SendAsync(request, cancelToken))
                 {
                     response.EnsureSuccessStatusCode();
 
-                    return await response.Deserialize();
+                    // forward the JsonSerializationSettings on if passed
+                    return await response.Deserialize<T>(serializationSettings);
                 }
             }
         }
@@ -92,13 +103,13 @@ namespace DynamicRestProxy.PortableHttpClient
 
             var client = new HttpClient(handler, true);
 
-            client.BaseAddress = new Uri(_baseUrl, UriKind.Absolute);
+            client.BaseAddress = _baseUrl;
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
-            
+
             if (handler.SupportsTransferEncodingChunked())
             {
                 client.DefaultRequestHeaders.TransferEncodingChunked = true;
@@ -112,7 +123,7 @@ namespace DynamicRestProxy.PortableHttpClient
                     client.DefaultRequestHeaders.UserAgent.Clear();
                     client.DefaultRequestHeaders.UserAgent.Add(productHeader);
                 }
-                
+
                 foreach (var kvp in _defaults.DefaultHeaders)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);

@@ -3,7 +3,7 @@
 namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
-    /// Default values that will be added all all requests
+    /// Default values that will be added all requests
     /// </summary>
     public class DynamicRestClientDefaults
     {

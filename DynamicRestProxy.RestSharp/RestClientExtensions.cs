@@ -1,38 +1,63 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Dynamic;
 
 using RestSharp;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
 
 namespace DynamicRestProxy
 {
     static class RestClientExtensions
     {
-        public static async Task<dynamic> ExecuteDynamicTaskAsync(this IRestClient client, IRestRequest request, Method method)
+        public static async Task<T> ExecuteDynamicTaskAsync<T>(this IRestClient client, IRestRequest request, Method method, CancellationToken cancelToken, JsonSerializerSettings settings)
         {
             request.Method = method;
 
-            var response = await client.ExecuteTaskAsync(request);
-            if (response == null)
-                return null;
-            
-            if (response.ErrorException != null)
-                throw response.ErrorException;
-
-            return await response.Deserialize();
-        }
-
-        public static async Task<dynamic> Deserialize(this IRestResponse response)
-        {
-            if (!string.IsNullOrEmpty(response.Content))
+            if (typeof(T) != typeof(object))
             {
-                return await Task.Factory.StartNew<dynamic>(() => JsonConvert.DeserializeObject<dynamic>(response.Content));
+                var typedResponse = await client.ExecuteTaskAsync<T>(request, cancelToken);
+                if (typedResponse == null)
+                {
+                    return default(T);
+                }
+
+                if (typedResponse.ErrorException != null)
+                {
+                    throw typedResponse.ErrorException;
+                }
+                return typedResponse.Data;
             }
 
-            return await Task.Factory.StartNew<dynamic>(() => { return null; });
+            var response = await client.ExecuteTaskAsync(request, cancelToken);
+            if (response == null || string.IsNullOrEmpty(response.Content))
+            {
+                return default(T);
+            }
+
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
+
+            return DeserializeToDynamic(response.Content.Trim(), settings);
+        }
+
+        static dynamic DeserializeToDynamic(string content, JsonSerializerSettings settings)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(content));
+
+            settings.Converters.Add(new ExpandoObjectConverter());
+            if (content.StartsWith("[")) // when the result is a list we need to tell JSonConvert
+            {
+                return JsonConvert.DeserializeObject<List<dynamic>>(content, settings);
+            }
+
+            return JsonConvert.DeserializeObject<ExpandoObject>(content, settings);
         }
 
         public static void AddDictionary(this IRestRequest request, IDictionary<string, object> args)
