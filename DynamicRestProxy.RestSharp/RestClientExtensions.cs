@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -21,22 +22,18 @@ namespace DynamicRestProxy
             if (typeof(T) != typeof(object))
             {
                 var typedResponse = await client.ExecuteTaskAsync<T>(request, cancelToken);
-                if (typedResponse == null)
-                {
-                    return default(T);
-                }
-
-                if (typedResponse.ErrorException != null)
-                {
-                    throw typedResponse.ErrorException;
-                }
-                return typedResponse.Data;
+                return typedResponse.EnsureSuccess<T>(() => typedResponse.Data);
             }
 
             var response = await client.ExecuteTaskAsync(request, cancelToken);
-            if (response == null || string.IsNullOrEmpty(response.Content))
+            return response.EnsureSuccess<dynamic>(() => DeserializeToDynamic(response.Content.Trim(), settings));
+        }
+
+        private static T EnsureSuccess<T>(this IRestResponse response, Func<T> successFunc)
+        {
+            if (response == null)
             {
-                return default(T);
+                throw new TimeoutException("The server returned no response or the request timed out");
             }
 
             if (response.ErrorException != null)
@@ -44,7 +41,12 @@ namespace DynamicRestProxy
                 throw response.ErrorException;
             }
 
-            return DeserializeToDynamic(response.Content.Trim(), settings);
+            if (string.IsNullOrEmpty(response.Content))
+            {
+                return default(T);
+            }
+
+            return successFunc();
         }
 
         static dynamic DeserializeToDynamic(string content, JsonSerializerSettings settings)
@@ -69,3 +71,4 @@ namespace DynamicRestProxy
         }
     }
 }
+
