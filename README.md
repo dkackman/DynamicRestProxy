@@ -27,6 +27,7 @@ Supports the GET, POST, PUT, PATCH and DELETE verbs.
 This package includes:
 - A dynamic proxy for Microsoft's [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). 
 - A [dynamic rest client](https://github.com/dkackman/DynamicRestProxy/wiki/Using-the-DynamicRestClient) that reduces to a bare minimum the amount of code needed to start calling rest endpoints
+- A proxy for the (RestSharp client)[https://github.com/dkackman/DynamicRestProxy/wiki/RestSharp-Examples]
 
 Example usage is on the [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) as well as supplied in the unit test projects.
 
