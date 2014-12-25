@@ -16,10 +16,10 @@ So a GET statement can be as simple as:
     dynamic bucket = await google.storage.v1.b("uspto-pair").get();
     Console.WriteLine(bucket.location);
 
-Or if you insist on static DTO types, a generic type argument can be supplied (desirialization uses [Json.Net](http://json.codeplex.com/) so all its rules and patterns apply):
+Or if you insist on static DTO types, a type argument can be supplied (deserialization uses [Json.Net](http://json.codeplex.com/) so all its rules and patterns apply):
 
     dynamic google = new DynamicRestClient("https://www.googleapis.com/");
-    Bucket bucket = google.storage.v1.b("uspto-pair").get<Bucket>();
+    Bucket bucket = google.storage.v1.b("uspto-pair").get(typeof(Bucket));
     Console.WriteLine(bucket.location);
 
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
@@ -27,6 +27,7 @@ Supports the GET, POST, PUT, PATCH and DELETE verbs.
 This package includes:
 - A dynamic proxy for Microsoft's [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). 
 - A [dynamic rest client](https://github.com/dkackman/DynamicRestProxy/wiki/Using-the-DynamicRestClient) that reduces to a bare minimum the amount of code needed to start calling rest endpoints
+- A dynamic proxy for the [RestSharp client](https://github.com/dkackman/DynamicRestProxy/wiki/RestSharp-Examples)
 
 Example usage is on the [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) as well as supplied in the unit test projects.
 
