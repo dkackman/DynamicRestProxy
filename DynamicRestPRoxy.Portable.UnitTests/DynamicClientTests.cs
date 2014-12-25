@@ -30,7 +30,6 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
         }
 
-
         [TestMethod]
         [TestCategory("portable-client")]
         [TestCategory("integration")]
@@ -46,6 +45,20 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 { "long", -93.214049 } // since long is a keyword we need to pass arguments in a Dictionary
             };
             var result = await client.legislators.geo.get(paramList: parameters, apikey: key);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
+        }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        public async Task ReservedWordNameEscapeWithCSharpSyntax()
+        {
+            dynamic client = new DynamicRestClient("http://openstates.org/api/v1/");
+
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+
+            var result = await client.legislators.geo.get(apikey: key, lat: 44.926868, @long: -93.214049);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
         }
