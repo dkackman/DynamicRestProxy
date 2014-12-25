@@ -42,7 +42,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             var parameters = new Dictionary<string, object>()
             {
                 { "lat", 44.926868 },
-                { "long", -93.214049 } // since long is a keyword we need to pass arguments in a Dictionary
+                { "long", -93.214049 } // since long is a keyword, pass arguments in a Dictionary
             };
             var result = await client.legislators.geo.get(paramList: parameters, apikey: key);
             Assert.IsNotNull(result);
@@ -58,6 +58,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
             string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
 
+            //escape the reserved word "long" with an @ symbol
             var result = await client.legislators.geo.get(apikey: key, lat: 44.926868, @long: -93.214049);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
