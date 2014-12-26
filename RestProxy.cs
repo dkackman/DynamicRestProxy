@@ -108,8 +108,8 @@ namespace DynamicRestProxy
                 // these are the objects that can be passed as unnamed args that we use intenrally and do not pass to the request
                 var cancelToken = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
                 var serializationSettings = unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance();
-#if EXPERIMENTAL_GENERICS
 
+#if EXPERIMENTAL_GENERICS
                 // dig the generic type argument out of the binder
                 var returnType = binder.GetGenericTypeArguments().FirstOrDefault(); // evil exists within that method
 #else
