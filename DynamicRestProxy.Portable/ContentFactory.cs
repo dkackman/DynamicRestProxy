@@ -69,8 +69,8 @@ namespace DynamicRestProxy.PortableHttpClient
                 return Create((ContentInfo)content);
             }
 
-            // value types get serialized as a string
-            if (content.GetType().GetTypeInfo().IsValueType)
+            // primitive types (int, float etc) types get serialized as a string
+            if (content.GetType().GetTypeInfo().IsPrimitive)
             {
                 return new StringContent(content.ToString());
             }
