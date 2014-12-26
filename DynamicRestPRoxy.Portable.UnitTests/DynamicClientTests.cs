@@ -11,6 +11,34 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     public class DynamicClientTests
     {
         [TestMethod]
+        [TestCategory("integration")]
+        [TestCategory("portable")]
+        public async Task EscapeUriSegmentsUsingClient()
+        {
+            dynamic client = new DynamicRestClient("http://openstates.org/api/v1/");
+
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+            var result = await client.bills.mn("2013s1")("SF 1").get(apikey: key);
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.id == "MNB00017167");
+        }
+
+        [TestMethod]
+        [TestCategory("integration")]
+        [TestCategory("portable")]
+        public async Task ExplicitGetInvokeUsingClient()
+        {
+            dynamic client = new DynamicRestClient("http://openstates.org/api/v1/");
+
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+            dynamic result = await client.metadata.mn.get(apikey: key);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Minnesota", result.name);
+        }
+
+        [TestMethod]
         [TestCategory("portable-client")]
         [TestCategory("integration")]
         public async Task CoordinateFromPostalCode()
@@ -21,7 +49,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
             dynamic result = await client.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
 
-            Assert.AreEqual(200, (int)result.statusCode);
+            Assert.AreEqual(200, result.statusCode);
             Assert.IsTrue(result.resourceSets.Count > 0);
             Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
 
@@ -62,6 +90,30 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             var result = await client.legislators.geo.get(apikey: key, lat: 44.926868, @long: -93.214049);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
+        }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        public async Task ReservedWordNameEscapeWithDictionary()
+        {
+            dynamic client = new DynamicRestClient("http://congress.api.sunlightfoundation.com");
+
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+
+            var parameters = new Dictionary<string, object>()
+            {
+                { "chamber", "senate" },
+                { "history.house_passage_result", "pass" } // history.house_passage_result couldn't be used a C# parameter name                
+            };
+
+            dynamic result = await client.bills.get(paramList: parameters, apikey: key);
+
+            foreach (dynamic bill in result.results)
+            {
+                Assert.AreEqual("senate", (string)bill.chamber);
+                Assert.AreEqual("pass", (string)bill.history.house_passage_result);
+            }
         }
     }
 }

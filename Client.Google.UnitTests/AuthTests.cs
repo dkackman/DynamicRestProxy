@@ -38,5 +38,30 @@ namespace Client.Google.UnitTests
             Assert.IsNotNull(profile);
             Assert.AreEqual("Kackman", (string)profile.family_name);
         }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
+        public async Task CreateGoogleCalendarUsingClient()
+        {
+            dynamic google = new DynamicRestClient("https://www.googleapis.com/calendar/v3/", null, async (request, cancelToken) =>
+            {
+                // this demonstrates how t use the configuration callback to handle authentication 
+                var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
+                var token = await auth.Authenticate("", cancelToken);
+                Assert.IsNotNull(token, "auth failed");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", token);
+            });
+
+            dynamic calendar = new ExpandoObject();
+            calendar.summary = "unit_testing";
+
+            var list = await google.calendars.post(calendar);
+
+            Assert.IsNotNull(list);
+            Assert.AreEqual(list.summary, "unit_testing");
+        }
     }
 }
