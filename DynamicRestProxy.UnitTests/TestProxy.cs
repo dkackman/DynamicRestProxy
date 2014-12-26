@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Threading;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Dynamic;
+
+using Newtonsoft.Json;
 
 namespace DynamicRestProxy.UnitTests
 {
@@ -9,14 +13,14 @@ namespace DynamicRestProxy.UnitTests
     /// </summary>
     public class TestProxy : RestProxy
     {
-        private string _baseUrl;
+        private Uri _baseUrl;
 
         public TestProxy(string baseUrl)
-            : this(baseUrl, null, null)
+            : this(new Uri(baseUrl, UriKind.Absolute), null, null)
         {
         }
 
-        internal TestProxy(string baseUrl, RestProxy parent, string name)
+        internal TestProxy(Uri baseUrl, RestProxy parent, string name)
             : base(parent, name)
         {
             _baseUrl = baseUrl;
@@ -27,20 +31,24 @@ namespace DynamicRestProxy.UnitTests
             return new TestProxy(_baseUrl, parent, name);
         }
 
-        protected override Task<dynamic> CreateVerbAsyncTask(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        protected override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
             // just pass the arguments back as a task to they can be tested
-            return Task.Factory.StartNew<dynamic>(() =>
+            return Task.Factory.StartNew<T>(() =>
                 {
                     dynamic expando = new ExpandoObject();
                     expando.Verb = verb;
                     expando.UnnamedArgs = unnamedArgs;
                     expando.NamedArgs = namedArgs;
+                    expando.CancelToken = cancelToken;
+                    expando.SerializationSettings = serializationSettings;
+                    expando.ReturnType = typeof(T);
+
                     return expando;
                 });
         }
 
-        protected override string BaseUri
+        protected override Uri BaseUri
         {
             get { return _baseUrl; }
         }

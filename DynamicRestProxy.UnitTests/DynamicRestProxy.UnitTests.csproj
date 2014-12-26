@@ -58,9 +58,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BinderExtensions.cs" />
+    <Compile Include="..\BinderExtensions.cs">
+      <Link>BinderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\LinqExtensions.cs">
+      <Link>LinqExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\RestProxy.cs">
+      <Link>RestProxy.cs</Link>
+    </Compile>
     <Compile Include="ParameterPassingTests.cs" />
-    <Compile Include="RestProxy.cs" />
     <Compile Include="TestProxy.cs" />
     <Compile Include="UrlConstructionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

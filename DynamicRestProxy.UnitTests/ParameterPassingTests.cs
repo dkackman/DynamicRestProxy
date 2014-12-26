@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Dynamic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,6 +14,32 @@ namespace DynamicRestProxy.UnitTests
     [TestClass]
     public class ParameterPassingTests
     {
+        [TestMethod]
+        [TestCategory("offline")]
+        public async Task CancellationTokenPassesThrough()
+        {
+            using (var source = new CancellationTokenSource())
+            {
+                dynamic proxy = new TestProxy("http://example.com");
+                dynamic expando = await proxy.get(source.Token, name: "value");
+
+                Assert.AreEqual(source.Token, expando.CancelToken);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("offline")]
+        public async Task ReturnTypePassesThrough()
+        {
+            using (var source = new CancellationTokenSource())
+            {
+                dynamic proxy = new TestProxy("http://example.com");
+                dynamic expando = await proxy.get(typeof(ExpandoObject), name: "value");
+
+                Assert.AreEqual(typeof(ExpandoObject), expando.ReturnType);
+            }
+        }
+
         [TestMethod]
         [TestCategory("offline")]
         public async Task NamedArgsArePassedCorrectly()
