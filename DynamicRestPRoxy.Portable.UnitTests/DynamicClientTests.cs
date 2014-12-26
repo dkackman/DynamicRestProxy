@@ -111,8 +111,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
             foreach (dynamic bill in result.results)
             {
-                Assert.AreEqual("senate", (string)bill.chamber);
-                Assert.AreEqual("pass", (string)bill.history.house_passage_result);
+                Assert.AreEqual("senate", bill.chamber);
+                Assert.AreEqual("pass", bill.history.house_passage_result);
             }
         }
     }

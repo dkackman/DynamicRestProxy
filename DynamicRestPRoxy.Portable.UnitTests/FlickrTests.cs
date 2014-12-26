@@ -33,7 +33,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
             dynamic result = await client.get(method: "flickr.people.findByUsername", username: "dkackman");
             Assert.IsNotNull(result);
-            Assert.AreEqual("9039518@N03", (string)result.user.id);
+            Assert.AreEqual("9039518@N03", result.user.id);
         }
 
         [TestMethod]

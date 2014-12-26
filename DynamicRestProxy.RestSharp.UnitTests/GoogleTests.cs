@@ -33,7 +33,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
             var profile = await proxy.oauth2.v1.userinfo.get();
 
             Assert.IsNotNull(profile);
-            Assert.AreEqual("Kackman", (string)profile.family_name);
+            Assert.AreEqual("Kackman", profile.family_name);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
             var list = await proxy.users.me.calendarList.get();
 
             Assert.IsNotNull(list);
-            Assert.AreEqual("calendar#calendarList", (string)list.kind);
+            Assert.AreEqual("calendar#calendarList", list.kind);
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace DynamicRestProxy.RestSharp.UnitTests
             var list = await proxy.calendars.post(calendar);
 
             Assert.IsNotNull(list);
-            Assert.AreEqual("unit_testing", (string)list.summary);
+            Assert.AreEqual("unit_testing", list.summary);
         }
 
         [TestMethod]

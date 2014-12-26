@@ -36,7 +36,7 @@ namespace Client.Google.UnitTests
             var profile = await google.oauth2.v1.userinfo.get();
 
             Assert.IsNotNull(profile);
-            Assert.AreEqual("Kackman", (string)profile.family_name);
+            Assert.AreEqual("Kackman", profile.family_name);
         }
 
         [TestMethod]
