@@ -14,8 +14,8 @@ namespace DynamicRestProxy.RestSharp
     {
         private IRestClient _client;
 
-        public RestSharpProxy(string baseUrl)
-            : this(new RestClient(baseUrl))
+        public RestSharpProxy(string baseUri)
+            : this(new RestClient(baseUri))
         {
         }
 
@@ -32,7 +32,7 @@ namespace DynamicRestProxy.RestSharp
             _client = client;
         }
 
-        protected override Uri BaseUrl
+        protected override Uri BaseUri
         {
             get
             {

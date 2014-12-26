@@ -22,37 +22,37 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="baseUrl">The root url for all requests</param>
+        /// <param name="baseUri">The root url for all requests</param>
         /// <param name="defaults">Default values to add to all requests</param>
         /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(string baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(new Uri(baseUrl, UriKind.Absolute), defaults, configure)
+        public DynamicRestClient(string baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
+            : this(new Uri(baseUri, UriKind.Absolute), defaults, configure)
         {
         }
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="baseUrl">The root url for all requests</param>
+        /// <param name="baseUri">The root url for all requests</param>
         /// <param name="defaults">Default values to add to all requests</param>
         /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(Uri baseUrl, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(baseUrl, null, "", defaults, configure)
+        public DynamicRestClient(Uri baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
+            : this(baseUri, null, "", defaults, configure)
         {
         }
 
-        internal DynamicRestClient(Uri baseUrl, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
+        internal DynamicRestClient(Uri baseUri, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
             : base(parent, name)
         {
-            _baseUrl = baseUrl;
+            _baseUrl = baseUri;
             _defaults = defaults ?? new DynamicRestClientDefaults();
             _configureRequest = configure;
         }
 
         /// <summary>
-        /// <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>
+        /// <see cref="DynamicRestProxy.RestProxy.BaseUri"/>
         /// </summary>
-        protected override Uri BaseUrl
+        protected override Uri BaseUri
         {
             get { return _baseUrl; }
         }
@@ -66,13 +66,12 @@ namespace DynamicRestProxy.PortableHttpClient
         }
 
         /// <summary>
-        /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
+        /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object}, CancellationToken, JsonSerializerSettings)"/>
         /// </summary>
         protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
             var builder = new RequestBuilder(this, _defaults);
 
-            // filter any CancellationTokens and JsonSerializerSettings out of the unnamed args as those are not intended as content
             using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             {
                 // give the user code a chance to setup any other request details

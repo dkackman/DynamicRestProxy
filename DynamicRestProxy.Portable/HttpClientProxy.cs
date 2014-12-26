@@ -14,7 +14,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// </summary>
     public class HttpClientProxy : RestProxy
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         /// <summary>
         /// ctor
@@ -37,9 +37,9 @@ namespace DynamicRestProxy.PortableHttpClient
         }
 
         /// <summary>
-        /// <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>
+        /// <see cref="DynamicRestProxy.RestProxy.BaseUri"/>
         /// </summary>
-        protected override Uri BaseUrl
+        protected override Uri BaseUri
         {
             get { return _client.BaseAddress; }
         }
@@ -53,7 +53,7 @@ namespace DynamicRestProxy.PortableHttpClient
         }
 
         /// <summary>
-        /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object})"/>
+        /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object}, CancellationToken, JsonSerializerSettings)"/>
         /// </summary>
         protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {

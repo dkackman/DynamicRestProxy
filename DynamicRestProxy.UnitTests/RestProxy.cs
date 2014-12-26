@@ -48,7 +48,7 @@ namespace DynamicRestProxy
         /// <summary>
         /// The base Url of the endpoint. Overridden in derived classess to allow specific rest client to deteremine how it is stored
         /// </summary>
-        protected abstract string BaseUrl { get; }
+        protected abstract string BaseUri { get; }
 
         /// <summary>
         /// Factory method used to create instances of derived child nodes. Overrideen in derived classess to create derived instances
@@ -149,7 +149,7 @@ namespace DynamicRestProxy
         /// <summary>
         /// The relative Url (minus parameters) for this endpoint
         /// </summary>
-        /// <returns>The relative part of the url (relative to <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>)</returns>
+        /// <returns>The relative part of the url (relative to <see cref="DynamicRestProxy.RestProxy.BaseUri"/>)</returns>
         public string GetEndPointPath()
         {
             var builder = new StringBuilder();
@@ -163,12 +163,12 @@ namespace DynamicRestProxy
         /// <returns>The full Url of this node in the path chain</returns>
         public override string ToString()
         {
-            if (BaseUrl.EndsWith("/"))
+            if (BaseUri.EndsWith("/"))
             {
-                return BaseUrl + GetEndPointPath();
+                return BaseUri + GetEndPointPath();
             }
 
-            return BaseUrl + "/" + GetEndPointPath();
+            return BaseUri + "/" + GetEndPointPath();
         }
 
         /// <summary>

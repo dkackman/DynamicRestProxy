@@ -26,6 +26,7 @@ namespace DynamicRestProxy.PortableHttpClient
             // the way the base class and this class's static contructor use BinderExtensions._verbs should prevent an unkown verb from reaching here
             Debug.Assert(_methods.ContainsKey(verb), "unrecognized verb. check the BinderExtensions _verbs array");
 
+            // combine the default parameters with the call specific paramters
             var allNamedArgs = namedArgs.Concat(_defaults.DefaultParameters);
 
             var method = _methods[verb];

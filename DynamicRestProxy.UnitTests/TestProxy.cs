@@ -40,7 +40,7 @@ namespace DynamicRestProxy.UnitTests
                 });
         }
 
-        protected override string BaseUrl
+        protected override string BaseUri
         {
             get { return _baseUrl; }
         }

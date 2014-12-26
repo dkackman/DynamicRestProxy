@@ -56,7 +56,7 @@ namespace DynamicRestProxy
         /// <summary>
         /// The base Url of the endpoint. Overridden in derived classes to allow specific rest client to determine how it is stored
         /// </summary>
-        protected abstract Uri BaseUrl { get; }
+        protected abstract Uri BaseUri { get; }
 
         /// <summary>
         /// Factory method used to create instances of derived child nodes. Overriden in derived classes to create derived instances
@@ -90,6 +90,8 @@ namespace DynamicRestProxy
         /// <param name="verb">The http verb to execute (must be get, post, put or delete)</param>
         /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
         /// <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
+        /// <param name="cancelToken">A CancellationToken for the async operations</param>
+        /// <param name="serializationSettings">Settings to use for response deserialization</param>
         /// <returns>Task{dynamic} that will execute the http call and return a dynamic object with the results</returns>
         protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings);
 
@@ -177,7 +179,7 @@ namespace DynamicRestProxy
         /// <summary>
         /// The relative Url (minus parameters) for this endpoint
         /// </summary>
-        /// <returns>The relative part of the url (relative to <see cref="DynamicRestProxy.RestProxy.BaseUrl"/>)</returns>
+        /// <returns>The relative part of the url (relative to <see cref="DynamicRestProxy.RestProxy.BaseUri"/>)</returns>
         public string GetEndPointPath()
         {
             var builder = new StringBuilder();
@@ -191,7 +193,7 @@ namespace DynamicRestProxy
         /// <returns>The full Url of this node in the path chain</returns>
         public override string ToString()
         {
-            string uri = BaseUrl.ToString();
+            string uri = BaseUri.ToString();
             if (uri.EndsWith("/"))
             {
                 return uri + GetEndPointPath();
