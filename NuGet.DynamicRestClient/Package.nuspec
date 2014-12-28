@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>1.1.0</version>
+    <version>2.0.0</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -10,9 +10,8 @@
       A portable http rest client using dynamic objects for data transfer and endpoint url construction
     </description>
     <releaseNotes>
-      Add patch verb
-      Add UserAgent
-      Remove dependency on abstract DynamicRestProxy dll and package
+      Added static type deserialization
+      option to pass JsonSerializationSettings to verb invocation methods      
     </releaseNotes>
     <summary>
     </summary>
@@ -23,7 +22,7 @@
     <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
     <copyright>Copyright Don Kackman 2014</copyright>
     <dependencies>
-      <group targetFramework="portable-windows8+net45+wp8+win8+wpa81+windowsphone8+sl5">
+      <group targetFramework="portable-windows8+net45+wp8+win8+wpa81+windowsphone8">
         <dependency id="Newtonsoft.Json" version="6.0.6" />
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Microsoft.Bcl" version="1.1.9" />
