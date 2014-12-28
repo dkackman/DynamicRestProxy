@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.IO;
+using System.Net.Http;
 using System.Dynamic;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -13,6 +14,17 @@ namespace DynamicRestProxy.PortableHttpClient
     {
         public async static Task<T> Deserialize<T>(this HttpResponseMessage response, JsonSerializerSettings settings)
         {
+            // if the client asked for a stream or byte array, return without serializing to a different type
+            if (typeof(T) == typeof(Stream))
+            {
+                return (T)(object)response.Content.ReadAsStreamAsync();
+            }
+
+            if (typeof(T) == typeof(byte[]))
+            {
+                return (T)(object)response.Content.ReadAsByteArrayAsync();
+            }
+
             var content = await response.Content.ReadAsStringAsync();
 
             if (!string.IsNullOrEmpty(content))
@@ -21,6 +33,12 @@ namespace DynamicRestProxy.PortableHttpClient
                 if (typeof(T) == typeof(object))
                 {
                     return DeserializeToDynamic(content.Trim(), settings);
+                }
+
+                // return type is string, just return the content
+                if (typeof(T) == typeof(string))
+                {
+                    return (T)(object)content;
                 }
 
                 // otherwise deserialize to the return type
