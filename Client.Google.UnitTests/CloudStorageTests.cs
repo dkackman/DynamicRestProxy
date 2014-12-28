@@ -20,6 +20,21 @@ namespace Client.Google.UnitTests
         [TestCategory("portable-client")]
         [TestCategory("integration")]
         [TestCategory("google")]
+        public async Task GetNonJsonContent()
+        {
+            dynamic google = new DynamicRestClient("https://www.googleapis.com/");
+            dynamic zip = google.storage.v1.b("uspto-pair").o("applications%2F05900002.zip");
+
+            byte[] zipBytes = await zip.get(typeof(byte[]), generation: 1370956749027000, alt: "media");
+
+            Assert.IsNotNull(zipBytes);
+            Assert.IsTrue(zipBytes.Any());
+        }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
         public async Task GetPublicBucket()
         {
             dynamic google = new DynamicRestClient("https://www.googleapis.com/");

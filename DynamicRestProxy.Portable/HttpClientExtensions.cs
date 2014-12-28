@@ -17,12 +17,14 @@ namespace DynamicRestProxy.PortableHttpClient
             // if the client asked for a stream or byte array, return without serializing to a different type
             if (typeof(T) == typeof(Stream))
             {
-                return (T)(object)response.Content.ReadAsStreamAsync();
+                var stream = await response.Content.ReadAsStreamAsync();
+                return (T)(object)stream;
             }
 
             if (typeof(T) == typeof(byte[]))
             {
-                return (T)(object)response.Content.ReadAsByteArrayAsync();
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                return (T)(object)bytes;
             }
 
             var content = await response.Content.ReadAsStringAsync();
