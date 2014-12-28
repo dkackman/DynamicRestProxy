@@ -17,6 +17,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.PortableHttpClient.UnitTests", "DynamicRestPRoxy.Portable.UnitTests\DynamicRestProxy.PortableHttpClient.UnitTests.csproj", "{8F20FF2D-3ECA-4444-9892-09292289B248}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.DynamicRestClient", "NuGet.DynamicRestClient\NuGet.DynamicRestClient.csproj", "{1D805AB8-F6C8-49AB-82B8-D954B998BBE9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{11B51B4D-D60E-42E0-81D8-C9BCC08063AD} = {11B51B4D-D60E-42E0-81D8-C9BCC08063AD}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{5D427DF5-A5A6-442F-9829-ADA85EF1EE61}"
 EndProject

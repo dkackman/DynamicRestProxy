@@ -29,16 +29,16 @@ namespace DynamicRestProxy.PortableHttpClient
 
             if (!string.IsNullOrEmpty(content))
             {
-                // if the return type is object return a dynamic object
-                if (typeof(T) == typeof(object))
-                {
-                    return DeserializeToDynamic(content.Trim(), settings);
-                }
-
                 // return type is string, just return the content
                 if (typeof(T) == typeof(string))
                 {
                     return (T)(object)content;
+                }
+
+                // if the return type is object return a dynamic object
+                if (typeof(T) == typeof(object))
+                {
+                    return DeserializeToDynamic(content.Trim(), settings);
                 }
 
                 // otherwise deserialize to the return type
