@@ -28,7 +28,7 @@ namespace DynamicRestProxy
             // Index is zero based so add one
             var request = new RestRequest(CreateUrlSegmentTemplate(_proxy.Index + 1));
             Method method;
-            if (!Enum.TryParse<Method>(verb, out method))
+            if (!Enum.TryParse<Method>(verb, true, out method))
             {
                 throw new InvalidOperationException("unsupported verb: " + verb);
             }
