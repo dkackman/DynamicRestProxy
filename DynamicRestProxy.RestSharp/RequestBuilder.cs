@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
@@ -20,7 +21,7 @@ namespace DynamicRestProxy
             _proxy = proxy;
         }
 
-        public IRestRequest BuildRequest(IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        public IRestRequest BuildRequest(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
         {
             // total number of segments is the number or parts of the call chain not including the root
             // example: proxy.location.geo.get() has two url segments - the verb doesn't count
@@ -56,8 +57,22 @@ namespace DynamicRestProxy
                     request.AddParameter(kvp.Key, kvp.Value.ToString());
                 }
             }
-
+            request.Method = GetMethod(verb);
             return request;
+        }
+
+        private static Method GetMethod(string verb)
+        {
+            switch (verb)
+            {
+                case "post": return Method.POST;
+                case "get": return Method.GET;
+                case "delete": return Method.DELETE;
+                case "put": return Method.PUT;
+                case "patch": return Method.PATCH;
+            }
+            Debug.Assert(false, "unsupported verb");
+            throw new InvalidOperationException("unsupported verb: " + verb);
         }
 
         private static string CreateUrlSegmentTemplate(int count)

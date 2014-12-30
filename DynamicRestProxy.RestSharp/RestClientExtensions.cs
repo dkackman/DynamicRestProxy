@@ -15,10 +15,8 @@ namespace DynamicRestProxy
 {
     static class RestClientExtensions
     {
-        public static async Task<T> ExecuteDynamicTaskAsync<T>(this IRestClient client, IRestRequest request, Method method, CancellationToken cancelToken, JsonSerializerSettings settings)
+        public static async Task<T> ExecuteDynamicTaskAsync<T>(this IRestClient client, IRestRequest request, CancellationToken cancelToken, JsonSerializerSettings settings)
         {
-            request.Method = method;
-
             if (typeof(T) != typeof(object))
             {
                 var typedResponse = await client.ExecuteTaskAsync<T>(request, cancelToken);
