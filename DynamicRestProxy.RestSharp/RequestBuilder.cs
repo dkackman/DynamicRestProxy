@@ -27,9 +27,15 @@ namespace DynamicRestProxy
             // example: proxy.location.geo.get() has two url segments - the verb doesn't count
             // Index is zero based so add one
             var request = new RestRequest(CreateUrlSegmentTemplate(_proxy.Index + 1));
+            Method method;
+            if (!Enum.TryParse<Method>(verb, out method))
+            {
+                throw new InvalidOperationException("unsupported verb: " + verb);
+            }
+            request.Method = method;
             request.RequestFormat = DataFormat.Json; // we only talk json            
             request.AddHeader("Accept", "application/json, text/json, text/x-json, text/javascript");
-            
+
             // fill in the url segments with the names of each call chain member
             _proxy.AddSegment(request); // this recurses up the instance chain
 
@@ -39,7 +45,7 @@ namespace DynamicRestProxy
                 request.AddBody(arg);
             }
 
-            foreach(var kvp in namedArgs)
+            foreach (var kvp in namedArgs)
             {
                 if (kvp.Value is IDictionary<string, object>) // if the arg is a dictionary, add each item as a parameter key value pair
                 {
@@ -57,22 +63,8 @@ namespace DynamicRestProxy
                     request.AddParameter(kvp.Key, kvp.Value.ToString());
                 }
             }
-            request.Method = GetMethod(verb);
-            return request;
-        }
 
-        private static Method GetMethod(string verb)
-        {
-            switch (verb)
-            {
-                case "post": return Method.POST;
-                case "get": return Method.GET;
-                case "delete": return Method.DELETE;
-                case "put": return Method.PUT;
-                case "patch": return Method.PATCH;
-            }
-            Debug.Assert(false, "unsupported verb");
-            throw new InvalidOperationException("unsupported verb: " + verb);
+            return request;
         }
 
         private static string CreateUrlSegmentTemplate(int count)
