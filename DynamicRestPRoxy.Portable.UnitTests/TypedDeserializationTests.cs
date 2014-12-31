@@ -2,6 +2,8 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Http;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -92,7 +94,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         public async Task DeserializeToStream()
         {
             dynamic google = new DynamicRestClient("https://www.google.com/");
-            Stream content = await google.get(typeof(Stream));
+            using (Stream content = await google.get(typeof(Stream)))
             {
                 Assert.IsNotNull(content);
                 using (var reader = new StreamReader(content))
@@ -102,6 +104,25 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                     Assert.IsTrue(s.StartsWith("<!doctype html>"));
                 }
             }
+        }
+
+        [TestMethod]
+        public async Task DebugStreamedContent()
+        {
+            Stream stream = null; // in real life the consumer of the stream is far away 
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("https://www.google.com/", UriKind.Absolute);
+            using (var request = new HttpRequestMessage(HttpMethod.Get, "/"))
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                //here I would return the stream 
+                stream = await response.Content.ReadAsStreamAsync();
+            }
+
+            Assert.IsNotNull(stream); // if response is disposed so is the stream
+            Assert.IsTrue(stream.CanRead);
         }
     }
 }
