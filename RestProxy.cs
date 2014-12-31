@@ -93,7 +93,7 @@ namespace DynamicRestProxy
         /// <param name="cancelToken">A CancellationToken for the async operations</param>
         /// <param name="serializationSettings">Settings to use for response deserialization</param>
         /// <returns>Task{dynamic} that will execute the http call and return a dynamic object with the results</returns>
-        protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings);
+        protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings);
 
         /// <summary>
         /// <see cref="System.Dynamic.DynamicObject.TryInvokeMember(InvokeMemberBinder, object[], out object)"/>

@@ -31,7 +31,7 @@ namespace DynamicRestProxy.UnitTests
             return new TestProxy(_baseUrl, parent, name);
         }
 
-        protected override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
+        protected override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
             // just pass the arguments back as a task to they can be tested
             return Task.Factory.StartNew<T>(() =>

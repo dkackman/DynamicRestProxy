@@ -55,9 +55,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object}, CancellationToken, JsonSerializerSettings)"/>
         /// </summary>
-        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
-            var builder = new RequestBuilder(this, new DynamicRestClientDefaults());
+            var builder = new RequestBuilder(this);
 
             using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             using (var response = await _client.SendAsync(request, cancelToken))

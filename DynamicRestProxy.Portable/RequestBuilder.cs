@@ -10,34 +10,29 @@ namespace DynamicRestProxy.PortableHttpClient
     class RequestBuilder
     {
         private readonly RestProxy _proxy;
-        private readonly DynamicRestClientDefaults _defaults;
 
         private static readonly IDictionary<string, HttpMethod> _methods = BinderExtensions._verbs.ToDictionary(verb => verb, verb => new HttpMethod(verb.ToUpperInvariant()));
 
-        public RequestBuilder(RestProxy proxy, DynamicRestClientDefaults defaults)
+        public RequestBuilder(RestProxy proxy)
         {
             Debug.Assert(proxy != null);
             _proxy = proxy;
-            _defaults = defaults;
         }
 
-        public HttpRequestMessage CreateRequest(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        public HttpRequestMessage CreateRequest(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
             // the way the base class and this class's static contructor use BinderExtensions._verbs should prevent an unkown verb from reaching here
             Debug.Assert(_methods.ContainsKey(verb), "unrecognized verb. check the BinderExtensions _verbs array");
-
-            // combine the default parameters with the call specific paramters
-            var allNamedArgs = namedArgs.Concat(_defaults.DefaultParameters);
 
             var method = _methods[verb];
             var request = new HttpRequestMessage()
             {
                 Method = method,
-                RequestUri = MakeUri(method, allNamedArgs)
+                RequestUri = MakeUri(method, namedArgs)
             };
 
             // filter out a cancellationtoken if passed
-            var content = CreateContent(method, unnamedArgs, allNamedArgs);
+            var content = CreateContent(method, unnamedArgs, namedArgs);
             if (content != null)
             {
                 request.Content = content;

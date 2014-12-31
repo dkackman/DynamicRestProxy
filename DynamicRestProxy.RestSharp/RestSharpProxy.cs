@@ -45,7 +45,7 @@ namespace DynamicRestProxy.RestSharp
             return new RestSharpProxy(_client, parent, name);
         }
 
-        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings settings)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings settings)
         {
             var builder = new RequestBuilder(this);
             var request = builder.BuildRequest(verb, unnamedArgs, namedArgs);

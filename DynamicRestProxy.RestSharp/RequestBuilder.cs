@@ -21,7 +21,7 @@ namespace DynamicRestProxy
             _proxy = proxy;
         }
 
-        public IRestRequest BuildRequest(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs)
+        public IRestRequest BuildRequest(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
             // total number of segments is the number or parts of the call chain not including the root
             // example: proxy.location.geo.get() has two url segments - the verb doesn't count

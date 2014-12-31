@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Diagnostics;
 
 using Newtonsoft.Json;
 
@@ -15,8 +17,8 @@ namespace DynamicRestProxy.PortableHttpClient
     /// </summary>
     public class DynamicRestClient : RestProxy
     {
-        private readonly Uri _baseUrl;
-        private readonly DynamicRestClientDefaults _defaults;
+        private readonly HttpClient _httpClient;
+        private readonly IEnumerable<KeyValuePair<string, object>> _defaultParameters;
         private readonly Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
 
         /// <summary>
@@ -37,15 +39,18 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <param name="defaults">Default values to add to all requests</param>
         /// <param name="configure">A callback function that will be called just before any request is sent</param>
         public DynamicRestClient(Uri baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(baseUri, null, "", defaults, configure)
+            : this(CreateClient(baseUri, defaults), null, null, "", configure)
         {
+            _defaultParameters = defaults != null ? defaults.DefaultParameters : null;
         }
 
-        internal DynamicRestClient(Uri baseUri, RestProxy parent, string name, DynamicRestClientDefaults defaults, Func<HttpRequestMessage, CancellationToken, Task> configure)
+        internal DynamicRestClient(HttpClient client, IEnumerable<KeyValuePair<string, object>> defaultParameters, RestProxy parent, string name, Func<HttpRequestMessage, CancellationToken, Task> configure)
             : base(parent, name)
         {
-            _baseUrl = baseUri;
-            _defaults = defaults ?? new DynamicRestClientDefaults();
+            Debug.Assert(client != null);
+
+            _httpClient = client;
+            _defaultParameters = defaultParameters;
             _configureRequest = configure;
         }
 
@@ -54,7 +59,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// </summary>
         protected override Uri BaseUri
         {
-            get { return _baseUrl; }
+            get { return _httpClient.BaseAddress; }
         }
 
         /// <summary>
@@ -62,15 +67,20 @@ namespace DynamicRestProxy.PortableHttpClient
         /// </summary>
         protected override RestProxy CreateProxyNode(RestProxy parent, string name)
         {
-            return new DynamicRestClient(_baseUrl, parent, name, _defaults, _configureRequest);
+            return new DynamicRestClient(_httpClient, _defaultParameters, parent, name, _configureRequest);
         }
 
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object}, CancellationToken, JsonSerializerSettings)"/>
         /// </summary>
-        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IDictionary<string, object> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
+        protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
-            var builder = new RequestBuilder(this, _defaults);
+            var builder = new RequestBuilder(this);
+
+            if (_defaultParameters != null)
+            {
+                namedArgs = namedArgs.Concat(_defaultParameters);
+            }
 
             using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
             {
@@ -81,18 +91,15 @@ namespace DynamicRestProxy.PortableHttpClient
                     await _configureRequest(request, cancelToken);
                 }
 
-                using (var client = CreateClient())
-                using (var response = await client.SendAsync(request, cancelToken))
-                {
-                    response.EnsureSuccessStatusCode();
+                var response = await _httpClient.SendAsync(request, cancelToken);
+                response.EnsureSuccessStatusCode();
 
-                    // forward the JsonSerializationSettings on if passed
-                    return await response.Deserialize<T>(serializationSettings);
-                }
+                // forward the JsonSerializationSettings on if passed
+                return await response.Deserialize<T>(serializationSettings);
             }
         }
 
-        private HttpClient CreateClient()
+        public static HttpClient CreateClient(Uri baseUri, DynamicRestClientDefaults defaults)
         {
             var handler = new HttpClientHandler();
             if (handler.SupportsAutomaticDecompression)
@@ -102,7 +109,7 @@ namespace DynamicRestProxy.PortableHttpClient
 
             var client = new HttpClient(handler, true);
 
-            client.BaseAddress = _baseUrl;
+            client.BaseAddress = baseUri;
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
@@ -114,23 +121,23 @@ namespace DynamicRestProxy.PortableHttpClient
                 client.DefaultRequestHeaders.TransferEncodingChunked = true;
             }
 
-            if (_defaults != null)
+            if (defaults != null)
             {
                 ProductInfoHeaderValue productHeader = null;
-                if (!string.IsNullOrEmpty(_defaults.UserAgent) && ProductInfoHeaderValue.TryParse(_defaults.UserAgent, out productHeader))
+                if (!string.IsNullOrEmpty(defaults.UserAgent) && ProductInfoHeaderValue.TryParse(defaults.UserAgent, out productHeader))
                 {
                     client.DefaultRequestHeaders.UserAgent.Clear();
                     client.DefaultRequestHeaders.UserAgent.Add(productHeader);
                 }
 
-                foreach (var kvp in _defaults.DefaultHeaders)
+                foreach (var kvp in defaults.DefaultHeaders)
                 {
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
                 }
 
-                if (!string.IsNullOrEmpty(_defaults.AuthToken) && !string.IsNullOrEmpty(_defaults.AuthScheme))
+                if (!string.IsNullOrEmpty(defaults.AuthToken) && !string.IsNullOrEmpty(defaults.AuthScheme))
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_defaults.AuthScheme, _defaults.AuthToken);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(defaults.AuthScheme, defaults.AuthToken);
                 }
             }
 

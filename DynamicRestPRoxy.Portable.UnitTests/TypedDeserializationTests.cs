@@ -105,24 +105,5 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 }
             }
         }
-
-        [TestMethod]
-        public async Task DebugStreamedContent()
-        {
-            Stream stream = null; // in real life the consumer of the stream is far away 
-            var client = new HttpClient();
-
-            client.BaseAddress = new Uri("https://www.google.com/", UriKind.Absolute);
-            using (var request = new HttpRequestMessage(HttpMethod.Get, "/"))
-            using (var response = await client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                //here I would return the stream 
-                stream = await response.Content.ReadAsStreamAsync();
-            }
-
-            Assert.IsNotNull(stream); // if response is disposed so is the stream
-            Assert.IsTrue(stream.CanRead);
-        }
     }
 }
