@@ -15,7 +15,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// <summary>
     /// A rest client that uses dynamic objects for invocation and result values
     /// </summary>
-    public class DynamicRestClient : RestProxy
+    public sealed class DynamicRestClient : RestProxy, IDisposable
     {
         private readonly HttpClient _httpClient;
         private readonly IEnumerable<KeyValuePair<string, object>> _defaultParameters;
@@ -96,6 +96,14 @@ namespace DynamicRestProxy.PortableHttpClient
 
                 // forward the JsonSerializationSettings on if passed
                 return await response.Deserialize<T>(serializationSettings);
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_httpClient != null)
+            {
+                _httpClient.Dispose();
             }
         }
 

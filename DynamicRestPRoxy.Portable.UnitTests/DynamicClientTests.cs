@@ -15,13 +15,14 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("portable-client")]
         public async Task EscapeUriSegmentsUsingClient()
         {
-            dynamic client = new DynamicRestClient("http://openstates.org/api/v1/");
+            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/"))
+            {
+                string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+                var result = await client.bills.mn("2013s1")("SF 1").get(apikey: key);
 
-            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
-            var result = await client.bills.mn("2013s1")("SF 1").get(apikey: key);
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.id == "MNB00017167");
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.id == "MNB00017167");
+            }
         }
 
         [TestMethod]
