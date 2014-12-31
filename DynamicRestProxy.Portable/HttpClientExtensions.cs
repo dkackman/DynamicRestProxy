@@ -18,6 +18,7 @@ namespace DynamicRestProxy.PortableHttpClient
             if (typeof(T) == typeof(Stream))
             {
                 var stream = await response.Content.ReadAsStreamAsync();
+                
                 return (T)(object)stream;
             }
 

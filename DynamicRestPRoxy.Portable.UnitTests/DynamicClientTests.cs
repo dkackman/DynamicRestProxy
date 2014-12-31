@@ -12,7 +12,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     {
         [TestMethod]
         [TestCategory("integration")]
-        [TestCategory("portable")]
+        [TestCategory("portable-client")]
         public async Task EscapeUriSegmentsUsingClient()
         {
             dynamic client = new DynamicRestClient("http://openstates.org/api/v1/");
@@ -26,7 +26,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
         [TestMethod]
         [TestCategory("integration")]
-        [TestCategory("portable")]
+        [TestCategory("portable-client")]
         public async Task ExplicitGetInvokeUsingClient()
         {
             dynamic client = new DynamicRestClient("http://openstates.org/api/v1/");

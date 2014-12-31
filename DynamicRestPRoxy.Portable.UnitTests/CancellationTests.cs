@@ -14,6 +14,9 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     public class CancellationTests
     {
         [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+
         public void Cancel()
         {
             dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/");
@@ -42,6 +45,10 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         }
 
         [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
+
         public void CancelPassesToConfigurationCallback()
         {
             using (var source = new CancellationTokenSource())

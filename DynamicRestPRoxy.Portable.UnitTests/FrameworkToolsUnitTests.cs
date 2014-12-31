@@ -9,7 +9,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     [TestClass]
     public class FrameworkToolsUnitTests
     {
-        #if EXPERIMENTAL_GENERICS
+#if EXPERIMENTAL_GENERICS
 
         [TestMethod]
         public void GetDynamicGenericArguments()
