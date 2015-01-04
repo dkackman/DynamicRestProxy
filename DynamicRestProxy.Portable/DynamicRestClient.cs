@@ -95,7 +95,18 @@ namespace DynamicRestProxy.PortableHttpClient
                 response.EnsureSuccessStatusCode();
 
                 // forward the JsonSerializationSettings on if passed
-                return await response.Deserialize<T>(serializationSettings);
+                T result = await response.Deserialize<T>(serializationSettings);
+
+                // if result isn't disposable (i.e. a stream or response message) it means
+                // that we have fully read and deserialized the content and can dispose the response
+                // If result is disposable, then it is up to the caller to dispose of it.
+                // so if the caller asks for a stream we do not dispose the response (which disposes the stream)
+                if (!(result is IDisposable))
+                {
+                    response.Dispose();
+                }
+
+                return result;
             }
         }
 
