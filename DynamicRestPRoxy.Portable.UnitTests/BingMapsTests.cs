@@ -41,16 +41,18 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
                 string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
-                dynamic proxy = new HttpClientProxy(client);
-                var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
+                using (dynamic proxy = new DynamicRestClient(client))
+                {
+                    var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
 
-                Assert.AreEqual(200, (int)result.statusCode);
-                Assert.IsTrue(result.resourceSets.Count > 0);
-                Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
+                    Assert.AreEqual(200, (int)result.statusCode);
+                    Assert.IsTrue(result.resourceSets.Count > 0);
+                    Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
 
-                var r = result.resourceSets[0].resources[0].point.coordinates;
-                Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
-                Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
+                    var r = result.resourceSets[0].resources[0].point.coordinates;
+                    Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
+                    Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
+                }
             }
         }
 
@@ -71,15 +73,17 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
                 string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
-                dynamic proxy = new HttpClientProxy(client);
-                var result = await proxy.Locations("44.9108238220215,-93.1702041625977").get(includeEntityTypes: "Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion", key: key);
+                using (dynamic proxy = new DynamicRestClient(client))
+                {
+                    var result = await proxy.Locations("44.9108238220215,-93.1702041625977").get(includeEntityTypes: "Address,PopulatedPlace,Postcode1,AdminDivision1,CountryRegion", key: key);
 
-                Assert.AreEqual(200, (int)result.statusCode);
-                Assert.IsTrue(result.resourceSets.Count > 0);
-                Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
+                    Assert.AreEqual(200, (int)result.statusCode);
+                    Assert.IsTrue(result.resourceSets.Count > 0);
+                    Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
 
-                var address = result.resourceSets[0].resources[0].address.formattedAddress;
-                Assert.AreEqual("1012 Davern St, St Paul, MN 55116", address);
+                    var address = result.resourceSets[0].resources[0].address.formattedAddress;
+                    Assert.AreEqual("1012 Davern St, St Paul, MN 55116", address);
+                }
             }
         }
     }
