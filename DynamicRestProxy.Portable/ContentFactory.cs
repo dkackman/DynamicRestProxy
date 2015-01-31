@@ -21,12 +21,12 @@ namespace DynamicRestProxy.PortableHttpClient
         public static HttpContent Create(IEnumerable<object> contents)
         {
             Debug.Assert(contents != null);
-            Debug.Assert(contents.Any());
+            Debug.Assert(contents.Any(o => o != null));
 
             // if only 1 object in the collection, just create as normal
-            if (contents.Count() == 1)
+            if (contents.Count(o => o != null) == 1)
             {
-                return Create(contents.First());
+                return Create(contents.First(o => o != null));
             }
 
             // otherwise package everything as multipart content

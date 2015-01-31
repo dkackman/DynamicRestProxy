@@ -31,12 +31,8 @@ namespace DynamicRestProxy.PortableHttpClient
                 RequestUri = MakeUri(method, namedArgs)
             };
 
-            // filter out a cancellationtoken if passed
-            var content = CreateContent(method, unnamedArgs, namedArgs);
-            if (content != null)
-            {
-                request.Content = content;
-            }
+            // create content object as appropriate to the args passed and method
+            request.Content = CreateContent(method, unnamedArgs, namedArgs);
 
             return request;
         }
