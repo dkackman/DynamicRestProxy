@@ -29,11 +29,12 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             defaults.DefaultParameters.Add("api_key", key.Key);
             defaults.DefaultParameters.Add("nojsoncallback", "1");
 
-            dynamic client = new DynamicRestClient("https://api.flickr.com/services/rest/", defaults);
-
-            dynamic result = await client.get(method: "flickr.people.findByUsername", username: "dkackman");
-            Assert.IsNotNull(result);
-            Assert.AreEqual("9039518@N03", result.user.id);
+            using (dynamic client = new DynamicRestClient("https://api.flickr.com/services/rest/", defaults))
+            {
+                dynamic result = await client.get(method: "flickr.people.findByUsername", username: "dkackman");
+                Assert.IsNotNull(result);
+                Assert.AreEqual("9039518@N03", result.user.id);
+            }
         }
 
         [TestMethod]
@@ -48,12 +49,12 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             defaults.DefaultParameters.Add("api_key", key.Key);
             defaults.DefaultParameters.Add("nojsoncallback", "1");
 
-            dynamic client = new DynamicRestClient("https://up.flickr.com/services/", defaults);
+            using (dynamic client = new DynamicRestClient("https://up.flickr.com/services/", defaults))
+            {
+                dynamic result = await client.upload.post(photo: File.OpenRead(@"D:\temp\test.png"));
 
-            dynamic result = await client.upload.post(photo: File.OpenRead(@"D:\temp\test.png"));
-
-            Assert.IsNotNull(result);
-
+                Assert.IsNotNull(result);
+            }
         }
     }
 }

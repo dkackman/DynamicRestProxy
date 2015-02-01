@@ -16,7 +16,7 @@ namespace Client.Google.UnitTests
     [TestClass]
     public class DriveTests
     {
-        private static string _token = null;        
+        private static string _token = null;
 
         [TestMethod]
         [TestCategory("portable-client")]
@@ -35,11 +35,12 @@ namespace Client.Google.UnitTests
                 AuthToken = _token
             };
 
-            dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults))
+            {
+                dynamic result = await google.upload.drive.v2.files.post(File.OpenRead(@"D:\temp\test.png"), uploadType: "media", title: "unit_test.jpg");
 
-            dynamic result = await google.upload.drive.v2.files.post(File.OpenRead(@"D:\temp\test.png"), uploadType: "media", title: "unit_test.jpg");
-
-            Assert.IsNotNull(result);
+                Assert.IsNotNull(result);
+            }
         }
     }
 }
