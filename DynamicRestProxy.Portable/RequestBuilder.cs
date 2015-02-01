@@ -28,12 +28,12 @@ namespace DynamicRestProxy.PortableHttpClient
             return new HttpRequestMessage()
             {
                 Method = method,
-                RequestUri = MakeUri(method, namedArgs),
+                RequestUri = CreateUri(method, namedArgs),
                 Content = CreateContent(method, unnamedArgs, namedArgs)
             };
         }
 
-        private Uri MakeUri(HttpMethod method, IEnumerable<KeyValuePair<string, object>> namedArgs)
+        private Uri CreateUri(HttpMethod method, IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
             var builder = new StringBuilder(_proxy.GetEndPointPath());
 
