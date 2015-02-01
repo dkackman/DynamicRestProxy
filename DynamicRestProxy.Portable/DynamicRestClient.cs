@@ -21,6 +21,7 @@ namespace DynamicRestProxy.PortableHttpClient
         private readonly IEnumerable<KeyValuePair<string, object>> _defaultParameters;
         private readonly Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
         private readonly bool _disposeClient = false;
+        private bool _disposed = false;
 
         /// <summary>
         /// ctor
@@ -88,6 +89,11 @@ namespace DynamicRestProxy.PortableHttpClient
         /// </summary>
         protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException("The shared HttpClient has been disposed");
+            }
+
             var builder = new RequestBuilder(this);
 
             if (_defaultParameters != null)
@@ -125,9 +131,10 @@ namespace DynamicRestProxy.PortableHttpClient
 
         public void Dispose()
         {
-            if (_httpClient != null && _disposeClient)
+            if (!_disposed && _httpClient != null && _disposeClient)
             {
                 _httpClient.Dispose();
+                _disposed = true;
             }
         }
 
