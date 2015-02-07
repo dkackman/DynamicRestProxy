@@ -44,7 +44,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <param name="defaults">Default values to add to all requests</param>
         /// <param name="configure">A callback function that will be called just before any request is sent</param>
         public DynamicRestClient(Uri baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(CreateClient(baseUri, defaults), null, null, "", configure, true)
+            : this(HttpClientFactory.CreateClient(baseUri, defaults), null, null, "", configure, true)
         {
             _defaultParameters = defaults != null ? defaults.DefaultParameters : null;
         }
@@ -170,51 +170,6 @@ namespace DynamicRestProxy.PortableHttpClient
                 _httpClient.Dispose();
                 _disposed = true;
             }
-        }
-
-        public static HttpClient CreateClient(Uri baseUri, DynamicRestClientDefaults defaults)
-        {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            var client = new HttpClient(handler, true);
-
-            client.BaseAddress = baseUri;
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
-
-            if (handler.SupportsTransferEncodingChunked())
-            {
-                client.DefaultRequestHeaders.TransferEncodingChunked = true;
-            }
-
-            if (defaults != null)
-            {
-                ProductInfoHeaderValue productHeader = null;
-                if (!string.IsNullOrEmpty(defaults.UserAgent) && ProductInfoHeaderValue.TryParse(defaults.UserAgent, out productHeader))
-                {
-                    client.DefaultRequestHeaders.UserAgent.Clear();
-                    client.DefaultRequestHeaders.UserAgent.Add(productHeader);
-                }
-
-                foreach (var kvp in defaults.DefaultHeaders)
-                {
-                    client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
-                }
-
-                if (!string.IsNullOrEmpty(defaults.AuthToken) && !string.IsNullOrEmpty(defaults.AuthScheme))
-                {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(defaults.AuthScheme, defaults.AuthToken);
-                }
-            }
-
-            return client;
         }
     }
 }
