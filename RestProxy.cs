@@ -108,7 +108,7 @@ namespace DynamicRestProxy
                 var requestArgs = unnamedArgs.Where(arg => !arg.IsOfType(_reservedTypes));
 
                 // these are the objects that can be passed as unnamed args that we use intenrally and do not pass to the request
-                var cancelToken = unnamedArgs.OfType<CancellationToken>().FirstOrDefault(CancellationToken.None);
+                var cancelToken = unnamedArgs.OfType<CancellationToken>().DefaultIfEmpty(CancellationToken.None).First();
                 var serializationSettings = unnamedArgs.OfType<JsonSerializerSettings>().FirstOrNewInstance();
 
 #if EXPERIMENTAL_GENERICS
