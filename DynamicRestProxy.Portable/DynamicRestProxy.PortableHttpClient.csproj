@@ -64,7 +64,6 @@
     <Compile Include="DynamicRestClient.cs" />
     <Compile Include="PostUrlParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestBuilder.cs" />
     <Compile Include="StreamInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Diagnostics;
+using System.Text;
 
 using Newtonsoft.Json;
 
@@ -17,6 +18,8 @@ namespace DynamicRestProxy.PortableHttpClient
     /// </summary>
     public sealed class DynamicRestClient : RestProxy, IDisposable
     {
+        private static readonly IDictionary<string, HttpMethod> _methods = BinderExtensions._verbs.ToDictionary(verb => verb, verb => new HttpMethod(verb.ToUpperInvariant()));
+
         private readonly HttpClient _httpClient;
         private readonly IEnumerable<KeyValuePair<string, object>> _defaultParameters;
         private readonly Func<HttpRequestMessage, CancellationToken, Task> _configureRequest;
@@ -94,14 +97,12 @@ namespace DynamicRestProxy.PortableHttpClient
                 throw new ObjectDisposedException("The shared HttpClient has been disposed");
             }
 
-            var builder = new RequestBuilder(this);
-
             if (_defaultParameters != null)
             {
                 namedArgs = namedArgs.Concat(_defaultParameters);
             }
 
-            using (var request = builder.CreateRequest(verb, unnamedArgs, namedArgs))
+            using (var request = CreateRequest(verb, unnamedArgs, namedArgs))
             {
                 // give the user code a chance to setup any other request details
                 // this is especially useful for setting oauth tokens when they have different lifetimes than the rest client
@@ -127,6 +128,39 @@ namespace DynamicRestProxy.PortableHttpClient
 
                 return result;
             }
+        }
+        private HttpRequestMessage CreateRequest(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs)
+        {
+            // the way the base class and this class's static contructor use BinderExtensions._verbs should prevent an unkown verb from reaching here
+            Debug.Assert(_methods.ContainsKey(verb), "unrecognized verb. check the BinderExtensions _verbs array");
+
+            var method = _methods[verb];
+            return new HttpRequestMessage()
+            {
+                Method = method,
+                RequestUri = CreateUri(method, namedArgs),
+                Content = ContentFactory.CreateContent(method, unnamedArgs, namedArgs)
+            };
+        }
+
+        private Uri CreateUri(HttpMethod method, IEnumerable<KeyValuePair<string, object>> namedArgs)
+        {
+            var builder = new StringBuilder(GetEndPointPath());
+
+            // all methods but post put params on the url
+            if (method != HttpMethod.Post)
+            {
+                builder.Append(namedArgs.AsQueryString());
+            }
+            else
+            {
+                // by default post uses form encoded paramters but it is allowable to have params on the url
+                // see google storage api for example https://developers.google.com/storage/docs/json_api/v1/objects/insert
+                // the PostUrlParam will wrap the param value and is a signal to force it onto the url and not form encode it
+                builder.Append(namedArgs.Where(kvp => kvp.Value is PostUrlParam).AsQueryString());
+            }
+
+            return new Uri(builder.ToString(), UriKind.Relative);
         }
 
         public void Dispose()

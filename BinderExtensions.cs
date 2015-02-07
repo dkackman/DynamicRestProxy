@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace DynamicRestProxy
 {
+    /// <summary>
+    /// Extension methods to differentiate named and unnamed args on dynamic member binder
+    /// </summary>
     static class BinderExtensions
     {
         internal static readonly string[] _verbs = new string[] { "post", "get", "delete", "put", "patch" }; // currently supported verbs
@@ -36,6 +39,11 @@ namespace DynamicRestProxy
             return binder.CallInfo.ArgumentCount - binder.CallInfo.ArgumentNames.Count;
         }
 
+        /// <summary>
+        /// We use the binder name as either a verb invocation method name or as a uri segment argument
+        /// </summary>
+        /// <param name="binder">the binder</param>
+        /// <returns>returns true if the binder name is one of the supported http verbs</returns>
         public static bool IsVerb(this InvokeMemberBinder binder)
         {
             return _verbs.Contains(binder.Name);
