@@ -2,9 +2,9 @@ DynamicRestProxy
 ================
 [NuGet package](https://www.nuget.org/packages/DynamicRestClient/)
 
-A rest client proxy using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
+A conventions based rest client using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
 
-The [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) has further detail and exmaples.
+The [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) has further detail and examples.
 
 This is a set of classes that wrap a concrete implementation of http client communication with a [DynamicObject](http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx). The wrapper translates dynamic method invocations and endpoint paths into REST requests. 
 
@@ -27,7 +27,6 @@ Or if you insist on static DTO types, a type argument can be supplied (deseriali
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
 This package includes:
-- A dynamic proxy for Microsoft's [Portable HttpClient](https://www.nuget.org/packages/Microsoft.Net.Http/). 
 - A [dynamic rest client](https://github.com/dkackman/DynamicRestProxy/wiki/Using-the-DynamicRestClient) that reduces to a bare minimum the amount of code needed to start calling rest endpoints
 - A dynamic proxy for the [RestSharp client](https://github.com/dkackman/DynamicRestProxy/wiki/RestSharp-Examples)
 
