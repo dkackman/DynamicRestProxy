@@ -112,6 +112,13 @@ namespace DynamicRestProxy.PortableHttpClient
                 }
 
                 var response = await _httpClient.SendAsync(request, cancelToken);
+
+                // if the client asked for the response message back do not check for success
+                if (typeof(T) == typeof(HttpResponseMessage))
+                {
+                    return (T)(object)response;
+                }
+
                 response.EnsureSuccessStatusCode();
 
                 // forward the JsonSerializationSettings on if passed

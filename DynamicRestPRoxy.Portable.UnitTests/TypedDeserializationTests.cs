@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -93,18 +94,40 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable-client")]
         [TestCategory("integration")]
-        public async Task DeserializeToStream()
+        public async Task ReturnResponseStream()
         {
             using (dynamic google = new DynamicRestClient("https://www.google.com/"))
-            using (Stream content = await google.get(typeof(Stream)))
+            using (Stream responseStream = await google.get(typeof(Stream)))
             {
-                Assert.IsNotNull(content);
-                using (var reader = new StreamReader(content))
+                Assert.IsNotNull(responseStream);
+                using (var reader = new StreamReader(responseStream))
                 {
-                    var s = reader.ReadToEnd();
-                    Assert.IsFalse(string.IsNullOrEmpty(s));
-                    Assert.IsTrue(s.StartsWith("<!doctype html>"));
+                    var content = reader.ReadToEnd();
+                    Assert.IsNotNull(content);
+                    Assert.IsTrue(content.StartsWith("<!doctype html>"));
                 }
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        public async Task ReturnHttpResponseMessage()
+        {
+            using (dynamic google = new DynamicRestClient("https://www.google.com/"))
+            using (HttpResponseMessage response = await google.get(typeof(HttpResponseMessage)))
+            {
+                Assert.IsNotNull(response);
+                // this makes it possible to inspect the response for more information than just the content
+                Assert.AreEqual("OK", response.ReasonPhrase);
+
+                // when asking for the complete response object the client does not check status
+                Assert.IsTrue(response.IsSuccessStatusCode);
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                Assert.IsNotNull(content);
+                Assert.IsTrue(content.StartsWith("<!doctype html>"));
             }
         }
     }
