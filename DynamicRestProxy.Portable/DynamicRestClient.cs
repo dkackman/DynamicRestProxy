@@ -88,7 +88,7 @@ namespace DynamicRestProxy.PortableHttpClient
         }
 
         /// <summary>
-        /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask(string, IEnumerable{object}, IDictionary{string, object}, CancellationToken, JsonSerializerSettings)"/>
+        /// <see cref="DynamicRestProxy.RestProxy.CreateVerbAsyncTask{T}(string, IEnumerable{object}, IEnumerable{KeyValuePair{string, object}}, CancellationToken, JsonSerializerSettings)"/>
         /// </summary>
         protected async override Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)
         {
@@ -170,6 +170,9 @@ namespace DynamicRestProxy.PortableHttpClient
             return new Uri(builder.ToString(), UriKind.Relative);
         }
 
+        /// <summary>
+        /// Disposes the contained HttpClient
+        /// </summary>
         public void Dispose()
         {
             if (!_disposed && _httpClient != null && _disposeClient)
