@@ -87,7 +87,7 @@ namespace DynamicRestProxy
         /// <summary>
         /// Abstract method to create a Task that will execute the necessary http communication
         /// </summary>
-        /// <param name="verb">The http verb to execute (must be get, post, put or delete)</param>
+        /// <param name="verb">The http verb to execute (must be get, post, put, patch or delete)</param>
         /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
         /// <param name="namedArgs">Named arguments supplied to the invocation. These become http request parameters</param>
         /// <param name="cancelToken">A CancellationToken for the async operations</param>
