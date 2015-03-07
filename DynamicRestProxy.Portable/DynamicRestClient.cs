@@ -136,6 +136,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 return result;
             }
         }
+
         private HttpRequestMessage CreateRequest(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs)
         {
             // the way the base class and this class's static contructor use BinderExtensions._verbs should prevent an unkown verb from reaching here
@@ -154,14 +155,14 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             var builder = new StringBuilder(GetEndPointPath());
 
-            // all methods but post put params on the url
+            // all methods but post place params on the url
             if (method != HttpMethod.Post)
             {
                 builder.Append(namedArgs.AsQueryString());
             }
             else
             {
-                // by default post uses form encoded paramters but it is allowable to have params on the url
+                // by default post uses form encoded parameters but it is allowable to have params on the url
                 // see google storage api for example https://developers.google.com/storage/docs/json_api/v1/objects/insert
                 // the PostUrlParam will wrap the param value and is a signal to force it onto the url and not form encode it
                 builder.Append(namedArgs.Where(kvp => kvp.Value is PostUrlParam).AsQueryString());
