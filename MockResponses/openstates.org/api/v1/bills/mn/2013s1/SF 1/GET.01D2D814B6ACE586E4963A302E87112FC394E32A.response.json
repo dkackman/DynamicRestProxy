@@ -10,16 +10,16 @@
       "*"
     ],
     "X-Varnish": [
-      "1154759232 1154748607"
+      "1154934666"
     ],
     "Age": [
-      "75"
+      "0"
     ],
     "Connection": [
       "keep-alive"
     ],
     "Date": [
-      "Sun, 24 May 2015 17:18:26 GMT"
+      "Sun, 24 May 2015 17:38:58 GMT"
     ],
     "Server": [
       "nginx/1.4.1",

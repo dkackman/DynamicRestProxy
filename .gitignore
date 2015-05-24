@@ -226,3 +226,5 @@ NuGet.DynamicRestProxy/lib/DynamicRestProxy.dll
 NuGet.DynamicRestProxy/lib/DynamicRestProxy.XML
 NuGet.DynamicRestClient/lib/DynamicRestProxy.PortableHttpClient.dll
 NuGet.DynamicRestClient/lib/DynamicRestProxy.xml
+/packages
+/Microsoft.Practices.ServiceLocation.dll

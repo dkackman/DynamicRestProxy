@@ -22,7 +22,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         public static void AssemblyInitialize(TestContext context)
         {
             // set the http message handler factory to the mode we want for the entire assmebly test execution
-            MessageHandlerFactory.Mode = MessageHandlerMode.Mock;
+            MessageHandlerFactory.Mode = MessageHandlerMode.Capture;
 
             // folders where mock responses are stored and where captured response should be saved
             var mockFolder = context.DeploymentDirectory; // the folder where the unit tests are running
