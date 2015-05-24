@@ -19,7 +19,6 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
         public void Cancel()
         {
-
             string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
             using(dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/"))

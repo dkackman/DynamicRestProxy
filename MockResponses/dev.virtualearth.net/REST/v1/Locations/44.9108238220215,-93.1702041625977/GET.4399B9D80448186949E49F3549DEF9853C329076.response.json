@@ -1,0 +1,42 @@
+{
+  "StatusCode": 200,
+  "Query": "includeentitytypes=address%2cpopulatedplace%2cpostcode1%2cadmindivision1%2ccountryregion",
+  "ContentFileName": "GET.4399B9D80448186949E49F3549DEF9853C329076.content.json",
+  "ResponseHeaders": {
+    "Transfer-Encoding": [
+      "chunked"
+    ],
+    "Vary": [
+      "Accept-Encoding"
+    ],
+    "X-BM-TraceID": [
+      "c09beab54c2e40438077fcd7e5c62aef"
+    ],
+    "X-BM-Srv": [
+      "CH10050906, CH1SCH060020401"
+    ],
+    "X-MS-BM-WS-INFO": [
+      "1"
+    ],
+    "Cache-Control": [
+      "no-cache"
+    ],
+    "Date": [
+      "Sun, 24 May 2015 17:18:09 GMT"
+    ],
+    "Server": [
+      "Microsoft-IIS/8.0"
+    ],
+    "X-AspNet-Version": [
+      "4.0.30319"
+    ],
+    "X-Powered-By": [
+      "ASP.NET"
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Type": [
+      "application/json; charset=utf-8"
+    ]
+  }
+}

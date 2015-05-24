@@ -22,6 +22,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     }
 
     [TestClass]
+    [DeploymentItem(@"MockResponses\")]
     public class BingMapsTests
     {
         [TestMethod]
@@ -29,13 +30,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task CoordinateFromPostalCode()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("http://dev.virtualearth.net/REST/v1/");
 
@@ -61,13 +56,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task GetFormattedAddressFromCoordinate()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("http://dev.virtualearth.net/REST/v1/");
 

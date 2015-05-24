@@ -7,6 +7,25 @@ namespace DynamicRestProxy.PortableHttpClient
 {
     static class HttpClientFactory
     {
+        public static HttpClient CreateClient(Uri baseUri, HttpMessageHandler handler, bool disposeHandler, DynamicRestClientDefaults defaults)
+        {
+            var client = new HttpClient(handler, disposeHandler);
+
+            client.BaseAddress = baseUri;
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
+
+            if (handler is HttpClientHandler && ((HttpClientHandler)handler).SupportsTransferEncodingChunked())
+            {
+                client.DefaultRequestHeaders.TransferEncodingChunked = true;
+            }
+
+            return client;
+        }
+
         public static HttpClient CreateClient(Uri baseUri, DynamicRestClientDefaults defaults)
         {
             var handler = new HttpClientHandler();

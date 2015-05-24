@@ -15,6 +15,7 @@ using UnitTestHelpers;
 namespace DynamicRestProxy.PortableHttpClient.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"MockResponses\")]
     public class BasicTests
     {
         [TestMethod]
@@ -22,13 +23,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("portable")]
         public async Task ExplicitGetInvoke()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
@@ -48,13 +43,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task GetMethodSegmentWithArgs()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
@@ -74,13 +63,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task GetMethod2PathAsProperty2Params()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
@@ -105,13 +88,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task GetMethod1PathArg1Param()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("http://openstates.org/api/v1/");
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
@@ -132,13 +109,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task EscapeParameterName()
         {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("http://congress.api.sunlightfoundation.com");
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;

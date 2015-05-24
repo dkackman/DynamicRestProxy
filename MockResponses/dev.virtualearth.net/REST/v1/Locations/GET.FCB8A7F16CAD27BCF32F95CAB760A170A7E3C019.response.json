@@ -1,0 +1,42 @@
+{
+  "StatusCode": 200,
+  "Query": "countryregion=us&postalcode=55116",
+  "ContentFileName": "GET.FCB8A7F16CAD27BCF32F95CAB760A170A7E3C019.content.json",
+  "ResponseHeaders": {
+    "Transfer-Encoding": [
+      "chunked"
+    ],
+    "Vary": [
+      "Accept-Encoding"
+    ],
+    "X-BM-TraceID": [
+      "87a2c495dc41452bb00398fee27db05b"
+    ],
+    "X-BM-Srv": [
+      "CH10043645, CH1SCH050020317"
+    ],
+    "X-MS-BM-WS-INFO": [
+      "0"
+    ],
+    "Cache-Control": [
+      "no-cache"
+    ],
+    "Date": [
+      "Sun, 24 May 2015 17:18:45 GMT"
+    ],
+    "Server": [
+      "Microsoft-IIS/8.0"
+    ],
+    "X-AspNet-Version": [
+      "4.0.30319"
+    ],
+    "X-Powered-By": [
+      "ASP.NET"
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Type": [
+      "application/json; charset=utf-8"
+    ]
+  }
+}

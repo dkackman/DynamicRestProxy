@@ -1,0 +1,40 @@
+{
+  "StatusCode": 200,
+  "Query": "apikey=e5883b15e17d4e1f8d93babda91160c6",
+  "ContentFileName": "GET.01D2D814B6ACE586E4963A302E87112FC394E32A.content.json",
+  "ResponseHeaders": {
+    "Vary": [
+      "Authorization"
+    ],
+    "Access-Control-Allow-Origin": [
+      "*"
+    ],
+    "X-Varnish": [
+      "1154759232 1154748607"
+    ],
+    "Age": [
+      "75"
+    ],
+    "Connection": [
+      "keep-alive"
+    ],
+    "Date": [
+      "Sun, 24 May 2015 17:18:26 GMT"
+    ],
+    "Server": [
+      "nginx/1.4.1",
+      "(Ubuntu)"
+    ],
+    "Via": [
+      "1.1 varnish"
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Length": [
+      "4421"
+    ],
+    "Content-Type": [
+      "application/json; charset=utf-8"
+    ]
+  }
+}

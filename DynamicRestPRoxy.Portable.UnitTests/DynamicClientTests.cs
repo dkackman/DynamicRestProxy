@@ -8,6 +8,7 @@ using UnitTestHelpers;
 namespace DynamicRestProxy.PortableHttpClient.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"MockResponses\")]
     public class DynamicClientTests
     {
         [TestMethod]
@@ -15,7 +16,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("portable-client")]
         public async Task EscapeUriSegmentsUsingClient()
         {
-            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/"))
+            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/", MockInitialization.Handler))
             {
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
                 var result = await client.bills.mn("2013s1")("SF 1").get(apikey: key);
@@ -30,7 +31,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("portable-client")]
         public async Task ExplicitGetInvokeUsingClient()
         {
-            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/"))
+            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/", MockInitialization.Handler))
             {
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
                 dynamic result = await client.metadata.mn.get(apikey: key);
@@ -45,7 +46,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task CoordinateFromPostalCode()
         {
-            using (dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/"))
+            using (dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/", MockInitialization.Handler))
             {
                 string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
@@ -66,7 +67,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task GetMethod2PathAsProperty2Params()
         {
-            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/"))
+            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/", MockInitialization.Handler))
             {
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
 
@@ -86,7 +87,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task ReservedWordNameEscapeWithCSharpSyntax()
         {
-            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/"))
+            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/", MockInitialization.Handler))
             {
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
 
@@ -102,7 +103,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task ReservedWordNameEscapeWithDictionary()
         {
-            using (dynamic client = new DynamicRestClient("http://congress.api.sunlightfoundation.com"))
+            using (dynamic client = new DynamicRestClient("http://congress.api.sunlightfoundation.com", MockInitialization.Handler))
             {
                 string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
 
