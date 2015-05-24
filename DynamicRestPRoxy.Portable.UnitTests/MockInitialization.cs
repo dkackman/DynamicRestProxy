@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using System.Net.Http;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,6 +16,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     {
         public static HttpMessageHandler Handler { get; private set; }
 
+        private static readonly string[] _ignoredParameterNames = new string[] { "key", "api_key" };
+
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
@@ -28,7 +30,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
 
             // here we don't want to serialize or include our api key in response lookups so
             // pass a lambda that will indicate to the serialzier to filter that param out
-            var store = new FileSystemResponseStore(mockFolder, captureFolder, (name, value) => name.Equals("key", StringComparison.InvariantCultureIgnoreCase));
+            var store = new FileSystemResponseStore(mockFolder, captureFolder, (name, value) => _ignoredParameterNames.Contains(name, StringComparer.InvariantCultureIgnoreCase));
 
             Handler =  MessageHandlerFactory.CreateMessageHandler(store);
         }

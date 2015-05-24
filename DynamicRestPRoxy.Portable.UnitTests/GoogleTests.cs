@@ -14,6 +14,7 @@ using UnitTestHelpers;
 namespace DynamicRestProxy.PortableHttpClient.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"MockResponses\")]
     public class GoogleTests
     {
         private static string _token = null;
@@ -21,19 +22,15 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable")]
         [TestCategory("integration")]
+        [TestCategory("google")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetUserProfile()
         {
             var auth = new GoogleOAuth2("email profile");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
 
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("https://www.googleapis.com");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _token);
@@ -51,6 +48,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable")]
         [TestCategory("integration")]
+        [TestCategory("google")]
         //  [Ignore] // - this test requires user interaction
         public async Task GetCalendarList()
         {
@@ -58,13 +56,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("https://www.googleapis.com/calendar/v3/");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _token);
@@ -82,6 +74,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable")]
         [TestCategory("ordered")]
+        [TestCategory("google")]
         // [Ignore] // - this test requires user interaction
         public async Task CreateCalendar()
         {
@@ -89,13 +82,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("https://www.googleapis.com/calendar/v3/");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _token);
@@ -116,6 +103,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable")]
         [TestCategory("ordered")]
+        [TestCategory("google")]
         //  [Ignore] // - this test requires user interaction
         public async Task UpdateCalendar()
         {
@@ -123,13 +111,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("https://www.googleapis.com/calendar/v3/");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _token);
@@ -162,6 +144,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable")]
         [TestCategory("ordered")]
+        [TestCategory("google")]
         //  [Ignore] // - this test requires user interaction
         public async Task DeleteCalendar()
         {
@@ -169,13 +152,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            using (var client = new HttpClient(handler, true))
+            using (var client = new HttpClient(MockInitialization.Handler, false))
             {
                 client.BaseAddress = new Uri("https://www.googleapis.com/calendar/v3/");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("OAuth", _token);

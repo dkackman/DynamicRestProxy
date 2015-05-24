@@ -16,10 +16,12 @@ using UnitTestHelpers;
 namespace DynamicRestProxy.PortableHttpClient.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"MockResponses\")]
     public class FlickrTests
     {
         [TestMethod]
         [TestCategory("portable-client")]
+        [TestCategory("flickr")]
         [TestCategory("integration")]
         public async Task FindUserByName()
         {
@@ -29,7 +31,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             defaults.DefaultParameters.Add("api_key", key.Key);
             defaults.DefaultParameters.Add("nojsoncallback", "1");
 
-            using (dynamic client = new DynamicRestClient("https://api.flickr.com/services/rest/", defaults))
+            using (dynamic client = new DynamicRestClient("https://api.flickr.com/services/rest/", MockInitialization.Handler, false, defaults))
             {
                 dynamic result = await client.get(method: "flickr.people.findByUsername", username: "dkackman");
                 Assert.IsNotNull(result);
@@ -40,6 +42,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable-client")]
         [TestCategory("integration")]
+        [TestCategory("flickr")]
         [Ignore]
         public async Task UploadPhoto()
         {
@@ -49,7 +52,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             defaults.DefaultParameters.Add("api_key", key.Key);
             defaults.DefaultParameters.Add("nojsoncallback", "1");
 
-            using (dynamic client = new DynamicRestClient("https://up.flickr.com/services/", defaults))
+            using (dynamic client = new DynamicRestClient("https://up.flickr.com/services/", MockInitialization.Handler, false, defaults))
             {
                 dynamic result = await client.upload.post(photo: File.OpenRead(@"D:\temp\test.png"));
 
