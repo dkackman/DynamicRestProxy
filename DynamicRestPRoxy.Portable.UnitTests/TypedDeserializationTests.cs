@@ -45,7 +45,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task DeserializeToStaticType()
         {
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/"))
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler))
             {
                 dynamic bucketEndPoint = google.storage.v1.b("uspto-pair");
 
@@ -64,7 +64,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task DeserializeToString()
         {
-            using (dynamic google = new DynamicRestClient("https://www.google.com/"))
+            using (dynamic google = new DynamicRestClient("https://www.google.com/", MockInitialization.Handler))
             {
                 string content = await google.get(typeof(string));
 
@@ -78,7 +78,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task DeserializeToByteArray()
         {
-            using (dynamic google = new DynamicRestClient("https://www.google.com/"))
+            using (dynamic google = new DynamicRestClient("https://www.google.com/", MockInitialization.Handler))
             {
                 byte[] content = await google.get(typeof(byte[]));
 
@@ -96,7 +96,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task ReturnResponseStream()
         {
-            using (dynamic google = new DynamicRestClient("https://www.google.com/"))
+            using (dynamic google = new DynamicRestClient("https://www.google.com/", MockInitialization.Handler))
             using (Stream responseStream = await google.get(typeof(Stream)))
             {
                 Assert.IsNotNull(responseStream);
@@ -114,7 +114,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestCategory("integration")]
         public async Task ReturnHttpResponseMessage()
         {
-            using (dynamic google = new DynamicRestClient("https://www.google.com/"))
+            using (dynamic google = new DynamicRestClient("https://www.google.com/", MockInitialization.Handler))
             using (HttpResponseMessage response = await google.get(typeof(HttpResponseMessage)))
             {
                 Assert.IsNotNull(response);

@@ -21,7 +21,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         {
             string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
-            using(dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/"))
+            using (dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/", MockInitialization.Handler))
             using (var source = new CancellationTokenSource())
             {
                 // run request on a different thread and do not await thread
@@ -53,14 +53,15 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
             using (var source = new CancellationTokenSource())
             {
                 // the cancellation token here is the one we passed in below
-                using (dynamic client = new DynamicRestClient("https://www.googleapis.com/oauth2/v1/userinfo", null, async (request, cancelToken) =>
-                {
-                    Assert.AreEqual(source.Token, cancelToken);
+                using (dynamic client = new DynamicRestClient("https://www.googleapis.com/oauth2/v1/userinfo", MockInitialization.Handler, false, null, 
+                    async (request, cancelToken) =>
+                    {
+                        Assert.AreEqual(source.Token, cancelToken);
 
-                    var oauth = new GoogleOAuth2("email profile");
-                    var authToken = await oauth.Authenticate("", cancelToken);
-                    request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", authToken);
-                }))
+                        var oauth = new GoogleOAuth2("email profile");
+                        var authToken = await oauth.Authenticate("", cancelToken);
+                        request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", authToken);
+                    }))
                 {
                     // run request on a different thread and do not await thread
                     Task t = client.oauth2.v1.userinfo.get(source.Token);

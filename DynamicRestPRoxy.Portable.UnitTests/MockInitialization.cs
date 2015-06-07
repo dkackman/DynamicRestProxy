@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -16,13 +15,14 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     {
         public static HttpMessageHandler Handler { get; private set; }
 
+        // these transient uri paramter names will not be used to hash rest query endpoint paths
         private static readonly string[] _ignoredParameterNames = new string[] { "key", "api_key" };
 
         [AssemblyInitialize]
         public static void AssemblyInitialize(TestContext context)
         {
             // set the http message handler factory to the mode we want for the entire assmebly test execution
-            MessageHandlerFactory.Mode = MessageHandlerMode.Capture;
+            MessageHandlerFactory.Mode = MessageHandlerMode.Mock;
 
             // folders where mock responses are stored and where captured response should be saved
             var mockFolder = context.DeploymentDirectory; // the folder where the unit tests are running
