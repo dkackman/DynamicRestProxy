@@ -1,0 +1,46 @@
+{
+  "StatusCode": 200,
+  "Query": "",
+  "ContentFileName": "GET.content.json",
+  "ResponseHeaders": {
+    "Vary": [
+      "Origin",
+      "X-Origin"
+    ],
+    "X-Content-Type-Options": [
+      "nosniff"
+    ],
+    "X-Frame-Options": [
+      "SAMEORIGIN"
+    ],
+    "X-XSS-Protection": [
+      "1; mode=block"
+    ],
+    "Alternate-Protocol": [
+      "443:quic,p=1"
+    ],
+    "Cache-Control": [
+      "no-transform, must-revalidate, max-age=0, private"
+    ],
+    "Date": [
+      "Sun, 24 May 2015 17:50:35 GMT"
+    ],
+    "ETag": [
+      "CAE="
+    ],
+    "Server": [
+      "GSE"
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Length": [
+      "274"
+    ],
+    "Content-Type": [
+      "application/json; charset=UTF-8"
+    ],
+    "Expires": [
+      "Sun, 24 May 2015 17:50:35 GMT"
+    ]
+  }
+}

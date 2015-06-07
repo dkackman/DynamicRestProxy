@@ -1,0 +1,46 @@
+{
+  "StatusCode": 403,
+  "Query": "",
+  "ContentFileName": "GET.content.json",
+  "ResponseHeaders": {
+    "Vary": [
+      "Origin",
+      "X-Origin"
+    ],
+    "X-Content-Type-Options": [
+      "nosniff"
+    ],
+    "X-Frame-Options": [
+      "SAMEORIGIN"
+    ],
+    "X-XSS-Protection": [
+      "1; mode=block"
+    ],
+    "Alternate-Protocol": [
+      "443:quic,p=1"
+    ],
+    "Transfer-Encoding": [
+      "chunked"
+    ],
+    "Cache-Control": [
+      "max-age=0, private"
+    ],
+    "Date": [
+      "Sun, 24 May 2015 17:50:35 GMT"
+    ],
+    "Server": [
+      "GSE"
+    ],
+    "WWW-Authenticate": [
+      "Bearer realm=\"https://accounts.google.com/\", error=insufficient_scope, scope=\"https://www.googleapis.com/auth/calendar.readonly\""
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Type": [
+      "application/json; charset=UTF-8"
+    ],
+    "Expires": [
+      "Sun, 24 May 2015 17:50:35 GMT"
+    ]
+  }
+}
