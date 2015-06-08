@@ -15,6 +15,7 @@ using UnitTestHelpers;
 namespace Client.Google.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"MockResponses\")]
     public class AuthTests
     {
         [TestMethod]
@@ -23,15 +24,16 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task AuthenticateAndGetUserName()
         {
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", null, async (request, cancelToken) =>
-            {
-                // this demonstrates how t use the configuration callback to handle authentication 
-                var auth = new GoogleOAuth2("email profile");
-                var token = await auth.Authenticate("", cancelToken);
-                Assert.IsNotNull(token, "auth failed");
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler, false, null, 
+                async (request, cancelToken) =>
+                {
+                    // this demonstrates how t use the configuration callback to handle authentication 
+                    var auth = MockInitialization.GetAuthClient("email profile");
+                    var token = await auth.Authenticate("", cancelToken);
+                    Assert.IsNotNull(token, "auth failed");
 
-                request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", token);
-            }))
+                    request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", token);
+                }))
             {
                 var profile = await google.oauth2.v1.userinfo.get();
 
@@ -46,15 +48,16 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task CreateGoogleCalendarUsingClient()
         {
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/calendar/v3/", null, async (request, cancelToken) =>
-            {
-                // this demonstrates how t use the configuration callback to handle authentication 
-                var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/calendar");
-                var token = await auth.Authenticate("", cancelToken);
-                Assert.IsNotNull(token, "auth failed");
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/calendar/v3/", MockInitialization.Handler, false, null, 
+                async (request, cancelToken) =>
+                {
+                    // this demonstrates how t use the configuration callback to handle authentication 
+                    var auth = MockInitialization.GetAuthClient("email profile https://www.googleapis.com/auth/calendar");
+                    var token = await auth.Authenticate("", cancelToken);
+                    Assert.IsNotNull(token, "auth failed");
 
-                request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", token);
-            }))
+                    request.Headers.Authorization = new AuthenticationHeaderValue("OAuth", token);
+                }))
             {
                 dynamic calendar = new ExpandoObject();
                 calendar.summary = "unit_testing";

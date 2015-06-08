@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CredentialStore.cs" />
     <Compile Include="GoogleOAuth2.cs" />
+    <Compile Include="IGoogleOAuth2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

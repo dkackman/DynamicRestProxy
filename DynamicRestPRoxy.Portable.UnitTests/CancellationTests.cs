@@ -16,12 +16,11 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable-client")]
         [TestCategory("integration")]
-
         public void Cancel()
         {
             string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
-            using (dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/", MockInitialization.Handler))
+            using (dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/"))
             using (var source = new CancellationTokenSource())
             {
                 // run request on a different thread and do not await thread
@@ -46,14 +45,12 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable-client")]
         [TestCategory("integration")]
-        [TestCategory("google")]
-
         public void CancelPassesToConfigurationCallback()
         {
             using (var source = new CancellationTokenSource())
             {
                 // the cancellation token here is the one we passed in below
-                using (dynamic client = new DynamicRestClient("https://www.googleapis.com/oauth2/v1/userinfo", MockInitialization.Handler, false, null, 
+                using (dynamic client = new DynamicRestClient("https://www.googleapis.com/oauth2/v1/userinfo", null, 
                     async (request, cancelToken) =>
                     {
                         Assert.AreEqual(source.Token, cancelToken);

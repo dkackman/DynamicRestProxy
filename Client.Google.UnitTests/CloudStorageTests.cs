@@ -22,7 +22,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task GetNonJsonContent()
         {
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/"))
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler))
             {
                 dynamic zip = google.storage.v1.b("uspto-pair").o("applications%2F05900002.zip");
 
@@ -39,7 +39,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task GetPublicBucket()
         {
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/"))
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler))
             {
                 dynamic bucket = google.storage.v1.b("uspto-pair");
 
@@ -58,7 +58,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task UploadObject()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
+            var auth = MockInitialization.GetAuthClient("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -67,7 +67,7 @@ namespace Client.Google.UnitTests
                 AuthScheme = "OAuth",
                 AuthToken = _token
             };
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults))
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler, false, defaults))
             using (var stream = new StreamInfo(File.OpenRead(@"D:\temp\test.png"), "image/png"))
             {
                 dynamic result = await google.upload.storage.v1.b.unit_tests.o.post(stream, name: new PostUrlParam("test_object"), uploadType: new PostUrlParam("media"));
@@ -81,7 +81,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task MultiPartUploadObject()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
+            var auth = MockInitialization.GetAuthClient("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -91,7 +91,7 @@ namespace Client.Google.UnitTests
                 AuthToken = _token
             };
 
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults))
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler, false, defaults))
             using (var stream = new StreamInfo(File.OpenRead(@"D:\temp\test2.png"), "image/png"))
             {
                 dynamic metaData = new ExpandoObject();
@@ -107,7 +107,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task UploadString()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
+            var auth = MockInitialization.GetAuthClient("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 
@@ -117,7 +117,7 @@ namespace Client.Google.UnitTests
                 AuthToken = _token
             };
 
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults))
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler, false, defaults))
             {
                 dynamic result = await google.upload.storage.v1.b.unit_tests.o.post("text", name: new PostUrlParam("string_object"), uploadType: new PostUrlParam("media"));
                 Assert.IsNotNull(result);
@@ -130,7 +130,7 @@ namespace Client.Google.UnitTests
         [TestCategory("google")]
         public async Task UploadInt()
         {
-            var auth = new GoogleOAuth2("email profile https://www.googleapis.com/auth/devstorage.read_write");
+            var auth = MockInitialization.GetAuthClient("email profile https://www.googleapis.com/auth/devstorage.read_write");
             _token = await auth.Authenticate(_token);
             Assert.IsNotNull(_token, "auth failed");
 

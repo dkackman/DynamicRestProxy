@@ -14,7 +14,7 @@ namespace UnitTestHelpers
     /// The first time a machine authenticates user interaction is required
     /// Subsequent unit test runs will use a stored token that will refresh with google
     /// </summary>
-    public class GoogleOAuth2
+    public class GoogleOAuth2 : UnitTestHelpers.IGoogleOAuth2
     {
         // the set of scopes to authorize
         private string _scope;
