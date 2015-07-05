@@ -5,7 +5,7 @@ using System.Net.Http;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using MockHttp;
+using FakeHttp;
 
 using UnitTestHelpers;
 
@@ -24,7 +24,7 @@ namespace Client.Google.UnitTests
         public static void AssemblyInitialize(TestContext context)
         {
             // set the http message handler factory to the mode we want for the entire assmebly test execution
-            MessageHandlerFactory.Mode = MessageHandlerMode.Mock;
+            MessageHandlerFactory.Mode = MessageHandlerMode.Fake;
 
             // folders where mock responses are stored and where captured response should be saved
             var mockFolder = context.DeploymentDirectory; // the folder where the unit tests are running
@@ -39,7 +39,7 @@ namespace Client.Google.UnitTests
 
         public static IGoogleOAuth2 GetAuthClient(string scope)
         {
-            if (MessageHandlerFactory.Mode == MessageHandlerMode.Mock)
+            if (MessageHandlerFactory.Mode == MessageHandlerMode.Fake)
             {
                 return new MockGoogleOAuth2();
             }
