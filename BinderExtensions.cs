@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using System.Dynamic;
-using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace DynamicRestProxy
@@ -73,12 +70,12 @@ namespace DynamicRestProxy
                 }
             }
 
-            // if the field info is still null, something changed in how .net implements the dynamic binder
             if (_typeArgumentsField != null)
             {
                 return _typeArgumentsField.GetValue(binder) as IEnumerable<Type> ?? new List<Type>();
             }
 
+            // if the field info is still null, something changed in how .net implements the dynamic binder
             Debug.Assert(false, "Retrieving the private collection of generic type arguments failed");
             // Sadly return empty collection if failed.
             return new List<Type>();

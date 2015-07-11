@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Diagnostics;
 
 namespace DynamicRestProxy
 {

@@ -10,8 +10,9 @@
       A portable http rest client using dynamic objects for data transfer and endpoint url construction
     </description>
     <releaseNotes>
-      Allow retreival of HttpResponseMessage
-      Share HttpClient instance across endpoints created form the same root
+      2.2.0 
+      - Allow retreival of HttpResponseMessage
+      - Share HttpClient instance across endpoints created form the same root
     </releaseNotes>
     <summary>
     </summary>
@@ -33,8 +34,7 @@
     <tags>Rest DLR dynamic proxy client http Portable Class Library PCL</tags>
   </metadata>
   <files>
-    <file src="lib\" target="lib" />
-    <file src="tools\" target="tools" />
-    <file src="content\" target="content" />
+    <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.dll" target="lib" />
+    <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.xml" target="lib" />
   </files>
 </package>
