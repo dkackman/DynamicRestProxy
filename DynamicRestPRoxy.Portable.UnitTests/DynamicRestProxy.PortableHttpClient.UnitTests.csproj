@@ -39,12 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FakeHttp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dkackman.FakeHttp.1.0.0\lib\net45\FakeHttp.dll</HintPath>
+    <Reference Include="FakeHttp, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dkackman.FakeHttp.1.1.0\lib\net45\FakeHttp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FakeHttp.Desktop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dkackman.FakeHttp.1.0.0\lib\net45\FakeHttp.Desktop.dll</HintPath>
+    <Reference Include="FakeHttp.Desktop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dkackman.FakeHttp.1.1.0\lib\net45\FakeHttp.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
