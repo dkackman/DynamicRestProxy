@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -9,9 +8,11 @@ namespace DynamicRestProxy.PortableHttpClient
     {
         public static HttpClient CreateClient(Uri baseUri, HttpMessageHandler handler, bool disposeHandler, DynamicRestClientDefaults defaults)
         {
-            var client = new HttpClient(handler, disposeHandler);
+            if (handler == null) throw new ArgumentNullException("handler");
 
+            var client = new HttpClient(handler, disposeHandler);
             client.BaseAddress = baseUri;
+
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
@@ -33,7 +34,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 }
 
                 foreach (var kvp in defaults.DefaultHeaders)
-                {
+                { 
                     client.DefaultRequestHeaders.Add(kvp.Key, kvp.Value);
                 }
 

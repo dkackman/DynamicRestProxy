@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>2.2.0</version>
+    <version>2.2.1</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -11,8 +11,10 @@
     </description>
     <releaseNotes>
       2.2.0 
-      - Allow retreival of HttpResponseMessage
-      - Share HttpClient instance across endpoints created form the same root
+        - Allow retreival of HttpResponseMessage
+        - Share HttpClient instance across endpoints created form the same root
+      2.2.1
+        - Bug fixes
     </releaseNotes>
     <summary>
     </summary>
@@ -24,7 +26,7 @@
     <copyright>Copyright Don Kackman 2014</copyright>
     <dependencies>
       <group targetFramework="portable-windows8+net45+wp8+win8+wpa81+windowsphone8">
-        <dependency id="Newtonsoft.Json" version="6.0.6" />
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
