@@ -47,15 +47,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\BinderExtensions.cs">
-      <Link>BinderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\LinqExtensions.cs">
-      <Link>LinqExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\RestProxy.cs">
-      <Link>RestProxy.cs</Link>
-    </Compile>
+    <Compile Include="BinderExtensions.cs" />
     <Compile Include="ContentFactory.cs" />
     <Compile Include="ContentInfo.cs" />
     <Compile Include="DynamicRestClientDefaults.cs" />
@@ -63,8 +55,10 @@
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="DynamicRestClient.cs" />
     <Compile Include="HttpClientFactory.cs" />
+    <Compile Include="LinqExtensions.cs" />
     <Compile Include="PostUrlParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestProxy.cs" />
     <Compile Include="StreamInfo.cs" />
   </ItemGroup>
   <ItemGroup>
