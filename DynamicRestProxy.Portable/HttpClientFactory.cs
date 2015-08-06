@@ -23,31 +23,6 @@ namespace DynamicRestProxy.PortableHttpClient
                 client.DefaultRequestHeaders.TransferEncodingChunked = true;
             }
 
-            return client;
-        }
-
-        public static HttpClient CreateClient(Uri baseUri, DynamicRestClientDefaults defaults)
-        {
-            var handler = new HttpClientHandler();
-            if (handler.SupportsAutomaticDecompression)
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            }
-
-            var client = new HttpClient(handler, true);
-
-            client.BaseAddress = baseUri;
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/json"));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
-
-            if (handler.SupportsTransferEncodingChunked())
-            {
-                client.DefaultRequestHeaders.TransferEncodingChunked = true;
-            }
-
             if (defaults != null)
             {
                 ProductInfoHeaderValue productHeader = null;
@@ -69,6 +44,11 @@ namespace DynamicRestProxy.PortableHttpClient
             }
 
             return client;
+        }
+
+        public static HttpClient CreateClient(Uri baseUri, DynamicRestClientDefaults defaults)
+        {
+            return CreateClient(baseUri, new HttpClientHandler(), true, defaults); ;
         }
     }
 }
