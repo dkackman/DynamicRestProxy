@@ -28,6 +28,7 @@ namespace DynamicRestProxy
                     ret.Add(binder.CallInfo.ArgumentNames[i], arg);
                 }
             }
+
             return ret;
         }
 
