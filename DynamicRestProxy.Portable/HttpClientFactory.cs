@@ -13,7 +13,13 @@ namespace DynamicRestProxy.PortableHttpClient
             var client = new HttpClient(handler, disposeHandler);
             client.BaseAddress = baseUri;
 
+            if (handler is HttpClientHandler && ((HttpClientHandler)handler).SupportsTransferEncodingChunked())
+            {
+                client.DefaultRequestHeaders.TransferEncodingChunked = true;
+            }
+
             client.DefaultRequestHeaders.Accept.Clear();
+
             if (defaults == null || !defaults.DefaultHeaders.ContainsKey("Accept"))
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -21,13 +27,9 @@ namespace DynamicRestProxy.PortableHttpClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/x-json"));
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/javascript"));
             }
-            if (handler is HttpClientHandler && ((HttpClientHandler)handler).SupportsTransferEncodingChunked())
-            {
-                client.DefaultRequestHeaders.TransferEncodingChunked = true;
-            }
 
             if (defaults != null)
-            {
+            {                
                 ProductInfoHeaderValue productHeader = null;
                 if (!string.IsNullOrEmpty(defaults.UserAgent) && ProductInfoHeaderValue.TryParse(defaults.UserAgent, out productHeader))
                 {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
@@ -13,7 +14,7 @@ namespace DynamicRestProxy.PortableHttpClient
         public DynamicRestClientDefaults()
         {
             DefaultParameters = new Dictionary<string, object>();
-            DefaultHeaders = new Dictionary<string, string>();
+            DefaultHeaders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
