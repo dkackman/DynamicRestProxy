@@ -17,9 +17,10 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         {
             var defaults = new DynamicRestClientDefaults();
             defaults.DefaultHeaders.Add("AccEpt", "application/json");
+
             using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults))
+            using (HttpResponseMessage response = await google.storage.v1.b("uspto-pair").get(typeof(HttpResponseMessage)))
             {
-                HttpResponseMessage response = await google.storage.v1.b("uspto-pair").get(typeof(HttpResponseMessage));
                 response.EnsureSuccessStatusCode();
                 Assert.IsNotNull(response.RequestMessage.Headers.Accept);
                 Assert.AreEqual(1, response.RequestMessage.Headers.Accept.Count);

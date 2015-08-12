@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>2.2.1</version>
+    <version>2.3.0</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -10,11 +10,13 @@
       A portable http rest client using dynamic objects for data transfer and endpoint url construction
     </description>
     <releaseNotes>
-      2.2.0 
-        - Allow retreival of HttpResponseMessage
-        - Share HttpClient instance across endpoints created form the same root
-      2.2.1
-        - Bug fixes
+2.2.0 
+  - Allow retrieval of HttpResponseMessage
+  - Share HttpClient instance across endpoints created from the same root
+2.2.1
+  - Bug fixes
+2.3.0
+  - Allow client code to override built-in accept header by supplying an accept header in the defaults 
     </releaseNotes>
     <summary>
     </summary>
