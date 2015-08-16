@@ -26,10 +26,6 @@ Or if you insist on static DTO types, a type argument can be supplied (deseriali
 
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
-This package includes:
-- A [dynamic rest client](https://github.com/dkackman/DynamicRestProxy/wiki/Using-the-DynamicRestClient) that reduces to a bare minimum the amount of code needed to start calling rest endpoints
-- A dynamic proxy for the [RestSharp client](https://github.com/dkackman/DynamicRestProxy/wiki/RestSharp-Examples)
-
 Example usage is on the [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) as well as supplied in the unit test projects.
 
 If you try to run the unit tests take a close look at the CredentialStore class in the unit test project. It's pretty straighforward and you can use it to supply your own api keys while keeping them out of the code.
