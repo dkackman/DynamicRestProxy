@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DynamicRestProxy.PortableHttpClient.UnitTests
 {
     [TestClass]
+    [DeploymentItem(@"MockResponses\")]
     public class DefaultsTests
     {
         [TestMethod]
@@ -17,8 +18,8 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         {
             var defaults = new DynamicRestClientDefaults();
             defaults.DefaultHeaders.Add("AccEpt", "application/json");
-
-            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults))
+            
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler, false, defaults))
             using (HttpResponseMessage response = await google.storage.v1.b("uspto-pair").get(typeof(HttpResponseMessage)))
             {
                 response.EnsureSuccessStatusCode();

@@ -1,5 +1,6 @@
-{
+﻿{
   "StatusCode": 200,
+  "BaseUri": "www.googleapis.com/storage/v1/b/uspto-pair",
   "Query": "",
   "ContentFileName": "GET.content.json",
   "ResponseHeaders": {
@@ -19,11 +20,14 @@
     "Alternate-Protocol": [
       "443:quic,p=1"
     ],
+    "Alt-Svc": [
+      "quic=\":443\"; p=\"1\"; ma=604800"
+    ],
     "Cache-Control": [
       "no-transform, must-revalidate, max-age=0, private"
     ],
     "Date": [
-      "Mon, 08 Jun 2015 23:17:27 GMT"
+      "Thu, 13 Aug 2015 22:48:32 GMT"
     ],
     "ETag": [
       "CAE="
@@ -40,7 +44,7 @@
       "application/json; charset=UTF-8"
     ],
     "Expires": [
-      "Mon, 08 Jun 2015 23:17:27 GMT"
+      "Thu, 13 Aug 2015 22:48:32 GMT"
     ]
   }
 }
