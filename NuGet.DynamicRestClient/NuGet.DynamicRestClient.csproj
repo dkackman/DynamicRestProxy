@@ -55,14 +55,17 @@
     <None Include="NuGetSetup.ps1" />
     <None Include="NuGet.exe" />
     <None Include="NuGet.config" />
-    <None Include="Package.nuspec" />
+    <None Include="Package.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="tools\init.ps1" />
     <None Include="tools\install.ps1" />
     <None Include="tools\uninstall.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\" />
-    <Folder Include="lib\" />
+    <Folder Include="lib\dotnet\" />
+    <Folder Include="lib\portable-net45+netcore45+wpa81+wp8\" />
     <Folder Include="src\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

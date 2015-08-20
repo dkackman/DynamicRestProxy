@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -17,6 +17,8 @@
   - Bug fixes
 2.3.0
   - Allow client code to override built-in accept header by supplying an accept header in the defaults 
+2.4.0
+  - Add Universal app support
     </releaseNotes>
     <summary>
     </summary>
@@ -27,18 +29,24 @@
     <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
     <copyright>Copyright Don Kackman 2014</copyright>
     <dependencies>
-      <group targetFramework="portable-windows8+net45+wp8+win8+wpa81+windowsphone8">
+      <group targetFramework="portable-net45+netcore45+wpa81+wp8">
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
       </group>
+      <group targetFramework="dotnet">
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
+      </group>      
     </dependencies>
     <references></references>
-    <tags>Rest DLR dynamic proxy client http Portable Class Library PCL</tags>
+    <tags>Rest DLR dynamic proxy client http Portable UWP Universal UAP10.0 PCL</tags>
   </metadata>
   <files>
-    <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.dll" target="lib" />
-    <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.xml" target="lib" />
+    <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    
+    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.dll" target="lib\dotnet" />
+    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.xml" target="lib\dotnet" />
   </files>
 </package>
