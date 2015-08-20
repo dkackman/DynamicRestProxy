@@ -35,7 +35,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleStorageConsole", "Goo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8D0E367C-0BCB-4AF8-B8D7-F029A734ED82}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\Desktop\nugeticon.png = ..\..\..\Desktop\nugeticon.png
+		nugeticon.png = nugeticon.png
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicRestProxy.UniversalHttpClient", "DynamicRestProxy.Universal\DynamicRestProxy.UniversalHttpClient.csproj", "{3F7CA0F8-6487-4E0C-8E50-AE2ED54CC807}"
