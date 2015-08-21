@@ -24,7 +24,7 @@
     </summary>
     <language>en-US</language>
     <projectUrl>https://github.com/dkackman/DynamicRestProxy</projectUrl>
-    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/dkackman/DynamicRestProxy/master/nugeticon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>http://opensource.org/licenses/Apache-2.0</licenseUrl>
     <copyright>Copyright Don Kackman 2014</copyright>
@@ -45,8 +45,12 @@
   <files>
     <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
     <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    
+    <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+
     <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.dll" target="lib\dotnet" />
     <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.xml" target="lib\dotnet" />
+    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.pdb" target="lib\dotnet" />
+    
+    <file src="..\DynamicRestProxy.Portable\*.cs" target="src" />
   </files>
 </package>
