@@ -1,13 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Dynamic;
+﻿using System.IO;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Net;
-
-using DynamicRestProxy.PortableHttpClient;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

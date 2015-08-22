@@ -14,6 +14,25 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("integration")]
         [TestCategory("portable-client")]
+        public async Task DefaultAuthHeader()
+        {
+            var defaults = new DynamicRestClientDefaults();
+
+            string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+            defaults.DefaultHeaders.Add("X-APIKEY", key);
+
+            using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/", defaults))
+            {
+                var result = await client.bills.mn("2013s1")("SF 1").get();
+
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.id == "MNB00017167");
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("integration")]
+        [TestCategory("portable-client")]
         public async Task EscapeUriSegmentsUsingClient()
         {
             using (dynamic client = new DynamicRestClient("http://openstates.org/api/v1/", MockInitialization.Handler))
