@@ -58,13 +58,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\BinderExtensions.cs">
+    <Compile Include="..\DynamicRestProxy.Portable\BinderExtensions.cs">
       <Link>BinderExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\LinqExtensions.cs">
+    <Compile Include="..\DynamicRestProxy.Portable\LinqExtensions.cs">
       <Link>LinqExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\RestProxy.cs">
+    <Compile Include="..\DynamicRestProxy.Portable\RestProxy.cs">
       <Link>RestProxy.cs</Link>
     </Compile>
     <Compile Include="ParameterPassingTests.cs" />
