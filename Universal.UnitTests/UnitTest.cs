@@ -12,6 +12,13 @@ namespace Universal.UnitTests
     {
         [TestMethod]
         [TestCategory("Universal")]
+        public async Task CanGetStorageFile()
+        {
+
+        }
+
+        [TestMethod]
+        [TestCategory("Universal")]
         public async Task GetPublicBucket()
         {
             using (dynamic google = new DynamicRestClient("https://www.googleapis.com/"))
