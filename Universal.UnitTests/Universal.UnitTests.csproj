@@ -100,7 +100,7 @@
     <Compile Include="UnitTestApp.xaml.cs">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="BasicUniversalTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml">
@@ -133,9 +133,6 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="MockResponses\**\*.*" />
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
@@ -144,13 +141,14 @@
     <PreBuildEvent>xcopy "$(SolutionDir)MockResponses\*.*" "$(ProjectDir)MockResponses\" /s /q /r /y</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets.   -->
   <Target Name="BeforeBuild">    
     <ItemGroup>
         <Content Include="MockResponses\**\*.*" />
     </ItemGroup>
   </Target>
-  <Target Name="AfterBuild">
+  <!-- 
+<Target Name="AfterBuild">
   </Target>
   -->
 </Project>
