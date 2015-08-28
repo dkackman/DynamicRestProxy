@@ -1,16 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Dynamic;
+﻿using System.Dynamic;
 using System.Threading.Tasks;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net;
 
 using DynamicRestProxy.PortableHttpClient;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using UnitTestHelpers;
 
 namespace Client.Google.UnitTests
 {
@@ -27,7 +21,7 @@ namespace Client.Google.UnitTests
             using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler, false, null, 
                 async (request, cancelToken) =>
                 {
-                    // this demonstrates how t use the configuration callback to handle authentication 
+                    // this demonstrates how to use the configuration callback to handle authentication 
                     var auth = MockInitialization.GetAuthClient("email profile");
                     var token = await auth.Authenticate("", cancelToken);
                     Assert.IsNotNull(token, "auth failed");
@@ -51,7 +45,7 @@ namespace Client.Google.UnitTests
             using (dynamic google = new DynamicRestClient("https://www.googleapis.com/calendar/v3/", MockInitialization.Handler, false, null, 
                 async (request, cancelToken) =>
                 {
-                    // this demonstrates how t use the configuration callback to handle authentication 
+                    // this demonstrates how to use the configuration callback to handle authentication 
                     var auth = MockInitialization.GetAuthClient("email profile https://www.googleapis.com/auth/calendar");
                     var token = await auth.Authenticate("", cancelToken);
                     Assert.IsNotNull(token, "auth failed");
