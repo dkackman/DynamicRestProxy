@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>2.4.0</version>
+    <version>2.4.5</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -19,6 +19,8 @@
   - Allow client code to override built-in accept header by supplying an accept header in the defaults 
 2.4.0
   - Add Universal app support
+2.4.5
+  - bug fix for universal nuget package
     </releaseNotes>
     <summary>
     </summary>
@@ -35,7 +37,7 @@
         <dependency id="Microsoft.Bcl" version="1.1.9" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
       </group>
-      <group targetFramework="dotnet">
+      <group targetFramework="uap10.0">
         <dependency id="Newtonsoft.Json" version="7.0.1" />
       </group>      
     </dependencies>
@@ -47,9 +49,9 @@
     <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
     <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
 
-    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.dll" target="lib\dotnet" />
-    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.xml" target="lib\dotnet" />
-    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.pdb" target="lib\dotnet" />
+    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.dll" target="lib\uap10.0" />
+    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.xml" target="lib\uap10.0" />
+    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.pdb" target="lib\uap10.0" />
     
     <file src="..\DynamicRestProxy.Portable\*.cs" target="src" />
   </files>
