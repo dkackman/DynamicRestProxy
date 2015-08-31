@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Dynamic;
 using System.Diagnostics;
@@ -10,8 +11,24 @@ using Newtonsoft.Json.Converters;
 
 namespace DynamicRestProxy.PortableHttpClient
 {
-    static class HttpClientExtensions
+    /// <summary>
+    /// Extension methods to aid deserialization
+    /// </summary>
+    public static class HttpClientExtensions
     {
+        /// <summary>
+        /// Helper method to deserialize content in a number of diferent ways
+        /// </summary>
+        /// <typeparam name="T"> The type to deserialize to
+        /// <see cref="Stream"/>
+        /// <see cref="string"/>
+        /// <see cref="byte"/> array
+        /// <see cref="ExpandoObject"/> when T is dynamic
+        /// or othe POCO types
+        /// </typeparam>
+        /// <param name="response">An <see cref="HttpResponseMessage"/> to deserialize</param>
+        /// <param name="settings">Json settings to control deserialization</param>
+        /// <returns>content deserialized to type T</returns>
         public async static Task<T> Deserialize<T>(this HttpResponseMessage response, JsonSerializerSettings settings)
         {
             // if the client asked for a stream or byte array, return without serializing to a different type
