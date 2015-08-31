@@ -4,7 +4,7 @@ DynamicRestProxy
 
 A conventions based rest client using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
 
-The [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) has further detail and examples.
+The [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) has further detail and examples, as does [this article](http://www.codeproject.com/Articles/762189/A-Dynamic-Rest-Client-Proxy-with-the-DLR) on codeproject.
 
 This is a set of classes that wrap a concrete implementation of http client communication with a [DynamicObject](http://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx). The wrapper translates dynamic method invocations and endpoint paths into REST requests. 
 
