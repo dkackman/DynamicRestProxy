@@ -52,6 +52,7 @@
     <Compile Include="ContentFactory.cs" />
     <Compile Include="ContentInfo.cs" />
     <Compile Include="DynamicRestClientDefaults.cs" />
+    <Compile Include="DynamicRestClientResponseException.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HttpClientExtensions.cs" />
     <Compile Include="DynamicRestClient.cs" />

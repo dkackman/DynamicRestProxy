@@ -8,6 +8,7 @@ using DynamicRestProxy.PortableHttpClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using UnitTestHelpers;
+using System.Net;
 
 namespace Client.Google.UnitTests
 {
@@ -144,6 +145,29 @@ namespace Client.Google.UnitTests
             {
                 dynamic result = await google.upload.storage.v1.b.unit_tests.o.post(42, name: new PostUrlParam("int_object"), uploadType: new PostUrlParam("media"));
                 Assert.IsNotNull(result);
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("portable-client")]
+        [TestCategory("integration")]
+        [TestCategory("google")]
+        public async Task GetBadUriThrowsResponseException()
+        {
+            using (dynamic google = new DynamicRestClient("https://www.googleapis.com/", MockInitialization.Handler))
+            {
+                dynamic bucket = google.storage.v1.b("bad-uri");
+
+                try
+                {
+                    dynamic metaData = await bucket.get();
+                }
+                catch (DynamicRestClientResponseException ex)
+                {
+                    Assert.AreEqual(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    Assert.AreEqual("Not Found", ex.Response.ReasonPhrase);
+                    Assert.IsFalse(ex.Response.IsSuccessStatusCode);
+                }
             }
         }
     }

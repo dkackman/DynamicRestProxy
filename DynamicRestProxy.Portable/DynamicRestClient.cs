@@ -144,7 +144,10 @@ namespace DynamicRestProxy.PortableHttpClient
                     return (T)(object)response;
                 }
 
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new DynamicRestClientResponseException(response);
+                }
 
                 // forward the JsonSerializationSettings on if passed
                 T result = await response.Deserialize<T>(serializationSettings);
