@@ -175,7 +175,7 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 Method = method,
                 RequestUri = CreateUri(method, namedArgs),
-                Content = ContentFactory.CreateContent(method, unnamedArgs, namedArgs)
+                Content = ContentFactory.CreateContent(method, unnamedArgs, namedArgs)                
             };
         }
 

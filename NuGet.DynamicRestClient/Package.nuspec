@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>2.5.0</version>
+    <version>3.0.0</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
@@ -25,6 +25,9 @@
   - upgrade BCL dependency versions
 2.5.0
   - make Deserialization extension class public
+3.0.0
+  - throw DyanmicRestClientResponseException on fail status
+  - Revert universal version to portable
     </releaseNotes>
     <summary>
     </summary>
@@ -40,22 +43,15 @@
         <dependency id="Microsoft.Net.Http" version="2.2.29" />
         <dependency id="Microsoft.Bcl" version="1.1.10" />
         <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
-      </group>
-      <group targetFramework="uap10.0">
-        <dependency id="Newtonsoft.Json" version="7.0.1" />
       </group>      
     </dependencies>
     <references></references>
-    <tags>Rest DLR dynamic proxy client http Portable UWP Universal UAP10.0 PCL</tags>
+    <tags>Rest DLR dynamic proxy client http Portable PCL</tags>
   </metadata>
   <files>
     <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
     <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
     <file src="..\DynamicRestProxy.Portable\bin\Release\DynamicRestProxy.PortableHttpClient.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
-
-    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.dll" target="lib\uap10.0" />
-    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.xml" target="lib\uap10.0" />
-    <file src="..\DynamicRestProxy.Universal\bin\Release\DynamicRestProxy.UniversalHttpClient.pdb" target="lib\uap10.0" />
     
     <file src="..\DynamicRestProxy.Portable\*.cs" target="src" />
   </files>

@@ -125,13 +125,13 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicRestProxy.Universal\DynamicRestProxy.UniversalHttpClient.csproj">
-      <Project>{3f7ca0f8-6487-4e0c-8e50-ae2ed54cc807}</Project>
-      <Name>DynamicRestProxy.UniversalHttpClient</Name>
-    </ProjectReference>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <ProjectReference Include="..\DynamicRestProxy.Portable\DynamicRestProxy.PortableHttpClient.csproj">
+      <Project>{11b51b4d-d60e-42e0-81d8-c9bcc08063ad}</Project>
+      <Name>DynamicRestProxy.PortableHttpClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
@@ -142,9 +142,9 @@
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.   -->
-  <Target Name="BeforeBuild">    
+  <Target Name="BeforeBuild">
     <ItemGroup>
-        <Content Include="MockResponses\**\*.*" />
+      <Content Include="MockResponses\**\*.*" />
     </ItemGroup>
   </Target>
   <!-- 

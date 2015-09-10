@@ -13,13 +13,6 @@ namespace DynamicRestProxy.PortableHttpClient
             var client = new HttpClient(handler, disposeHandler);
             client.BaseAddress = baseUri;
 
-#if !WINDOWS_UWP
-            if (handler is HttpClientHandler && ((HttpClientHandler)handler).SupportsTransferEncodingChunked())
-            {
-                client.DefaultRequestHeaders.TransferEncodingChunked = true;
-            }
-#endif
-
             client.DefaultRequestHeaders.Accept.Clear();
 
             if (defaults == null || !defaults.DefaultHeaders.ContainsKey("Accept"))
