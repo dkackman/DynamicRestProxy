@@ -129,6 +129,9 @@
     <Compile Include="..\DynamicRestProxy.Portable\DynamicRestClientDefaults.cs">
       <Link>DynamicRestClientDefaults.cs</Link>
     </Compile>
+    <Compile Include="..\DynamicRestProxy.Portable\DynamicRestClientResponseException.cs">
+      <Link>DynamicRestClientResponseException.cs</Link>
+    </Compile>
     <Compile Include="..\DynamicRestProxy.Portable\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
