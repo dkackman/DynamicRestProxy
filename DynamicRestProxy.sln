@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.DynamicRestClient", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{5D427DF5-A5A6-442F-9829-ADA85EF1EE61}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{AEFFFBCB-25A7-4B27-8C5D-DFB05C310DC0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Google.UnitTests", "Client.Google.UnitTests\Client.Google.UnitTests.csproj", "{23FD9838-1477-4BF6-92C9-EBC031956F81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestHelpers", "UnitTestHelpers\UnitTestHelpers.csproj", "{A589A7BA-9E16-4AE4-B01C-8D6B0AA9CFF8}"
