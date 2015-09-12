@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DynamicRestClient</id>
-    <version>3.0.0-alpha-0</version>
+    <version>3.0.0-</version>
     <title>Dynamic Rest Client</title>
     <authors>dkackman</authors>
     <owners></owners>
