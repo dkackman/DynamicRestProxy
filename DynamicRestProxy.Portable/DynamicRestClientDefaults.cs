@@ -6,7 +6,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// <summary>
     /// Default values that will be added all requests
     /// </summary>
-    public class DynamicRestClientDefaults
+    public sealed class DynamicRestClientDefaults
     {
         /// <summary>
         /// ctor
@@ -18,7 +18,7 @@ namespace DynamicRestProxy.PortableHttpClient
         }
 
         /// <summary>
-        /// Default paramter values
+        /// Default parameter values
         /// </summary>
         public IDictionary<string, object> DefaultParameters { get; private set; }
 
