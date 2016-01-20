@@ -41,6 +41,19 @@ namespace Universal.UnitTests
         //}
 
         [TestMethod]
+        [TestCategory("portable")]
+        [TestCategory("integration")]
+        public async Task DownloadJsonFile()
+        {
+            using (dynamic client = new DynamicRestClient("https://storage.googleapis.com/pictureframe/settings.json"))
+            {
+                var result = await client.get();
+                Assert.IsNotNull(result);
+                Assert.AreEqual(10000, result.settingCheckInterval);
+            }
+        }
+
+        [TestMethod]
         [TestCategory("Universal")]
         public async Task GetPublicBucket()
         {

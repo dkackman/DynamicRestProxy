@@ -17,7 +17,7 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
     [DeploymentItem(@"MockResponses\")]
     public class GoogleTests
     {
-        private static string _token = null;
+        private static string _token = null;        
 
         [TestMethod]
         [TestCategory("portable")]

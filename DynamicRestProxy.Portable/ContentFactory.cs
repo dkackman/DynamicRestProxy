@@ -35,7 +35,8 @@ namespace DynamicRestProxy.PortableHttpClient
 
         private static HttpContent Create(IEnumerable<KeyValuePair<string, object>> args)
         {
-            return new StringContent(args.AsQueryString(""), Encoding.UTF8, "application/x-www-form-urlencoded");
+            var nonNullArgs = args.Where(kvp => kvp.Value != null);
+            return new FormUrlEncodedContent(nonNullArgs.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
         }
 
         private static HttpContent Create(IEnumerable<object> contents)
