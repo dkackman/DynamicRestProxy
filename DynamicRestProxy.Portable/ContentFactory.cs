@@ -27,16 +27,10 @@ namespace DynamicRestProxy.PortableHttpClient
             var localNamedArgs = namedArgs.Where(kvp => kvp.Value != null && !(kvp.Value is PostUrlParam));
             if (method == HttpMethod.Post && localNamedArgs.Any())
             {
-                return Create(localNamedArgs);
+                return new FormUrlEncodedContent(localNamedArgs.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
             }
 
             return null;
-        }
-
-        private static HttpContent Create(IEnumerable<KeyValuePair<string, object>> args)
-        {
-            var nonNullArgs = args.Where(kvp => kvp.Value != null);
-            return new FormUrlEncodedContent(nonNullArgs.Select(kvp => new KeyValuePair<string, string>(kvp.Key, kvp.Value.ToString())));
         }
 
         private static HttpContent Create(IEnumerable<object> contents)
