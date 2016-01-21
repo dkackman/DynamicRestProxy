@@ -88,7 +88,7 @@ namespace DynamicRestProxy.PortableHttpClient
         internal DynamicRestClient(HttpClient client, IEnumerable<KeyValuePair<string, object>> defaultParameters, RestProxy parent, string name, Func<HttpRequestMessage, CancellationToken, Task> configure, bool disposeClient)
             : base(parent, name)
         {
-            Debug.Assert(client != null);
+            if (client == null) throw new ArgumentNullException("client");
 
             _httpClient = client;
             _defaultParameters = defaultParameters;
@@ -122,6 +122,7 @@ namespace DynamicRestProxy.PortableHttpClient
                 throw new ObjectDisposedException("The shared HttpClient has been disposed");
             }
 
+            // if we have any default parameters add them to the set used for this request
             if (_defaultParameters != null)
             {
                 namedArgs = namedArgs.Concat(_defaultParameters);
@@ -138,7 +139,7 @@ namespace DynamicRestProxy.PortableHttpClient
 
                 var response = await _httpClient.SendAsync(request, cancelToken);
 
-                // if the client asked for the response message back do not check for success
+                // if the client asked for the response message back do not check for success and just send it back
                 if (typeof(T) == typeof(HttpResponseMessage))
                 {
                     return (T)(object)response;
@@ -175,7 +176,7 @@ namespace DynamicRestProxy.PortableHttpClient
             {
                 Method = method,
                 RequestUri = CreateUri(method, namedArgs),
-                Content = ContentFactory.CreateContent(method, unnamedArgs, namedArgs)                
+                Content = ContentFactory.CreateContent(method, unnamedArgs, namedArgs)
             };
         }
 

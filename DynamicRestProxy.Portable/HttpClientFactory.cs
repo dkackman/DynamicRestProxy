@@ -6,12 +6,13 @@ namespace DynamicRestProxy.PortableHttpClient
 {
     static class HttpClientFactory
     {
-        public static HttpClient CreateClient(Uri baseUri, HttpMessageHandler handler, bool disposeHandler, DynamicRestClientDefaults defaults)
+        public static HttpClient CreateClient(Uri baseAddress, HttpMessageHandler handler, bool disposeHandler, DynamicRestClientDefaults defaults)
         {
+            if (baseAddress == null) throw new ArgumentNullException("baseAddress");
             if (handler == null) throw new ArgumentNullException("handler");
 
             var client = new HttpClient(handler, disposeHandler);
-            client.BaseAddress = baseUri;
+            client.BaseAddress = baseAddress;
 
             client.DefaultRequestHeaders.Accept.Clear();
 
