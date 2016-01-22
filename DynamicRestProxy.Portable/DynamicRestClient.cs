@@ -16,7 +16,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// </summary>
     public sealed class DynamicRestClient : RestProxy, IDisposable
     {
-        private static readonly IDictionary<string, HttpMethod> _methods = BinderExtensions._verbs.ToDictionary(verb => verb, verb => new HttpMethod(verb.ToUpperInvariant()));
+        private static readonly IDictionary<string, HttpMethod> _methods = _verbs.ToDictionary(verb => verb, verb => new HttpMethod(verb.ToUpperInvariant()));
 
         private readonly HttpClient _httpClient;
         private readonly IEnumerable<KeyValuePair<string, object>> _defaultParameters;

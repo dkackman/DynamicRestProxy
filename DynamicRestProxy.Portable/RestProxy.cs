@@ -17,7 +17,10 @@ namespace DynamicRestProxy
     /// </summary>
     public abstract class RestProxy : DynamicObject
     {
-        // objects of these types, when pass to a verb invocation as unnamed arguments, 
+        // currently supported verbs
+        protected static readonly string[] _verbs = new string[] { "post", "get", "delete", "put", "patch" };
+
+        // objects of these types, when passed to a verb invocation as unnamed arguments, 
         // will signal particualr behavior rather than get passed as content
         private static readonly TypeInfo[] _reservedTypes = new TypeInfo[] { typeof(CancellationToken).GetTypeInfo(), typeof(JsonSerializerSettings).GetTypeInfo(), typeof(Type).GetTypeInfo() };
 
@@ -100,7 +103,7 @@ namespace DynamicRestProxy
         /// </summary>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            if (binder.IsVerb()) // the method name is one of our http verbs - invoke as such
+            if (_verbs.Contains(binder.Name)) // the method name is one of our http verbs - invoke as such
             {
                 var unnamedArgs = binder.GetUnnamedArgs(args);
 
@@ -120,7 +123,7 @@ namespace DynamicRestProxy
                 // if no return type argument provided there is no need for late bound method dispatch
                 if (returnType == null)
                 {
-                    // no return type argumentso return result deserialized as dynamic
+                    // no return type argument so return result deserialized as dynamic
                     // parse out the details of the invocation and have the derived class create a Task
                     result = CreateVerbAsyncTask<dynamic>(binder.Name, requestArgs, binder.GetNamedArgs(args), cancelToken, serializationSettings);
                 }
