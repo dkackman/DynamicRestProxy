@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Net.Http;
 using System.Dynamic;
 using System.Diagnostics;
@@ -22,9 +21,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <typeparam name="T"> The type to deserialize to
         /// <see cref="Stream"/>
         /// <see cref="string"/>
-        /// <see cref="byte"/> array
+        /// <see cref="byte[]"/> array
         /// <see cref="ExpandoObject"/> when T is dynamic
-        /// or othe POCO types
+        /// or other POCO types
         /// </typeparam>
         /// <param name="response">An <see cref="HttpResponseMessage"/> to deserialize</param>
         /// <param name="settings">Json settings to control deserialization</param>
