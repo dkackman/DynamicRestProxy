@@ -29,9 +29,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// </summary>
         /// <param name="baseUri">The root url for all requests</param>
         /// <param name="defaults">Default values to add to all requests</param>
-        /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(string baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(new Uri(baseUri, UriKind.Absolute), defaults, configure)
+        /// <param name="configureRequest">A callback function that will be called just before any request is sent</param>
+        public DynamicRestClient(string baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configureRequest = null)
+            : this(new Uri(baseUri, UriKind.Absolute), defaults, configureRequest)
         {
         }
 
@@ -40,9 +40,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// </summary>
         /// <param name="baseUri">The root url for all requests</param>
         /// <param name="defaults">Default values to add to all requests</param>
-        /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(Uri baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(HttpClientFactory.CreateClient(baseUri, defaults), null, null, "", configure, true)
+        /// <param name="configureRequest">A callback function that will be called just before any request is sent</param>
+        public DynamicRestClient(Uri baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configureRequest = null)
+            : this(HttpClientFactory.CreateClient(baseUri, defaults), null, null, "", configureRequest, true)
         {
             _defaultParameters = defaults != null ? defaults.DefaultParameters : null;
         }
@@ -52,9 +52,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// </summary>
         /// <param name="client">HttpClient to use for communication</param>
         /// <param name="disposeClient">Flag indicating whether to take ownership of the client instance and dispose of when this instance is disposed</param>
-        /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(HttpClient client, bool disposeClient = false, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(client, null, null, "", configure, disposeClient)
+        /// <param name="configureRequest">A callback function that will be called just before any request is sent</param>
+        public DynamicRestClient(HttpClient client, bool disposeClient = false, Func<HttpRequestMessage, CancellationToken, Task> configureRequest = null)
+            : this(client, null, null, "", configureRequest, disposeClient)
         {
         }
 
@@ -65,9 +65,9 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <param name="handler">HttpMessageHandler to use for communication</param>
         /// <param name="disposeHandler">Flag indicating whether to take ownership of the handler instance and dispose of when this instance is disposed</param>
         /// <param name="defaults">Default values to add to all requests</param>
-        /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(string baseUri, HttpMessageHandler handler, bool disposeHandler = false, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(new Uri(baseUri, UriKind.Absolute), handler, disposeHandler, defaults, configure)
+        /// <param name="configureRequest">A callback function that will be called just before any request is sent</param>
+        public DynamicRestClient(string baseUri, HttpMessageHandler handler, bool disposeHandler = false, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configureRequest = null)
+            : this(new Uri(baseUri, UriKind.Absolute), handler, disposeHandler, defaults, configureRequest)
         {
         }
 
@@ -78,21 +78,21 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <param name="handler">HttpMessageHandler to use for communication</param>
         /// <param name="disposeHandler">Flag indicating whether to take ownership of the handler instance and dispose of when this instance is disposed</param>
         /// <param name="defaults">Default values to add to all requests</param>
-        /// <param name="configure">A callback function that will be called just before any request is sent</param>
-        public DynamicRestClient(Uri baseUri, HttpMessageHandler handler, bool disposeHandler = false, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configure = null)
-            : this(HttpClientFactory.CreateClient(baseUri, handler, disposeHandler, defaults), null, null, "", configure, true)
+        /// <param name="configureRequest">A callback function that will be called just before any request is sent</param>
+        public DynamicRestClient(Uri baseUri, HttpMessageHandler handler, bool disposeHandler = false, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configureRequest = null)
+            : this(HttpClientFactory.CreateClient(baseUri, handler, disposeHandler, defaults), null, null, "", configureRequest, true)
         {
             _defaultParameters = defaults != null ? defaults.DefaultParameters : null;
         }
 
-        internal DynamicRestClient(HttpClient client, IEnumerable<KeyValuePair<string, object>> defaultParameters, RestProxy parent, string name, Func<HttpRequestMessage, CancellationToken, Task> configure, bool disposeClient)
+        internal DynamicRestClient(HttpClient client, IEnumerable<KeyValuePair<string, object>> defaultParameters, RestProxy parent, string name, Func<HttpRequestMessage, CancellationToken, Task> configureRequest, bool disposeClient)
             : base(parent, name)
         {
             if (client == null) throw new ArgumentNullException("client");
 
             _httpClient = client;
             _defaultParameters = defaultParameters;
-            _configureRequest = configure;
+            _configureRequest = configureRequest;
             _disposeClient = disposeClient;
         }
 
