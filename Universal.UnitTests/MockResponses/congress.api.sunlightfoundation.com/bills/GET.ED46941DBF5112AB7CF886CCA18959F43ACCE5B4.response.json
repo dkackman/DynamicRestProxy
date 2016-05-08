@@ -1,0 +1,30 @@
+{
+  "StatusCode": 200,
+  "Query": "chamber=senate&history.house_passage_result=pass",
+  "ContentFileName": "GET.ED46941DBF5112AB7CF886CCA18959F43ACCE5B4.content.json",
+  "ResponseHeaders": {
+    "Transfer-Encoding": [
+      "chunked"
+    ],
+    "Connection": [
+      "keep-alive"
+    ],
+    "Vary": [
+      "Accept-Encoding"
+    ],
+    "Status": [
+      "200 OK"
+    ],
+    "Date": [
+      "Sun, 24 May 2015 17:50:32 GMT"
+    ],
+    "Server": [
+      "nginx/1.1.19"
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Type": [
+      "application/json; charset=utf-8"
+    ]
+  }
+}

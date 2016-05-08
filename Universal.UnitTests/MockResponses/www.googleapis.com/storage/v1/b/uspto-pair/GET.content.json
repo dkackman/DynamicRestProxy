@@ -1,0 +1,11 @@
+{
+ "kind": "storage#bucket",
+ "id": "uspto-pair",
+ "selfLink": "https://www.googleapis.com/storage/v1/b/uspto-pair",
+ "name": "uspto-pair",
+ "timeCreated": "2010-08-06T15:59:47.851Z",
+ "metageneration": "1",
+ "location": "US",
+ "storageClass": "STANDARD",
+ "etag": "CAE="
+}

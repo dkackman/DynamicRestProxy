@@ -1,0 +1,40 @@
+{
+  "StatusCode": 200,
+  "Query": "chamber=upper&state=mn&status=passed_upper",
+  "ContentFileName": "GET.CFC063B1F7A6C4C5883200CC4AD9F1417D32F2AC.content.json",
+  "ResponseHeaders": {
+    "Vary": [
+      "Authorization"
+    ],
+    "Access-Control-Allow-Origin": [
+      "*"
+    ],
+    "X-Varnish": [
+      "1155036135"
+    ],
+    "Age": [
+      "0"
+    ],
+    "Connection": [
+      "keep-alive"
+    ],
+    "Date": [
+      "Sun, 24 May 2015 17:50:48 GMT"
+    ],
+    "Server": [
+      "nginx/1.4.1",
+      "(Ubuntu)"
+    ],
+    "Via": [
+      "1.1 varnish"
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Length": [
+      "147480"
+    ],
+    "Content-Type": [
+      "application/json; charset=utf-8"
+    ]
+  }
+}

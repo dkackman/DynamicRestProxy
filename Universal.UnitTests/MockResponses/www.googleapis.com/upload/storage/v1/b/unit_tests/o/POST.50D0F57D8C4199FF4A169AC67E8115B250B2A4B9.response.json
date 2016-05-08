@@ -1,0 +1,29 @@
+{
+  "StatusCode": 403,
+  "Query": "name=test_object&uploadtype=media",
+  "ContentFileName": "POST.50D0F57D8C4199FF4A169AC67E8115B250B2A4B9.content.json",
+  "ResponseHeaders": {
+    "Vary": [
+      "Origin",
+      "X-Origin"
+    ],
+    "Alternate-Protocol": [
+      "443:quic,p=1"
+    ],
+    "Date": [
+      "Mon, 08 Jun 2015 23:17:29 GMT"
+    ],
+    "Server": [
+      "UploadServer",
+      "(\"Built on May 21 2015 09:31:47 (1432225907)\")"
+    ]
+  },
+  "ContentHeaders": {
+    "Content-Length": [
+      "329"
+    ],
+    "Content-Type": [
+      "application/json; charset=UTF-8"
+    ]
+  }
+}
