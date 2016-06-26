@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
-    /// Default values that will be added all requests
+    /// Default values that will be added to all requests
     /// </summary>
     public sealed class DynamicRestClientDefaults
     {

@@ -201,7 +201,7 @@ namespace DynamicRestProxy.PortableHttpClient
         }
 
         /// <summary>
-        /// Disposes the contained HttpClient
+        /// Disposes the contained <see cref="HttpClient"/> 
         /// </summary>
         public void Dispose()
         {

@@ -4,7 +4,7 @@ using System.IO;
 namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
-    /// Wrapper class for a stream that relates the stream to metadata (MIME type)
+    /// Wrapper class for a <see cref="Stream"/> that relates the stream to metadata (MIME type)
     /// about the stream so metadata can be added to content headers
     /// </summary>
     public sealed class StreamInfo : ContentInfo, IDisposable

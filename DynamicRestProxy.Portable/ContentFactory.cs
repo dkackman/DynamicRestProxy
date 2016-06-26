@@ -100,12 +100,13 @@ namespace DynamicRestProxy.PortableHttpClient
             // create content object as normal
             var content = Create(info.Content);
 
-            // set any additional headers
+            // set content type if we have one
             if (!string.IsNullOrEmpty(info.MimeType))
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue(info.MimeType);
             }
 
+            // set any additional headers
             foreach (var kvp in info.ContentHeaders)
             {
                 content.Headers.Add(kvp.Key, kvp.Value);

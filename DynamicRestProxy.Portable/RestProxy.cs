@@ -46,17 +46,6 @@ namespace DynamicRestProxy
         public string Name { get; private set; }
 
         /// <summary>
-        /// The numeric index of this node in the chain
-        /// </summary>
-        public int Index
-        {
-            get
-            {
-                return Parent != null ? Parent.Index + 1 : -1; // the root is the main url - does not represent a url segment
-            }
-        }
-
-        /// <summary>
         /// The base Url of the endpoint. Overridden in derived classes to allow specific rest client to determine how it is stored
         /// </summary>
         protected abstract Uri BaseUri { get; }
@@ -88,7 +77,7 @@ namespace DynamicRestProxy
         }
 
         /// <summary>
-        /// Abstract method to create a Task that will execute the necessary http communication
+        /// Abstract method to create a <see cref="Task"/> that will execute the necessary http communication
         /// </summary>
         /// <param name="verb">The http verb to execute (must be get, post, put, patch or delete)</param>
         /// <param name="unnamedArgs">Unnamed arguments passed to the invocation. These go into the http request body</param>
