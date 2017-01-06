@@ -5,18 +5,18 @@
   },
   "dependencies": {
     "Newtonsoft.Json": "9.0.1",
-    "DynamicRestClient": "3.0.0",
-    "System.Runtime.Serialization.Primitives": "4.1.1",
+    "DynamicRestProxy.Portable": "4.0.0-*",
+    "System.Runtime.Serialization.Primitives": "4.3.0",
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-192208-24"
   },
   "testRunner": "xunit",
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.1": {
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0"
+          "version": "1.1.0"
         }
       },
       "imports": [
