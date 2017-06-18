@@ -1,0 +1,6 @@
+{
+    "projects":[
+        "DynamicRestProxy.Portable",
+        "XUnitTests"
+    ]
+}

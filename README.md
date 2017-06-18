@@ -21,10 +21,12 @@ So a GET statement can be as simple as:
 Or if you insist on static DTO types, a type argument can be supplied (deserialization uses [Json.Net](http://json.codeplex.com/) so all its rules and patterns apply):
 
     dynamic google = new DynamicRestClient("https://www.googleapis.com/");
-    Bucket bucket = google.storage.v1.b("uspto-pair").get(typeof(Bucket));
+    Bucket bucket = await google.storage.v1.b("uspto-pair").get(typeof(Bucket));
     Console.WriteLine(bucket.location);
 
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
+
+Tested on dotnetcore on Linux.
 
 Example usage is on the [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) as well as supplied in the unit test projects.
 
