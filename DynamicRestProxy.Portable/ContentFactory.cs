@@ -64,24 +64,24 @@ namespace DynamicRestProxy.PortableHttpClient
             }
 
             // check for a set of sentinal types that will serialize in a specific manner
-            if (content is Stream)
+            if (content is Stream stream)
             {
-                return new StreamContent((Stream)content);
+                return new StreamContent(stream);
             }
 
-            if (content is byte[])
+            if (content is byte[] bytes)
             {
-                return new ByteArrayContent((byte[])content);
+                return new ByteArrayContent(bytes);
             }
 
-            if (content is string)
+            if (content is string s)
             {
-                return new StringContent((string)content);
+                return new StringContent(s);
             }
 
-            if (content is ContentInfo)
+            if (content is ContentInfo info)
             {
-                return Create((ContentInfo)content);
+                return Create(info);
             }
 
             // primitive types (int, float etc) types get serialized as a string

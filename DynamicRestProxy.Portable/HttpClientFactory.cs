@@ -8,12 +8,12 @@ namespace DynamicRestProxy.PortableHttpClient
     {
         public static HttpClient CreateClient(Uri baseAddress, HttpMessageHandler handler, bool disposeHandler, DynamicRestClientDefaults defaults)
         {
-            if (baseAddress == null) throw new ArgumentNullException("baseAddress");
             if (handler == null) throw new ArgumentNullException("handler");
 
-            var client = new HttpClient(handler, disposeHandler);
-            client.BaseAddress = baseAddress;
-
+            var client = new HttpClient(handler, disposeHandler)
+            {
+                BaseAddress = baseAddress ?? throw new ArgumentNullException("baseAddress")
+            };
             client.DefaultRequestHeaders.Accept.Clear();
 
             if (defaults == null || !defaults.DefaultHeaders.ContainsKey("Accept"))
@@ -25,9 +25,8 @@ namespace DynamicRestProxy.PortableHttpClient
             }
 
             if (defaults != null)
-            {                
-                ProductInfoHeaderValue productHeader = null;
-                if (!string.IsNullOrEmpty(defaults.UserAgent) && ProductInfoHeaderValue.TryParse(defaults.UserAgent, out productHeader))
+            {
+                if (!string.IsNullOrEmpty(defaults.UserAgent) && ProductInfoHeaderValue.TryParse(defaults.UserAgent, out ProductInfoHeaderValue productHeader))
                 {
                     client.DefaultRequestHeaders.UserAgent.Clear();
                     client.DefaultRequestHeaders.UserAgent.Add(productHeader);
