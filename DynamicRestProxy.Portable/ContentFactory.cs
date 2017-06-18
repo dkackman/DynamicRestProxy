@@ -58,9 +58,9 @@ namespace DynamicRestProxy.PortableHttpClient
         {
             Debug.Assert(content != null);
 
-            if (content is HttpContent) // if caller went to the trouble of passing HttpContent, just use it
+            if (content is HttpContent httpContent) // if caller went to the trouble of passing HttpContent, just use it
             {
-                return (HttpContent)content;
+                return httpContent;
             }
 
             // check for a set of sentinal types that will serialize in a specific manner

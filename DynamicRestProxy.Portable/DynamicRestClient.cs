@@ -44,7 +44,7 @@ namespace DynamicRestProxy.PortableHttpClient
         public DynamicRestClient(Uri baseUri, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configureRequest = null)
             : this(HttpClientFactory.CreateClient(baseUri, defaults), null, null, "", configureRequest, true)
         {
-            _defaultParameters = defaults != null ? defaults.DefaultParameters : null;
+            _defaultParameters = defaults?.DefaultParameters;
         }
 
         /// <summary>
@@ -82,15 +82,13 @@ namespace DynamicRestProxy.PortableHttpClient
         public DynamicRestClient(Uri baseUri, HttpMessageHandler handler, bool disposeHandler = false, DynamicRestClientDefaults defaults = null, Func<HttpRequestMessage, CancellationToken, Task> configureRequest = null)
             : this(HttpClientFactory.CreateClient(baseUri, handler, disposeHandler, defaults), null, null, "", configureRequest, true)
         {
-            _defaultParameters = defaults != null ? defaults.DefaultParameters : null;
+            _defaultParameters = defaults?.DefaultParameters;
         }
 
         internal DynamicRestClient(HttpClient client, IEnumerable<KeyValuePair<string, object>> defaultParameters, RestProxy parent, string name, Func<HttpRequestMessage, CancellationToken, Task> configureRequest, bool disposeClient)
             : base(parent, name)
         {
-            if (client == null) throw new ArgumentNullException("client");
-
-            _httpClient = client;
+            _httpClient = client ?? throw new ArgumentNullException("client");
             _defaultParameters = defaultParameters;
             _configureRequest = configureRequest;
             _disposeClient = disposeClient;
