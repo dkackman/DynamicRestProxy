@@ -1,0 +1,664 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DynamicRestClient
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DynamicRestClient
+   ">
+    <meta name="generator" content="docfx 2.18.5.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient">
+  
+  
+  <h1 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient">Class DynamicRestClient
+  </h1>
+  <div class="markdown level0 summary"><p>A rest client that uses dynamic objects for invocation and result values</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a></div>
+    <div class="level1"><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110).aspx">DynamicObject</a></div>
+    <div class="level2"><a class="xref" href="DynamicRestProxy.RestProxy.html">RestProxy</a></div>
+    <div class="level3"><span class="xref">DynamicRestClient</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy__verbs">RestProxy._verbs</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Parent">RestProxy.Parent</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Name">RestProxy.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryInvoke_System_Dynamic_InvokeBinder_System_Object___System_Object__">RestProxy.TryInvoke(InvokeBinder, Object[], Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryInvokeMember_System_Dynamic_InvokeMemberBinder_System_Object___System_Object__">RestProxy.TryInvokeMember(InvokeMemberBinder, Object[], Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryGetMember_System_Dynamic_GetMemberBinder_System_Object__">RestProxy.TryGetMember(GetMemberBinder, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetEndPointPath_System_Text_StringBuilder_">RestProxy.GetEndPointPath(StringBuilder)</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetEndPointPath">RestProxy.GetEndPointPath()</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_ToString">RestProxy.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetHashCode">RestProxy.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Equals_System_Object_">RestProxy.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd630192(v=vs.110).aspx">DynamicObject.GetDynamicMemberNames()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd549077(v=vs.110).aspx">DynamicObject.GetMetaObject(Expression)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487513(v=vs.110).aspx">DynamicObject.TryBinaryOperation(BinaryOperationBinder, Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487544(v=vs.110).aspx">DynamicObject.TryConvert(ConvertBinder, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487491(v=vs.110).aspx">DynamicObject.TryCreateInstance(CreateInstanceBinder, Object[], Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487417(v=vs.110).aspx">DynamicObject.TryDeleteIndex(DeleteIndexBinder, Object[])</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487542(v=vs.110).aspx">DynamicObject.TryDeleteMember(DeleteMemberBinder)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487575(v=vs.110).aspx">DynamicObject.TryGetIndex(GetIndexBinder, Object[], Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487441(v=vs.110).aspx">DynamicObject.TrySetIndex(SetIndexBinder, Object[], Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487353(v=vs.110).aspx">DynamicObject.TrySetMember(SetMemberBinder, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dd487564(v=vs.110).aspx">DynamicObject.TryUnaryOperation(UnaryOperationBinder, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/w4hkze5k(v=vs.110).aspx">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/dfwy45w9(v=vs.110).aspx">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/57ctke0a(v=vs.110).aspx">Object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://msdn.microsoft.com/en-us/library/hz2a0b8x(v=vs.110).aspx">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="DynamicRestProxy.PortableHttpClient.html">DynamicRestProxy.PortableHttpClient</a></h6>
+  <h6><strong>Assembly</strong>: DynamicRestProxy.NetStandard.dll</h6>
+  <h5 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class DynamicRestClient : RestProxy, IDynamicMetaObjectProvider, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Net_Http_HttpClient_System_Boolean_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.%23ctor(System.Net.Http.HttpClient%2CSystem.Boolean%2CSystem.Func%7BSystem.Net.Http.HttpRequestMessage%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L56">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Net_Http_HttpClient_System_Boolean_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Net.Http.HttpClient,System.Boolean,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})">DynamicRestClient(HttpClient, Boolean, Func&lt;HttpRequestMessage, CancellationToken, Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>ctor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DynamicRestClient(HttpClient client, bool disposeClient = false, Func&lt;HttpRequestMessage, CancellationToken, Task&gt; configureRequest = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.110).aspx">HttpClient</a></td>
+        <td><span class="parametername">client</span></td>
+        <td><p>HttpClient to use for communication</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
+        <td><span class="parametername">disposeClient</span></td>
+        <td><p>Flag indicating whether to take ownership of the client instance and dispose of when this instance is disposed</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/bb534647(v=vs.110).aspx">Func</a>&lt;<span class="xref">System.Net.Http.HttpRequestMessage</span>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.cancellationtoken(v=vs.110).aspx">CancellationToken</a>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.tasks.task(v=vs.110).aspx">Task</a>&gt;</td>
+        <td><span class="parametername">configureRequest</span></td>
+        <td><p>A callback function that will be called just before any request is sent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_String_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.%23ctor(System.String%2CDynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults%2CSystem.Func%7BSystem.Net.Http.HttpRequestMessage%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L33">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_String_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.String,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})">DynamicRestClient(String, DynamicRestClientDefaults, Func&lt;HttpRequestMessage, CancellationToken, Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>ctor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DynamicRestClient(string baseUri, DynamicRestClientDefaults defaults = null, Func&lt;HttpRequestMessage, CancellationToken, Task&gt; configureRequest = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+        <td><span class="parametername">baseUri</span></td>
+        <td><p>The root url for all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a></td>
+        <td><span class="parametername">defaults</span></td>
+        <td><p>Default values to add to all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/bb534647(v=vs.110).aspx">Func</a>&lt;<span class="xref">System.Net.Http.HttpRequestMessage</span>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.cancellationtoken(v=vs.110).aspx">CancellationToken</a>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.tasks.task(v=vs.110).aspx">Task</a>&gt;</td>
+        <td><span class="parametername">configureRequest</span></td>
+        <td><p>A callback function that will be called just before any request is sent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_String_System_Net_Http_HttpMessageHandler_System_Boolean_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.%23ctor(System.String%2CSystem.Net.Http.HttpMessageHandler%2CSystem.Boolean%2CDynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults%2CSystem.Func%7BSystem.Net.Http.HttpRequestMessage%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L69">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_String_System_Net_Http_HttpMessageHandler_System_Boolean_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.String,System.Net.Http.HttpMessageHandler,System.Boolean,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})">DynamicRestClient(String, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func&lt;HttpRequestMessage, CancellationToken, Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>ctor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DynamicRestClient(string baseUri, HttpMessageHandler handler, bool disposeHandler = false, DynamicRestClientDefaults defaults = null, Func&lt;HttpRequestMessage, CancellationToken, Task&gt; configureRequest = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+        <td><span class="parametername">baseUri</span></td>
+        <td><p>The root url for all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpmessagehandler(v=vs.110).aspx">HttpMessageHandler</a></td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>HttpMessageHandler to use for communication</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
+        <td><span class="parametername">disposeHandler</span></td>
+        <td><p>Flag indicating whether to take ownership of the handler instance and dispose of when this instance is disposed</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a></td>
+        <td><span class="parametername">defaults</span></td>
+        <td><p>Default values to add to all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/bb534647(v=vs.110).aspx">Func</a>&lt;<span class="xref">System.Net.Http.HttpRequestMessage</span>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.cancellationtoken(v=vs.110).aspx">CancellationToken</a>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.tasks.task(v=vs.110).aspx">Task</a>&gt;</td>
+        <td><span class="parametername">configureRequest</span></td>
+        <td><p>A callback function that will be called just before any request is sent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Uri_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.%23ctor(System.Uri%2CDynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults%2CSystem.Func%7BSystem.Net.Http.HttpRequestMessage%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L44">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Uri_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Uri,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})">DynamicRestClient(Uri, DynamicRestClientDefaults, Func&lt;HttpRequestMessage, CancellationToken, Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>ctor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DynamicRestClient(Uri baseUri, DynamicRestClientDefaults defaults = null, Func&lt;HttpRequestMessage, CancellationToken, Task&gt; configureRequest = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx">Uri</a></td>
+        <td><span class="parametername">baseUri</span></td>
+        <td><p>The root url for all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a></td>
+        <td><span class="parametername">defaults</span></td>
+        <td><p>Default values to add to all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/bb534647(v=vs.110).aspx">Func</a>&lt;<span class="xref">System.Net.Http.HttpRequestMessage</span>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.cancellationtoken(v=vs.110).aspx">CancellationToken</a>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.tasks.task(v=vs.110).aspx">Task</a>&gt;</td>
+        <td><span class="parametername">configureRequest</span></td>
+        <td><p>A callback function that will be called just before any request is sent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Uri_System_Net_Http_HttpMessageHandler_System_Boolean_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.%23ctor(System.Uri%2CSystem.Net.Http.HttpMessageHandler%2CSystem.Boolean%2CDynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults%2CSystem.Func%7BSystem.Net.Http.HttpRequestMessage%2CSystem.Threading.CancellationToken%2CSystem.Threading.Tasks.Task%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L82">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Uri_System_Net_Http_HttpMessageHandler_System_Boolean_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Uri,System.Net.Http.HttpMessageHandler,System.Boolean,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})">DynamicRestClient(Uri, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func&lt;HttpRequestMessage, CancellationToken, Task&gt;)</h4>
+  <div class="markdown level1 summary"><p>ctor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DynamicRestClient(Uri baseUri, HttpMessageHandler handler, bool disposeHandler = false, DynamicRestClientDefaults defaults = null, Func&lt;HttpRequestMessage, CancellationToken, Task&gt; configureRequest = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx">Uri</a></td>
+        <td><span class="parametername">baseUri</span></td>
+        <td><p>The root url for all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpmessagehandler(v=vs.110).aspx">HttpMessageHandler</a></td>
+        <td><span class="parametername">handler</span></td>
+        <td><p>HttpMessageHandler to use for communication</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.boolean(v=vs.110).aspx">Boolean</a></td>
+        <td><span class="parametername">disposeHandler</span></td>
+        <td><p>Flag indicating whether to take ownership of the handler instance and dispose of when this instance is disposed</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a></td>
+        <td><span class="parametername">defaults</span></td>
+        <td><p>Default values to add to all requests</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/bb534647(v=vs.110).aspx">Func</a>&lt;<span class="xref">System.Net.Http.HttpRequestMessage</span>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.cancellationtoken(v=vs.110).aspx">CancellationToken</a>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.tasks.task(v=vs.110).aspx">Task</a>&gt;</td>
+        <td><span class="parametername">configureRequest</span></td>
+        <td><p>A callback function that will be called just before any request is sent</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient_BaseUri.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L100">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_BaseUri_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_BaseUri" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri">BaseUri</h4>
+  <div class="markdown level1 summary"><a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_BaseUri">BaseUri</a>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Uri BaseUri { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.uri(v=vs.110).aspx">Uri</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_BaseUri">RestProxy.BaseUri</a></div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateProxyNode_DynamicRestProxy_RestProxy_System_String_.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode(DynamicRestProxy.RestProxy%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L108">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateProxyNode_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateProxyNode_DynamicRestProxy_RestProxy_System_String_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode(DynamicRestProxy.RestProxy,System.String)">CreateProxyNode(RestProxy, String)</h4>
+  <div class="markdown level1 summary"><a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateProxyNode_DynamicRestProxy_RestProxy_System_String_">CreateProxyNode(RestProxy, String)</a>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override RestProxy CreateProxyNode(RestProxy parent, string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="DynamicRestProxy.RestProxy.html">RestProxy</a></td>
+        <td><span class="parametername">parent</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="DynamicRestProxy.RestProxy.html">RestProxy</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateProxyNode_DynamicRestProxy_RestProxy_System_String_">RestProxy.CreateProxyNode(RestProxy, String)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateVerbAsyncTask__1_System_String_System_Collections_Generic_IEnumerable_System_Object__System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Object___System_Threading_CancellationToken_Newtonsoft_Json_JsonSerializerSettings_.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask%60%601(System.String%2CSystem.Collections.Generic.IEnumerable%7BSystem.Object%7D%2CSystem.Collections.Generic.IEnumerable%7BSystem.Collections.Generic.KeyValuePair%7BSystem.String%2CSystem.Object%7D%7D%2CSystem.Threading.CancellationToken%2CNewtonsoft.Json.JsonSerializerSettings)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L116">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateVerbAsyncTask_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateVerbAsyncTask__1_System_String_System_Collections_Generic_IEnumerable_System_Object__System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Object___System_Threading_CancellationToken_Newtonsoft_Json_JsonSerializerSettings_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask``1(System.String,System.Collections.Generic.IEnumerable{System.Object},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Threading.CancellationToken,Newtonsoft.Json.JsonSerializerSettings)">CreateVerbAsyncTask&lt;T&gt;(String, IEnumerable&lt;Object&gt;, IEnumerable&lt;KeyValuePair&lt;String, Object&gt;&gt;, CancellationToken, JsonSerializerSettings)</h4>
+  <div class="markdown level1 summary"><a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateVerbAsyncTask__1_System_String_System_Collections_Generic_IEnumerable_System_Object__System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Object___System_Threading_CancellationToken_Newtonsoft_Json_JsonSerializerSettings_">CreateVerbAsyncTask&lt;T&gt;(String, IEnumerable&lt;Object&gt;, IEnumerable&lt;KeyValuePair&lt;String, Object&gt;&gt;, CancellationToken, JsonSerializerSettings)</a>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Task&lt;T&gt; CreateVerbAsyncTask&lt;T&gt;(string verb, IEnumerable&lt;object&gt; unnamedArgs, IEnumerable&lt;KeyValuePair&lt;string, object&gt;&gt; namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a></td>
+        <td><span class="parametername">verb</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/9eekhta0(v=vs.110).aspx">IEnumerable</a>&lt;<a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a>&gt;</td>
+        <td><span class="parametername">unnamedArgs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/9eekhta0(v=vs.110).aspx">IEnumerable</a>&lt;<span class="xref">System.Collections.Generic.KeyValuePair</span>&lt;<a class="xref" href="https://msdn.microsoft.com/en-us/library/system.string(v=vs.110).aspx">String</a>, <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.object(v=vs.110).aspx">Object</a>&gt;&gt;</td>
+        <td><span class="parametername">namedArgs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/system.threading.cancellationtoken(v=vs.110).aspx">CancellationToken</a></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Newtonsoft.Json.JsonSerializerSettings</span></td>
+        <td><span class="parametername">serializationSettings</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://msdn.microsoft.com/en-us/library/dd321424(v=vs.110).aspx">Task</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateVerbAsyncTask__1_System_String_System_Collections_Generic_IEnumerable_System_Object__System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Object___System_Threading_CancellationToken_Newtonsoft_Json_JsonSerializerSettings_">RestProxy.CreateVerbAsyncTask&lt;T&gt;(String, IEnumerable&lt;Object&gt;, IEnumerable&lt;KeyValuePair&lt;String, Object&gt;&gt;, CancellationToken, JsonSerializerSettings)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient_Dispose.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L204">View Source</a>
+  </span>
+  <a id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_Dispose_" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose*"></a>
+  <h4 id="DynamicRestProxy_PortableHttpClient_DynamicRestClient_Dispose" data-uid="DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>Disposes the contained <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.110).aspx">HttpClient</a> </p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <h5 class="implements">Implements</h5>
+      <div><a class="xref" href="https://msdn.microsoft.com/en-us/library/es4s3w1d(v=vs.110).aspx">IDisposable.Dispose()</a></div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dkackman/DynamicRestProxy/new/master/apiSpec/new?filename=DynamicRestProxy_PortableHttpClient_DynamicRestClient.md&amp;value=---%0Auid%3A%20DynamicRestProxy.PortableHttpClient.DynamicRestClient%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/DynamicRestProxy.NetStandard/DynamicRestClient.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
