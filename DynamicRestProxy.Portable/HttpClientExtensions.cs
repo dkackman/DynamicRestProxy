@@ -21,7 +21,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <typeparam name="T"> The type to deserialize to
         /// <see cref="Stream"/>
         /// <see cref="string"/>
-        /// <see cref="byte[]"/> array
+        /// <see cref="T:System.Byte[]"/> array
         /// <see cref="ExpandoObject"/> when T is dynamic
         /// or other POCO types
         /// </typeparam>

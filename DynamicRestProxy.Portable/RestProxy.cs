@@ -17,7 +17,9 @@ namespace DynamicRestProxy
     /// </summary>
     public abstract class RestProxy : DynamicObject
     {
-        // currently supported verbs
+        /// <summary>
+        /// List of supported Http verbs. Currently "post", "get", "delete", "put", "patch"
+        /// </summary>
         protected static readonly string[] _verbs = new string[] { "post", "get", "delete", "put", "patch" };
 
         // objects of these types, when passed to a verb invocation as unnamed arguments, 
