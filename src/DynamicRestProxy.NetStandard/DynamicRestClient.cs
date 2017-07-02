@@ -12,7 +12,9 @@ using Newtonsoft.Json;
 namespace DynamicRestProxy.PortableHttpClient
 {
     /// <summary>
-    /// A rest client that uses dynamic objects for invocation and result values
+    /// A rest client that uses dynamic objects for invocation and result values.
+    /// Strongly typed methods are for dynamic binding purposes only. Aside from construction,
+    /// there is little or no need to interact with this type as anything other than a dynamic object.
     /// </summary>
     public sealed class DynamicRestClient : RestProxy, IDisposable
     {
