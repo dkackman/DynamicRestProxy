@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)api\index.md" />
+    <None Include="$(MSBuildThisFileDirectory)articles\advanced.md" />
     <None Include="$(MSBuildThisFileDirectory)articles\getting-started.md" />
     <None Include="$(MSBuildThisFileDirectory)index.md" />
     <None Include="$(MSBuildThisFileDirectory)toc.yml" />

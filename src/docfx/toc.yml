@@ -1,5 +1,7 @@
 - name: Api Documentation
   href: api/
+  homepage: api/index.md
 - name: Getting Started
   href: articles/getting-started.md
-  
+- name: Advanced Topics
+  href: articles/advanced.md  

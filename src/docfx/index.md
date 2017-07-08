@@ -34,4 +34,4 @@ Tested on dotnetcore on Linux.
 1. [Getting Started](articles/getting-started.md)
 2. [NuGet Package](https://www.nuget.org/packages/DynamicRestProxy/)
 3. [GitHub Project](https://github.com/dkackman/DynamicRestProxy/)
-4. [Background](https://www.codeproject.com/Articles/762189/A-Dynamic-Rest-Client-Proxy-with-the-DLR)
+4. [Some Background](https://www.codeproject.com/Articles/762189/A-Dynamic-Rest-Client-Proxy-with-the-DLR)

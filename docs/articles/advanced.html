@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Advanced Topics </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Advanced Topics ">
+    <meta name="generator" content="docfx 2.19.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="advanced-topics">Advanced Topics</h1>
+
+<p>The thing about convetion based api&#39;s is that the conventions hide both the complexity but also flexiblity of the
+underlying mechanisms. Conventions favor simplicity over expressiveness making the simple things easy, but they also need 
+to make the less simple possible.</p>
+<h2 id="escape-mechanisms">Escape Mechanisms</h2>
+<p>The following escape mechanisms exist to expose the full flexibility of http/Rest and also work around
+places where a it may conflict with the rules and syntax of C#.</p>
+<h3 id="path-names">Path names</h3>
+<h3 id="reserved-word-parameter-names">Reserved word parameter names</h3>
+<h3 id="request-configuration-callback">Request configuration callback</h3>
+<h3 id="calling-a-post-endpoint-with-url-parameters">Calling a POST endpoint with url parameters</h3>
+<h2 id="bypassing-content-serialization-conventions">Bypassing content serialization conventions</h2>
+<p>If you require fine grained control over the reqeust content any instance of an
+<a href="https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx">HttpContent</a> derived
+class passed to the verb invocation will be added to the reuqest as-is, overriding any content creation conventions.</p>
+<h2 id="returning-types-other-than-dynamic">Returning types other than dynamic</h2>
+<p>Pass a single <a href="https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx">Type</a> instance to a verb invocation in order
+to control how response conent is deserialized or overriden.</p>
+<h3 id="strong-typing-the-response">Strong typing the response</h3>
+<h3 id="other-return-types">Other return types</h3>
+<ul>
+<li>Passing typeof Stream, byte[] or string will deserialize the request content to those respective types</li>
+<li>Passing typeof <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=netframework-4.7">HttpResponseMessage</a> allows you to receive the complete response message</li>
+<li>Any other type instance is assumed to be intended for a strongly typed response as discussed above</li>
+</ul>
+<h2 id="special-invocation-argument-types">Special invocation argument types</h2>
+<p>The following types, when passed as unnamed arguments will be used during the creation and invocation of the request.</p>
+<ul>
+<li>JsonSerializerSettings Serialization is done with <a href="http://www.newtonsoft.com/json">Json.Net</a>. An instance of this type can be passed to control serialization.</li>
+<li><a href="http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&amp;l=EN-US&amp;k=k(System.Threading.CancellationToken);k(SolutionItemsProject);k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.6.1);k(DevLang-csharp)&amp;rd=true">CancellationToken</a>
+Because verb invocations are always async, a CancellationToken can be passed in order for client code to cancel the operation.</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/dkackman/DynamicRestProxy/blob/master/src/docfx/articles/advanced.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Copyright © 2015-2017 Microsoft<br>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
