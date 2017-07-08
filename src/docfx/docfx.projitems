@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)api\index.md" />
+    <None Include="$(MSBuildThisFileDirectory)articles\getting-started.md" />
     <None Include="$(MSBuildThisFileDirectory)index.md" />
     <None Include="$(MSBuildThisFileDirectory)toc.yml" />
     <None Include="$(MSBuildThisFileDirectory)xref\msdn.4.5.2.zip" />
@@ -17,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)apidoc\" />
-    <Folder Include="$(MSBuildThisFileDirectory)articles\" />
     <Folder Include="$(MSBuildThisFileDirectory)images\" />
   </ItemGroup>
   <ItemGroup>
