@@ -1,0 +1,630 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: DynamicRestProxy
+  name: DynamicRestProxy
+  href: api/DynamicRestProxy.html
+  commentId: N:DynamicRestProxy
+  fullName: DynamicRestProxy
+  nameWithType: DynamicRestProxy
+- uid: DynamicRestProxy.PortableHttpClient
+  name: DynamicRestProxy.PortableHttpClient
+  href: api/DynamicRestProxy.PortableHttpClient.html
+  commentId: N:DynamicRestProxy.PortableHttpClient
+  fullName: DynamicRestProxy.PortableHttpClient
+  nameWithType: DynamicRestProxy.PortableHttpClient
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo
+  name: ContentInfo
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html
+  commentId: T:DynamicRestProxy.PortableHttpClient.ContentInfo
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo
+  nameWithType: ContentInfo
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.#ctor(System.Object,System.String)
+  name: ContentInfo(Object, String)
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo__ctor_System_Object_System_String_
+  commentId: M:DynamicRestProxy.PortableHttpClient.ContentInfo.#ctor(System.Object,System.String)
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.ContentInfo(System.Object, System.String)
+  nameWithType: ContentInfo.ContentInfo(Object, String)
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.#ctor*
+  name: ContentInfo
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo__ctor_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.ContentInfo.#ctor
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.ContentInfo
+  nameWithType: ContentInfo.ContentInfo
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.Content
+  name: Content
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo_Content
+  commentId: P:DynamicRestProxy.PortableHttpClient.ContentInfo.Content
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.Content
+  nameWithType: ContentInfo.Content
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.Content*
+  name: Content
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo_Content_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.ContentInfo.Content
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.Content
+  nameWithType: ContentInfo.Content
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.ContentHeaders
+  name: ContentHeaders
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo_ContentHeaders
+  commentId: P:DynamicRestProxy.PortableHttpClient.ContentInfo.ContentHeaders
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.ContentHeaders
+  nameWithType: ContentInfo.ContentHeaders
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.ContentHeaders*
+  name: ContentHeaders
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo_ContentHeaders_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.ContentInfo.ContentHeaders
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.ContentHeaders
+  nameWithType: ContentInfo.ContentHeaders
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.MimeType
+  name: MimeType
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo_MimeType
+  commentId: P:DynamicRestProxy.PortableHttpClient.ContentInfo.MimeType
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.MimeType
+  nameWithType: ContentInfo.MimeType
+- uid: DynamicRestProxy.PortableHttpClient.ContentInfo.MimeType*
+  name: MimeType
+  href: api/DynamicRestProxy.PortableHttpClient.ContentInfo.html#DynamicRestProxy_PortableHttpClient_ContentInfo_MimeType_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.ContentInfo.MimeType
+  fullName: DynamicRestProxy.PortableHttpClient.ContentInfo.MimeType
+  nameWithType: ContentInfo.MimeType
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient
+  name: DynamicRestClient
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html
+  commentId: T:DynamicRestProxy.PortableHttpClient.DynamicRestClient
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient
+  nameWithType: DynamicRestClient
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Net.Http.HttpClient,System.Boolean,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name: DynamicRestClient(HttpClient, Boolean, Func<HttpRequestMessage, CancellationToken, Task>)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Net_Http_HttpClient_System_Boolean_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Net.Http.HttpClient,System.Boolean,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name.vb: DynamicRestClient(HttpClient, Boolean, Func(Of HttpRequestMessage, CancellationToken, Task))
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.Net.Http.HttpClient, System.Boolean, System.Func<System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task>)
+  fullName.vb: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.Net.Http.HttpClient, System.Boolean, System.Func(Of System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task))
+  nameWithType: DynamicRestClient.DynamicRestClient(HttpClient, Boolean, Func<HttpRequestMessage, CancellationToken, Task>)
+  nameWithType.vb: DynamicRestClient.DynamicRestClient(HttpClient, Boolean, Func(Of HttpRequestMessage, CancellationToken, Task))
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.String,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name: DynamicRestClient(String, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_String_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.String,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name.vb: DynamicRestClient(String, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.String, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func<System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task>)
+  fullName.vb: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.String, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func(Of System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task))
+  nameWithType: DynamicRestClient.DynamicRestClient(String, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  nameWithType.vb: DynamicRestClient.DynamicRestClient(String, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.String,System.Net.Http.HttpMessageHandler,System.Boolean,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name: DynamicRestClient(String, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_String_System_Net_Http_HttpMessageHandler_System_Boolean_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.String,System.Net.Http.HttpMessageHandler,System.Boolean,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name.vb: DynamicRestClient(String, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.String, System.Net.Http.HttpMessageHandler, System.Boolean, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func<System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task>)
+  fullName.vb: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.String, System.Net.Http.HttpMessageHandler, System.Boolean, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func(Of System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task))
+  nameWithType: DynamicRestClient.DynamicRestClient(String, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  nameWithType.vb: DynamicRestClient.DynamicRestClient(String, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Uri,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name: DynamicRestClient(Uri, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Uri_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Uri,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name.vb: DynamicRestClient(Uri, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.Uri, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func<System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task>)
+  fullName.vb: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.Uri, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func(Of System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task))
+  nameWithType: DynamicRestClient.DynamicRestClient(Uri, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  nameWithType.vb: DynamicRestClient.DynamicRestClient(Uri, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Uri,System.Net.Http.HttpMessageHandler,System.Boolean,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name: DynamicRestClient(Uri, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_System_Uri_System_Net_Http_HttpMessageHandler_System_Boolean_DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_System_Func_System_Net_Http_HttpRequestMessage_System_Threading_CancellationToken_System_Threading_Tasks_Task__
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor(System.Uri,System.Net.Http.HttpMessageHandler,System.Boolean,DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults,System.Func{System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken,System.Threading.Tasks.Task})
+  name.vb: DynamicRestClient(Uri, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.Uri, System.Net.Http.HttpMessageHandler, System.Boolean, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func<System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task>)
+  fullName.vb: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient(System.Uri, System.Net.Http.HttpMessageHandler, System.Boolean, DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults, System.Func(Of System.Net.Http.HttpRequestMessage, System.Threading.CancellationToken, System.Threading.Tasks.Task))
+  nameWithType: DynamicRestClient.DynamicRestClient(Uri, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func<HttpRequestMessage, CancellationToken, Task>)
+  nameWithType.vb: DynamicRestClient.DynamicRestClient(Uri, HttpMessageHandler, Boolean, DynamicRestClientDefaults, Func(Of HttpRequestMessage, CancellationToken, Task))
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor*
+  name: DynamicRestClient
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient__ctor_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClient.#ctor
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.DynamicRestClient
+  nameWithType: DynamicRestClient.DynamicRestClient
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri
+  name: BaseUri
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_BaseUri
+  commentId: P:DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri
+  nameWithType: DynamicRestClient.BaseUri
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri*
+  name: BaseUri
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_BaseUri_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.BaseUri
+  nameWithType: DynamicRestClient.BaseUri
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode(DynamicRestProxy.RestProxy,System.String)
+  name: CreateProxyNode(RestProxy, String)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateProxyNode_DynamicRestProxy_RestProxy_System_String_
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode(DynamicRestProxy.RestProxy,System.String)
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode(DynamicRestProxy.RestProxy, System.String)
+  nameWithType: DynamicRestClient.CreateProxyNode(RestProxy, String)
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode*
+  name: CreateProxyNode
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateProxyNode_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateProxyNode
+  nameWithType: DynamicRestClient.CreateProxyNode
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask*
+  name: CreateVerbAsyncTask
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateVerbAsyncTask_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask
+  nameWithType: DynamicRestClient.CreateVerbAsyncTask
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask``1(System.String,System.Collections.Generic.IEnumerable{System.Object},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Threading.CancellationToken,Newtonsoft.Json.JsonSerializerSettings)
+  name: CreateVerbAsyncTask<T>(String, IEnumerable<Object>, IEnumerable<KeyValuePair<String, Object>>, CancellationToken, JsonSerializerSettings)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_CreateVerbAsyncTask__1_System_String_System_Collections_Generic_IEnumerable_System_Object__System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Object___System_Threading_CancellationToken_Newtonsoft_Json_JsonSerializerSettings_
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask``1(System.String,System.Collections.Generic.IEnumerable{System.Object},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Threading.CancellationToken,Newtonsoft.Json.JsonSerializerSettings)
+  name.vb: CreateVerbAsyncTask(Of T)(String, IEnumerable(Of Object), IEnumerable(Of KeyValuePair(Of String, Object)), CancellationToken, JsonSerializerSettings)
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask<T>(System.String, System.Collections.Generic.IEnumerable<System.Object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String, System.Object>>, System.Threading.CancellationToken, Newtonsoft.Json.JsonSerializerSettings)
+  fullName.vb: DynamicRestProxy.PortableHttpClient.DynamicRestClient.CreateVerbAsyncTask(Of T)(System.String, System.Collections.Generic.IEnumerable(Of System.Object), System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of System.String, System.Object)), System.Threading.CancellationToken, Newtonsoft.Json.JsonSerializerSettings)
+  nameWithType: DynamicRestClient.CreateVerbAsyncTask<T>(String, IEnumerable<Object>, IEnumerable<KeyValuePair<String, Object>>, CancellationToken, JsonSerializerSettings)
+  nameWithType.vb: DynamicRestClient.CreateVerbAsyncTask(Of T)(String, IEnumerable(Of Object), IEnumerable(Of KeyValuePair(Of String, Object)), CancellationToken, JsonSerializerSettings)
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose
+  name: Dispose()
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_Dispose
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose()
+  nameWithType: DynamicRestClient.Dispose()
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose*
+  name: Dispose
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html#DynamicRestProxy_PortableHttpClient_DynamicRestClient_Dispose_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClient.Dispose
+  nameWithType: DynamicRestClient.Dispose
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults
+  name: DynamicRestClientDefaults
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html
+  commentId: T:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults
+  nameWithType: DynamicRestClientDefaults
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.#ctor
+  name: DynamicRestClientDefaults()
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults__ctor
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.#ctor
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DynamicRestClientDefaults()
+  nameWithType: DynamicRestClientDefaults.DynamicRestClientDefaults()
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.#ctor*
+  name: DynamicRestClientDefaults
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults__ctor_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.#ctor
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DynamicRestClientDefaults
+  nameWithType: DynamicRestClientDefaults.DynamicRestClientDefaults
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthScheme
+  name: AuthScheme
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_AuthScheme
+  commentId: P:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthScheme
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthScheme
+  nameWithType: DynamicRestClientDefaults.AuthScheme
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthScheme*
+  name: AuthScheme
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_AuthScheme_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthScheme
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthScheme
+  nameWithType: DynamicRestClientDefaults.AuthScheme
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthToken
+  name: AuthToken
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_AuthToken
+  commentId: P:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthToken
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthToken
+  nameWithType: DynamicRestClientDefaults.AuthToken
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthToken*
+  name: AuthToken
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_AuthToken_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthToken
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.AuthToken
+  nameWithType: DynamicRestClientDefaults.AuthToken
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultHeaders
+  name: DefaultHeaders
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_DefaultHeaders
+  commentId: P:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultHeaders
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultHeaders
+  nameWithType: DynamicRestClientDefaults.DefaultHeaders
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultHeaders*
+  name: DefaultHeaders
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_DefaultHeaders_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultHeaders
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultHeaders
+  nameWithType: DynamicRestClientDefaults.DefaultHeaders
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultParameters
+  name: DefaultParameters
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_DefaultParameters
+  commentId: P:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultParameters
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultParameters
+  nameWithType: DynamicRestClientDefaults.DefaultParameters
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultParameters*
+  name: DefaultParameters
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_DefaultParameters_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultParameters
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.DefaultParameters
+  nameWithType: DynamicRestClientDefaults.DefaultParameters
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.UserAgent
+  name: UserAgent
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_UserAgent
+  commentId: P:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.UserAgent
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.UserAgent
+  nameWithType: DynamicRestClientDefaults.UserAgent
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.UserAgent*
+  name: UserAgent
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientDefaults_UserAgent_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.UserAgent
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.UserAgent
+  nameWithType: DynamicRestClientDefaults.UserAgent
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException
+  name: DynamicRestClientResponseException
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html
+  commentId: T:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException
+  nameWithType: DynamicRestClientResponseException
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.#ctor(System.Net.Http.HttpResponseMessage)
+  name: DynamicRestClientResponseException(HttpResponseMessage)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientResponseException__ctor_System_Net_Http_HttpResponseMessage_
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.#ctor(System.Net.Http.HttpResponseMessage)
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.DynamicRestClientResponseException(System.Net.Http.HttpResponseMessage)
+  nameWithType: DynamicRestClientResponseException.DynamicRestClientResponseException(HttpResponseMessage)
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.#ctor(System.Net.Http.HttpResponseMessage,System.Exception)
+  name: DynamicRestClientResponseException(HttpResponseMessage, Exception)
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientResponseException__ctor_System_Net_Http_HttpResponseMessage_System_Exception_
+  commentId: M:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.#ctor(System.Net.Http.HttpResponseMessage,System.Exception)
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.DynamicRestClientResponseException(System.Net.Http.HttpResponseMessage, System.Exception)
+  nameWithType: DynamicRestClientResponseException.DynamicRestClientResponseException(HttpResponseMessage, Exception)
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.#ctor*
+  name: DynamicRestClientResponseException
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientResponseException__ctor_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.#ctor
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.DynamicRestClientResponseException
+  nameWithType: DynamicRestClientResponseException.DynamicRestClientResponseException
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.Response
+  name: Response
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientResponseException_Response
+  commentId: P:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.Response
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.Response
+  nameWithType: DynamicRestClientResponseException.Response
+- uid: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.Response*
+  name: Response
+  href: api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html#DynamicRestProxy_PortableHttpClient_DynamicRestClientResponseException_Response_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.Response
+  fullName: DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.Response
+  nameWithType: DynamicRestClientResponseException.Response
+- uid: DynamicRestProxy.PortableHttpClient.HttpClientExtensions
+  name: HttpClientExtensions
+  href: api/DynamicRestProxy.PortableHttpClient.HttpClientExtensions.html
+  commentId: T:DynamicRestProxy.PortableHttpClient.HttpClientExtensions
+  fullName: DynamicRestProxy.PortableHttpClient.HttpClientExtensions
+  nameWithType: HttpClientExtensions
+- uid: DynamicRestProxy.PortableHttpClient.HttpClientExtensions.Deserialize*
+  name: Deserialize
+  href: api/DynamicRestProxy.PortableHttpClient.HttpClientExtensions.html#DynamicRestProxy_PortableHttpClient_HttpClientExtensions_Deserialize_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.HttpClientExtensions.Deserialize
+  fullName: DynamicRestProxy.PortableHttpClient.HttpClientExtensions.Deserialize
+  nameWithType: HttpClientExtensions.Deserialize
+- uid: DynamicRestProxy.PortableHttpClient.HttpClientExtensions.Deserialize``1(System.Net.Http.HttpResponseMessage,Newtonsoft.Json.JsonSerializerSettings)
+  name: Deserialize<T>(HttpResponseMessage, JsonSerializerSettings)
+  href: api/DynamicRestProxy.PortableHttpClient.HttpClientExtensions.html#DynamicRestProxy_PortableHttpClient_HttpClientExtensions_Deserialize__1_System_Net_Http_HttpResponseMessage_Newtonsoft_Json_JsonSerializerSettings_
+  commentId: M:DynamicRestProxy.PortableHttpClient.HttpClientExtensions.Deserialize``1(System.Net.Http.HttpResponseMessage,Newtonsoft.Json.JsonSerializerSettings)
+  name.vb: Deserialize(Of T)(HttpResponseMessage, JsonSerializerSettings)
+  fullName: DynamicRestProxy.PortableHttpClient.HttpClientExtensions.Deserialize<T>(System.Net.Http.HttpResponseMessage, Newtonsoft.Json.JsonSerializerSettings)
+  fullName.vb: DynamicRestProxy.PortableHttpClient.HttpClientExtensions.Deserialize(Of T)(System.Net.Http.HttpResponseMessage, Newtonsoft.Json.JsonSerializerSettings)
+  nameWithType: HttpClientExtensions.Deserialize<T>(HttpResponseMessage, JsonSerializerSettings)
+  nameWithType.vb: HttpClientExtensions.Deserialize(Of T)(HttpResponseMessage, JsonSerializerSettings)
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam
+  name: PostUrlParam
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html
+  commentId: T:DynamicRestProxy.PortableHttpClient.PostUrlParam
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam
+  nameWithType: PostUrlParam
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.#ctor(System.Object)
+  name: PostUrlParam(Object)
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam__ctor_System_Object_
+  commentId: M:DynamicRestProxy.PortableHttpClient.PostUrlParam.#ctor(System.Object)
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.PostUrlParam(System.Object)
+  nameWithType: PostUrlParam.PostUrlParam(Object)
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.#ctor*
+  name: PostUrlParam
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam__ctor_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.PostUrlParam.#ctor
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.PostUrlParam
+  nameWithType: PostUrlParam.PostUrlParam
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.Equals(System.Object)
+  name: Equals(Object)
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_Equals_System_Object_
+  commentId: M:DynamicRestProxy.PortableHttpClient.PostUrlParam.Equals(System.Object)
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.Equals(System.Object)
+  nameWithType: PostUrlParam.Equals(Object)
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.Equals*
+  name: Equals
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_Equals_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.PostUrlParam.Equals
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.Equals
+  nameWithType: PostUrlParam.Equals
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.GetHashCode
+  name: GetHashCode()
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_GetHashCode
+  commentId: M:DynamicRestProxy.PortableHttpClient.PostUrlParam.GetHashCode
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.GetHashCode()
+  nameWithType: PostUrlParam.GetHashCode()
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.GetHashCode*
+  name: GetHashCode
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_GetHashCode_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.PostUrlParam.GetHashCode
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.GetHashCode
+  nameWithType: PostUrlParam.GetHashCode
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.ToString
+  name: ToString()
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_ToString
+  commentId: M:DynamicRestProxy.PortableHttpClient.PostUrlParam.ToString
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.ToString()
+  nameWithType: PostUrlParam.ToString()
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.ToString*
+  name: ToString
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_ToString_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.PostUrlParam.ToString
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.ToString
+  nameWithType: PostUrlParam.ToString
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.Value
+  name: Value
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_Value
+  commentId: P:DynamicRestProxy.PortableHttpClient.PostUrlParam.Value
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.Value
+  nameWithType: PostUrlParam.Value
+- uid: DynamicRestProxy.PortableHttpClient.PostUrlParam.Value*
+  name: Value
+  href: api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html#DynamicRestProxy_PortableHttpClient_PostUrlParam_Value_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.PostUrlParam.Value
+  fullName: DynamicRestProxy.PortableHttpClient.PostUrlParam.Value
+  nameWithType: PostUrlParam.Value
+- uid: DynamicRestProxy.PortableHttpClient.StreamInfo
+  name: StreamInfo
+  href: api/DynamicRestProxy.PortableHttpClient.StreamInfo.html
+  commentId: T:DynamicRestProxy.PortableHttpClient.StreamInfo
+  fullName: DynamicRestProxy.PortableHttpClient.StreamInfo
+  nameWithType: StreamInfo
+- uid: DynamicRestProxy.PortableHttpClient.StreamInfo.#ctor(System.IO.Stream,System.String)
+  name: StreamInfo(Stream, String)
+  href: api/DynamicRestProxy.PortableHttpClient.StreamInfo.html#DynamicRestProxy_PortableHttpClient_StreamInfo__ctor_System_IO_Stream_System_String_
+  commentId: M:DynamicRestProxy.PortableHttpClient.StreamInfo.#ctor(System.IO.Stream,System.String)
+  fullName: DynamicRestProxy.PortableHttpClient.StreamInfo.StreamInfo(System.IO.Stream, System.String)
+  nameWithType: StreamInfo.StreamInfo(Stream, String)
+- uid: DynamicRestProxy.PortableHttpClient.StreamInfo.#ctor*
+  name: StreamInfo
+  href: api/DynamicRestProxy.PortableHttpClient.StreamInfo.html#DynamicRestProxy_PortableHttpClient_StreamInfo__ctor_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.StreamInfo.#ctor
+  fullName: DynamicRestProxy.PortableHttpClient.StreamInfo.StreamInfo
+  nameWithType: StreamInfo.StreamInfo
+- uid: DynamicRestProxy.PortableHttpClient.StreamInfo.Dispose
+  name: Dispose()
+  href: api/DynamicRestProxy.PortableHttpClient.StreamInfo.html#DynamicRestProxy_PortableHttpClient_StreamInfo_Dispose
+  commentId: M:DynamicRestProxy.PortableHttpClient.StreamInfo.Dispose
+  fullName: DynamicRestProxy.PortableHttpClient.StreamInfo.Dispose()
+  nameWithType: StreamInfo.Dispose()
+- uid: DynamicRestProxy.PortableHttpClient.StreamInfo.Dispose*
+  name: Dispose
+  href: api/DynamicRestProxy.PortableHttpClient.StreamInfo.html#DynamicRestProxy_PortableHttpClient_StreamInfo_Dispose_
+  commentId: Overload:DynamicRestProxy.PortableHttpClient.StreamInfo.Dispose
+  fullName: DynamicRestProxy.PortableHttpClient.StreamInfo.Dispose
+  nameWithType: StreamInfo.Dispose
+- uid: DynamicRestProxy.RestProxy
+  name: RestProxy
+  href: api/DynamicRestProxy.RestProxy.html
+  commentId: T:DynamicRestProxy.RestProxy
+  fullName: DynamicRestProxy.RestProxy
+  nameWithType: RestProxy
+- uid: DynamicRestProxy.RestProxy.#ctor(DynamicRestProxy.RestProxy,System.String)
+  name: RestProxy(RestProxy, String)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy__ctor_DynamicRestProxy_RestProxy_System_String_
+  commentId: M:DynamicRestProxy.RestProxy.#ctor(DynamicRestProxy.RestProxy,System.String)
+  fullName: DynamicRestProxy.RestProxy.RestProxy(DynamicRestProxy.RestProxy, System.String)
+  nameWithType: RestProxy.RestProxy(RestProxy, String)
+- uid: DynamicRestProxy.RestProxy.#ctor*
+  name: RestProxy
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy__ctor_
+  commentId: Overload:DynamicRestProxy.RestProxy.#ctor
+  fullName: DynamicRestProxy.RestProxy.RestProxy
+  nameWithType: RestProxy.RestProxy
+- uid: DynamicRestProxy.RestProxy._verbs
+  name: _verbs
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy__verbs
+  commentId: F:DynamicRestProxy.RestProxy._verbs
+  fullName: DynamicRestProxy.RestProxy._verbs
+  nameWithType: RestProxy._verbs
+- uid: DynamicRestProxy.RestProxy.BaseUri
+  name: BaseUri
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_BaseUri
+  commentId: P:DynamicRestProxy.RestProxy.BaseUri
+  fullName: DynamicRestProxy.RestProxy.BaseUri
+  nameWithType: RestProxy.BaseUri
+- uid: DynamicRestProxy.RestProxy.BaseUri*
+  name: BaseUri
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_BaseUri_
+  commentId: Overload:DynamicRestProxy.RestProxy.BaseUri
+  fullName: DynamicRestProxy.RestProxy.BaseUri
+  nameWithType: RestProxy.BaseUri
+- uid: DynamicRestProxy.RestProxy.CreateProxyNode(DynamicRestProxy.RestProxy,System.String)
+  name: CreateProxyNode(RestProxy, String)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateProxyNode_DynamicRestProxy_RestProxy_System_String_
+  commentId: M:DynamicRestProxy.RestProxy.CreateProxyNode(DynamicRestProxy.RestProxy,System.String)
+  fullName: DynamicRestProxy.RestProxy.CreateProxyNode(DynamicRestProxy.RestProxy, System.String)
+  nameWithType: RestProxy.CreateProxyNode(RestProxy, String)
+- uid: DynamicRestProxy.RestProxy.CreateProxyNode*
+  name: CreateProxyNode
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateProxyNode_
+  commentId: Overload:DynamicRestProxy.RestProxy.CreateProxyNode
+  fullName: DynamicRestProxy.RestProxy.CreateProxyNode
+  nameWithType: RestProxy.CreateProxyNode
+- uid: DynamicRestProxy.RestProxy.CreateVerbAsyncTask*
+  name: CreateVerbAsyncTask
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateVerbAsyncTask_
+  commentId: Overload:DynamicRestProxy.RestProxy.CreateVerbAsyncTask
+  fullName: DynamicRestProxy.RestProxy.CreateVerbAsyncTask
+  nameWithType: RestProxy.CreateVerbAsyncTask
+- uid: DynamicRestProxy.RestProxy.CreateVerbAsyncTask``1(System.String,System.Collections.Generic.IEnumerable{System.Object},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Threading.CancellationToken,Newtonsoft.Json.JsonSerializerSettings)
+  name: CreateVerbAsyncTask<T>(String, IEnumerable<Object>, IEnumerable<KeyValuePair<String, Object>>, CancellationToken, JsonSerializerSettings)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_CreateVerbAsyncTask__1_System_String_System_Collections_Generic_IEnumerable_System_Object__System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_Object___System_Threading_CancellationToken_Newtonsoft_Json_JsonSerializerSettings_
+  commentId: M:DynamicRestProxy.RestProxy.CreateVerbAsyncTask``1(System.String,System.Collections.Generic.IEnumerable{System.Object},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Threading.CancellationToken,Newtonsoft.Json.JsonSerializerSettings)
+  name.vb: CreateVerbAsyncTask(Of T)(String, IEnumerable(Of Object), IEnumerable(Of KeyValuePair(Of String, Object)), CancellationToken, JsonSerializerSettings)
+  fullName: DynamicRestProxy.RestProxy.CreateVerbAsyncTask<T>(System.String, System.Collections.Generic.IEnumerable<System.Object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.String, System.Object>>, System.Threading.CancellationToken, Newtonsoft.Json.JsonSerializerSettings)
+  fullName.vb: DynamicRestProxy.RestProxy.CreateVerbAsyncTask(Of T)(System.String, System.Collections.Generic.IEnumerable(Of System.Object), System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of System.String, System.Object)), System.Threading.CancellationToken, Newtonsoft.Json.JsonSerializerSettings)
+  nameWithType: RestProxy.CreateVerbAsyncTask<T>(String, IEnumerable<Object>, IEnumerable<KeyValuePair<String, Object>>, CancellationToken, JsonSerializerSettings)
+  nameWithType.vb: RestProxy.CreateVerbAsyncTask(Of T)(String, IEnumerable(Of Object), IEnumerable(Of KeyValuePair(Of String, Object)), CancellationToken, JsonSerializerSettings)
+- uid: DynamicRestProxy.RestProxy.Equals(System.Object)
+  name: Equals(Object)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Equals_System_Object_
+  commentId: M:DynamicRestProxy.RestProxy.Equals(System.Object)
+  fullName: DynamicRestProxy.RestProxy.Equals(System.Object)
+  nameWithType: RestProxy.Equals(Object)
+- uid: DynamicRestProxy.RestProxy.Equals*
+  name: Equals
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Equals_
+  commentId: Overload:DynamicRestProxy.RestProxy.Equals
+  fullName: DynamicRestProxy.RestProxy.Equals
+  nameWithType: RestProxy.Equals
+- uid: DynamicRestProxy.RestProxy.GetEndPointPath
+  name: GetEndPointPath()
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetEndPointPath
+  commentId: M:DynamicRestProxy.RestProxy.GetEndPointPath
+  fullName: DynamicRestProxy.RestProxy.GetEndPointPath()
+  nameWithType: RestProxy.GetEndPointPath()
+- uid: DynamicRestProxy.RestProxy.GetEndPointPath(System.Text.StringBuilder)
+  name: GetEndPointPath(StringBuilder)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetEndPointPath_System_Text_StringBuilder_
+  commentId: M:DynamicRestProxy.RestProxy.GetEndPointPath(System.Text.StringBuilder)
+  fullName: DynamicRestProxy.RestProxy.GetEndPointPath(System.Text.StringBuilder)
+  nameWithType: RestProxy.GetEndPointPath(StringBuilder)
+- uid: DynamicRestProxy.RestProxy.GetEndPointPath*
+  name: GetEndPointPath
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetEndPointPath_
+  commentId: Overload:DynamicRestProxy.RestProxy.GetEndPointPath
+  fullName: DynamicRestProxy.RestProxy.GetEndPointPath
+  nameWithType: RestProxy.GetEndPointPath
+- uid: DynamicRestProxy.RestProxy.GetHashCode
+  name: GetHashCode()
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetHashCode
+  commentId: M:DynamicRestProxy.RestProxy.GetHashCode
+  fullName: DynamicRestProxy.RestProxy.GetHashCode()
+  nameWithType: RestProxy.GetHashCode()
+- uid: DynamicRestProxy.RestProxy.GetHashCode*
+  name: GetHashCode
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_GetHashCode_
+  commentId: Overload:DynamicRestProxy.RestProxy.GetHashCode
+  fullName: DynamicRestProxy.RestProxy.GetHashCode
+  nameWithType: RestProxy.GetHashCode
+- uid: DynamicRestProxy.RestProxy.Name
+  name: Name
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Name
+  commentId: P:DynamicRestProxy.RestProxy.Name
+  fullName: DynamicRestProxy.RestProxy.Name
+  nameWithType: RestProxy.Name
+- uid: DynamicRestProxy.RestProxy.Name*
+  name: Name
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Name_
+  commentId: Overload:DynamicRestProxy.RestProxy.Name
+  fullName: DynamicRestProxy.RestProxy.Name
+  nameWithType: RestProxy.Name
+- uid: DynamicRestProxy.RestProxy.op_Explicit(DynamicRestProxy.RestProxy)~System.Uri
+  name: Explicit(RestProxy to Uri)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_op_Explicit_DynamicRestProxy_RestProxy__System_Uri
+  commentId: M:DynamicRestProxy.RestProxy.op_Explicit(DynamicRestProxy.RestProxy)~System.Uri
+  name.vb: Narrowing(RestProxy to Uri)
+  fullName: DynamicRestProxy.RestProxy.Explicit(DynamicRestProxy.RestProxy to System.Uri)
+  fullName.vb: DynamicRestProxy.RestProxy.Narrowing(DynamicRestProxy.RestProxy to System.Uri)
+  nameWithType: RestProxy.Explicit(RestProxy to Uri)
+  nameWithType.vb: RestProxy.Narrowing(RestProxy to Uri)
+- uid: DynamicRestProxy.RestProxy.op_Explicit*
+  name: Explicit
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_op_Explicit_
+  commentId: Overload:DynamicRestProxy.RestProxy.op_Explicit
+  name.vb: Narrowing
+  fullName: DynamicRestProxy.RestProxy.Explicit
+  fullName.vb: DynamicRestProxy.RestProxy.Narrowing
+  nameWithType: RestProxy.Explicit
+  nameWithType.vb: RestProxy.Narrowing
+- uid: DynamicRestProxy.RestProxy.op_Implicit(DynamicRestProxy.RestProxy)~System.String
+  name: Implicit(RestProxy to String)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_op_Implicit_DynamicRestProxy_RestProxy__System_String
+  commentId: M:DynamicRestProxy.RestProxy.op_Implicit(DynamicRestProxy.RestProxy)~System.String
+  name.vb: Widening(RestProxy to String)
+  fullName: DynamicRestProxy.RestProxy.Implicit(DynamicRestProxy.RestProxy to System.String)
+  fullName.vb: DynamicRestProxy.RestProxy.Widening(DynamicRestProxy.RestProxy to System.String)
+  nameWithType: RestProxy.Implicit(RestProxy to String)
+  nameWithType.vb: RestProxy.Widening(RestProxy to String)
+- uid: DynamicRestProxy.RestProxy.op_Implicit*
+  name: Implicit
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_op_Implicit_
+  commentId: Overload:DynamicRestProxy.RestProxy.op_Implicit
+  name.vb: Widening
+  fullName: DynamicRestProxy.RestProxy.Implicit
+  fullName.vb: DynamicRestProxy.RestProxy.Widening
+  nameWithType: RestProxy.Implicit
+  nameWithType.vb: RestProxy.Widening
+- uid: DynamicRestProxy.RestProxy.Parent
+  name: Parent
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Parent
+  commentId: P:DynamicRestProxy.RestProxy.Parent
+  fullName: DynamicRestProxy.RestProxy.Parent
+  nameWithType: RestProxy.Parent
+- uid: DynamicRestProxy.RestProxy.Parent*
+  name: Parent
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_Parent_
+  commentId: Overload:DynamicRestProxy.RestProxy.Parent
+  fullName: DynamicRestProxy.RestProxy.Parent
+  nameWithType: RestProxy.Parent
+- uid: DynamicRestProxy.RestProxy.ToString
+  name: ToString()
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_ToString
+  commentId: M:DynamicRestProxy.RestProxy.ToString
+  fullName: DynamicRestProxy.RestProxy.ToString()
+  nameWithType: RestProxy.ToString()
+- uid: DynamicRestProxy.RestProxy.ToString*
+  name: ToString
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_ToString_
+  commentId: Overload:DynamicRestProxy.RestProxy.ToString
+  fullName: DynamicRestProxy.RestProxy.ToString
+  nameWithType: RestProxy.ToString
+- uid: DynamicRestProxy.RestProxy.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)
+  name: TryGetMember(GetMemberBinder, out Object)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryGetMember_System_Dynamic_GetMemberBinder_System_Object__
+  commentId: M:DynamicRestProxy.RestProxy.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)
+  name.vb: TryGetMember(GetMemberBinder, ByRef Object)
+  fullName: DynamicRestProxy.RestProxy.TryGetMember(System.Dynamic.GetMemberBinder, out System.Object)
+  fullName.vb: DynamicRestProxy.RestProxy.TryGetMember(System.Dynamic.GetMemberBinder, ByRef System.Object)
+  nameWithType: RestProxy.TryGetMember(GetMemberBinder, out Object)
+  nameWithType.vb: RestProxy.TryGetMember(GetMemberBinder, ByRef Object)
+- uid: DynamicRestProxy.RestProxy.TryGetMember*
+  name: TryGetMember
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryGetMember_
+  commentId: Overload:DynamicRestProxy.RestProxy.TryGetMember
+  fullName: DynamicRestProxy.RestProxy.TryGetMember
+  nameWithType: RestProxy.TryGetMember
+- uid: DynamicRestProxy.RestProxy.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)
+  name: TryInvoke(InvokeBinder, Object[], out Object)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryInvoke_System_Dynamic_InvokeBinder_System_Object___System_Object__
+  commentId: M:DynamicRestProxy.RestProxy.TryInvoke(System.Dynamic.InvokeBinder,System.Object[],System.Object@)
+  name.vb: TryInvoke(InvokeBinder, Object(), ByRef Object)
+  fullName: DynamicRestProxy.RestProxy.TryInvoke(System.Dynamic.InvokeBinder, System.Object[], out System.Object)
+  fullName.vb: DynamicRestProxy.RestProxy.TryInvoke(System.Dynamic.InvokeBinder, System.Object(), ByRef System.Object)
+  nameWithType: RestProxy.TryInvoke(InvokeBinder, Object[], out Object)
+  nameWithType.vb: RestProxy.TryInvoke(InvokeBinder, Object(), ByRef Object)
+- uid: DynamicRestProxy.RestProxy.TryInvoke*
+  name: TryInvoke
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryInvoke_
+  commentId: Overload:DynamicRestProxy.RestProxy.TryInvoke
+  fullName: DynamicRestProxy.RestProxy.TryInvoke
+  nameWithType: RestProxy.TryInvoke
+- uid: DynamicRestProxy.RestProxy.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)
+  name: TryInvokeMember(InvokeMemberBinder, Object[], out Object)
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryInvokeMember_System_Dynamic_InvokeMemberBinder_System_Object___System_Object__
+  commentId: M:DynamicRestProxy.RestProxy.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)
+  name.vb: TryInvokeMember(InvokeMemberBinder, Object(), ByRef Object)
+  fullName: DynamicRestProxy.RestProxy.TryInvokeMember(System.Dynamic.InvokeMemberBinder, System.Object[], out System.Object)
+  fullName.vb: DynamicRestProxy.RestProxy.TryInvokeMember(System.Dynamic.InvokeMemberBinder, System.Object(), ByRef System.Object)
+  nameWithType: RestProxy.TryInvokeMember(InvokeMemberBinder, Object[], out Object)
+  nameWithType.vb: RestProxy.TryInvokeMember(InvokeMemberBinder, Object(), ByRef Object)
+- uid: DynamicRestProxy.RestProxy.TryInvokeMember*
+  name: TryInvokeMember
+  href: api/DynamicRestProxy.RestProxy.html#DynamicRestProxy_RestProxy_TryInvokeMember_
+  commentId: Overload:DynamicRestProxy.RestProxy.TryInvokeMember
+  fullName: DynamicRestProxy.RestProxy.TryInvokeMember
+  nameWithType: RestProxy.TryInvokeMember
