@@ -2,6 +2,8 @@ DynamicRestProxy
 ================
 [NuGet package](https://www.nuget.org/packages/DynamicRestClient/)
 
+[Documentation](https://dkackman.github.io/DynamicRestProxy)
+
 A conventions based rest client using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
 
 The [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) has further detail and examples, as does [this article](http://www.codeproject.com/Articles/762189/A-Dynamic-Rest-Client-Proxy-with-the-DLR) on codeproject.
@@ -27,8 +29,6 @@ Or if you insist on static DTO types, a type argument can be supplied (deseriali
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
 Tested on dotnetcore on Linux.
-
-Example usage is on the [Wiki](https://github.com/dkackman/DynamicRestProxy/wiki) as well as supplied in the unit test projects.
 
 If you try to run the unit tests take a close look at the CredentialStore class in the unit test project. It's pretty straighforward and you can use it to supply your own api keys while keeping them out of the code.
 
