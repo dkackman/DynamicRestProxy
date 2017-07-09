@@ -28,8 +28,9 @@ Or if you insist on static DTO types, a type argument can be supplied (deseriali
 Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
 Tested on dotnetcore on Linux.
-    
+
 ## Quick Start Notes:
+
 1. [Getting Started](articles/getting-started.md)
 2. [NuGet Package](https://www.nuget.org/packages/DynamicRestProxy/)
 3. [GitHub Project](https://github.com/dkackman/DynamicRestProxy/)
