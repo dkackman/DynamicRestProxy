@@ -67,28 +67,36 @@ See <a href="advanced.html">advanced topics</a> for mechanisms to bypass these c
 <p>Using the dynamic rest client start with instantiating an instance, accessing an endpoint path and invoking a REST verb, awaiting the result. Always declare the DynamicRestClient as 
 a dynamic.</p>
 <pre><code>dynamic client = new DynamicRestClient(&quot;http://dev.virtualearth.net/REST/v1/&quot;);
-var result = await proxy.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: &quot;api-key&quot;);
+dynamic result = await proxy.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: &quot;api-key&quot;);
 </code></pre><p>Figure 1</p>
 <h3 id="building-the-endpoint-path">Building the endpoint path</h3>
-<p>The endpoint path is represented by dot-seperated members of the dynamic client instance. Each node in the path is another dynamic object
+<p>The endpoint path is represented by dot-separated members of the dynamic client instance. Each node in the path is another dynamic object
 to which additional path elements can be chained. The resulting path is relative to the base address set in the constructor of the client object.</p>
-<p>The full endpoint Uri of the example in figure 1 is:
-<a href="http://dev.virtualearth.net/REST/v1/Locations/">http://dev.virtualearth.net/REST/v1/Locations/</a></p>
+<p>The full endpoint Uri of the example in figure 1 is:</p>
+<p><a href="http://dev.virtualearth.net/REST/v1/Locations/">http://dev.virtualearth.net/REST/v1/Locations/</a></p>
+<pre><code>dynamic google = new DynamicRestClient(&quot;https://www.googleapis.com/&quot;);
+dynamic bucket = await google.storage.v1.b(&quot;uspto-pair&quot;).get();
+</code></pre><p>Figure 2</p>
+<p>The code in figure 2 chains multiple elements together to build a longer path. It also uses an escape mechanism in order to specify a 
+path element that is not a valid idenifier in C#. The resulting Uri is:</p>
+<p><a href="https://www.googleapis.com/storage/v1/b/uspto-pair/">https://www.googleapis.com/storage/v1/b/uspto-pair/</a></p>
 <h3 id="passing-parameters">Passing parameters</h3>
-<p>Parameters are based to the verb invocation using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments">C#&#39;s named paramter syntax</a>.</p>
-<p>Parameter names are passed as is. Any type of object can be passed as a parameter value. Values are serialized as whatever the type&#39;s 
+<p>Parameters are based to the verb invocation using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments">C#&#39;s named parameter syntax</a>.</p>
+<p>Any type of object can be passed as a parameter value. Values are serialized via the value object&#39;s 
 <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object.tostring?view=netframework-4.7">ToString</a>
-method returns. Both parameter names and values are <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webutility.urlencode?view=netframework-4.7">Url encoded</a>.</p>
+method. Both parameter names and values are <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webutility.urlencode?view=netframework-4.7">Url encoded</a>.</p>
 <p>The GET request for the example in figure 1 is:
 <a href="http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&amp;countryRegion=US&amp;key=api-key">http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&countryRegion=US&key=api-key</a></p>
 <p>Named parameters passed to a POST invocation will be <a href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">form url encoded</a> in the request body.</p>
 <h3 id="passing-content">Passing Content</h3>
 <p>Request content is passed to the verb invocation as an unnamed argument. The first unnamed argument will be passed as the request
 content body. Subsequent unnamed arguments, <a href="advanced.html">with the exception of some special types</a>, will be ignored.</p>
-<p>Strings and primitive types will be passed as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.stringcontent.-ctor?view=netframework-4.7">StringContent</a>. 
-Byte arrays will be passed as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.bytearraycontent?view=netframework-4.7">ByteArrayContent</a>
-Any type of <a href="http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&amp;l=EN-US&amp;k=k(System.IO.Stream);k(DevLang-csharp)&amp;rd=true">stream</a> will be passed as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.streamcontent.-ctor?view=netframework-4.7">StreamContent</a>.
-All other types will be serialized to JSON.</p>
+<ul>
+<li>Strings and primitive types will be passed as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.stringcontent.-ctor?view=netframework-4.7">StringContent</a>. </li>
+<li>Byte arrays will be passed as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.bytearraycontent?view=netframework-4.7">ByteArrayContent</a></li>
+<li>Any type of <a href="http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&amp;l=EN-US&amp;k=k(System.IO.Stream);k(DevLang-csharp)&amp;rd=true">stream</a> will be passed as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.streamcontent.-ctor?view=netframework-4.7">StreamContent</a>.</li>
+<li>All other types will be serialized to JSON.</li>
+</ul>
 <h4 id="setting-content-headers">Setting content headers</h4>
 <h3 id="invoking-the-http-verb">Invoking the Http verb</h3>
 <p>GET, PUT, POST, DELETE and PATCH are the http verbs supported by this REST client. Invocation of the verb method
