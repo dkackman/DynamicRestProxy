@@ -19,8 +19,7 @@ So a GET statement can be as simple as:
     dynamic bucket = await google.storage.v1.b("uspto-pair").get();
     Console.WriteLine(bucket.location);
 
-Or if you insist on static DTO types, a type argument can be supplied (deserialization uses [Json.Net](http://json.codeplex.com/) s
-o all its rules and patterns apply):
+Or if you insist on static DTO types, a type argument can be supplied (deserialization uses [Json.Net](http://json.codeplex.com/) so all its rules and patterns apply):
 
     dynamic google = new DynamicRestClient("https://www.googleapis.com/");
     Bucket bucket = await google.storage.v1.b("uspto-pair").get(typeof(Bucket));
