@@ -69,7 +69,12 @@ a <code>dynamic</code>.</p>
 <pre><code>dynamic client = new DynamicRestClient(&quot;http://dev.virtualearth.net/REST/v1/&quot;);
 dynamic result = await proxy.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: &quot;api-key&quot;);
 </code></pre><p>[Figure 1]</p>
-<h3 id="building-the-endpoint-path">Building the endpoint path</h3>
+<pre><code>GET http://dev.virtualearth.net/REST/v1/Locations?postalCode=55116&amp;countryRegion=US&amp;key=api-key HTTP/1.1
+Accept: application/json, text/json, text/x-json, text/javascript
+Host: dev.virtualearth.net
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
+</code></pre><h3 id="building-the-endpoint-path">Building the endpoint path</h3>
 <p>The endpoint path is represented by dot-separated members of the dynamic client instance. Each node in the path is another dynamic object
 to which additional path elements can be chained. The resulting path is relative to the base address set in the constructor of the client object.</p>
 <p>The full endpoint Uri of the example in Figure 1 is:</p>
@@ -122,9 +127,36 @@ sends the appropraite http message to the endpoint, along with defaults, paramet
 lower case and return a <code>Task</code> object, so must be <code>await</code>-ed. Unless using a strongly typed response
 (see below), the return will be <code>Task&lt;object&gt;</code> where the result type is a dynamic object.</p>
 <h2 id="setting-defaults">Setting Defaults</h2>
+<p>Setting defaults to be included in every request is accomplished by passing a 
+<a class="xref" href="../api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a> to the client constructor.</p>
 <h3 id="api-keys">Api Keys</h3>
-<h3 id="authentication-and-authorization">Authentication and Authorization</h3>
-</article>
+<p>Many REST apis require an api-key to use, typically as a paramter included on all requests. Setting it as a default parameter
+will ensure it is added to every request.</p>
+<pre><code>var defaults = new DynamicRestClientDefaults();
+defaults.DefaultParameters.Add(&quot;format&quot;, &quot;json&quot;);
+defaults.DefaultParameters.Add(&quot;api_key&quot;, &quot;my-api-key&quot;);
+defaults.DefaultParameters.Add(&quot;nojsoncallback&quot;, &quot;1&quot;);
+
+dynamic client = new DynamicRestClient(&quot;https://api.flickr.com/services/rest/&quot;);
+dynamic result = await client.get(method: &quot;flickr.people.findByUsername&quot;, username: &quot;dkackman&quot;);
+</code></pre><h3 id="authentication-and-authorization">Authentication and Authorization</h3>
+<p>For services that require authentication and authorization, the defaults type can also be used to 
+manage passing auth data.</p>
+<pre><code>var defaults = new DynamicRestClientDefaults()
+{
+    AuthScheme = &quot;OAuth&quot;,
+    AuthToken = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;
+};
+
+dynamic google = new DynamicRestClient(&quot;https://www.googleapis.com/&quot;, defaults);
+dynamic profile = await google.oauth2.v1.userinfo.get();
+</code></pre><p>The auth data is added to every request.    </p>
+<pre><code>GET https://www.googleapis.com/oauth2/v1/userinfo HTTP/1.1
+Authorization: OAuth xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Accept: application/json, text/json, text/x-json, text/javascript
+Host: www.googleapis.com
+Accept-Encoding: gzip, deflate
+</code></pre></article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

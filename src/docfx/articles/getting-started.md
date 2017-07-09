@@ -12,6 +12,12 @@ a `dynamic`.
     dynamic result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US", key: "api-key");
 [Figure 1]
 
+    GET http://dev.virtualearth.net/REST/v1/Locations?postalCode=55116&countryRegion=US&key=api-key HTTP/1.1
+    Accept: application/json, text/json, text/x-json, text/javascript
+    Host: dev.virtualearth.net
+    Accept-Encoding: gzip, deflate
+    Connection: Keep-Alive
+
 ### Building the endpoint path
 
 The endpoint path is represented by dot-separated members of the dynamic client instance. Each node in the path is another dynamic object
@@ -85,6 +91,40 @@ lower case and return a `Task` object, so must be `await`-ed. Unless using a str
 
 ## Setting Defaults
 
+Setting defaults to be included in every request is accomplished by passing a 
+[DynamicRestClientDefaults](xref:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults) to the client constructor.
+
 ### Api Keys
 
+Many REST apis require an api-key to use, typically as a paramter included on all requests. Setting it as a default parameter
+will ensure it is added to every request.
+
+    var defaults = new DynamicRestClientDefaults();
+    defaults.DefaultParameters.Add("format", "json");
+    defaults.DefaultParameters.Add("api_key", "my-api-key");
+    defaults.DefaultParameters.Add("nojsoncallback", "1");
+
+    dynamic client = new DynamicRestClient("https://api.flickr.com/services/rest/");
+    dynamic result = await client.get(method: "flickr.people.findByUsername", username: "dkackman");
+
 ### Authentication and Authorization
+
+For services that require authentication and authorization, the defaults type can also be used to 
+manage passing auth data.
+
+    var defaults = new DynamicRestClientDefaults()
+    {
+        AuthScheme = "OAuth",
+        AuthToken = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    };
+
+    dynamic google = new DynamicRestClient("https://www.googleapis.com/", defaults);
+    dynamic profile = await google.oauth2.v1.userinfo.get();
+
+The auth data is added to every request.    
+
+    GET https://www.googleapis.com/oauth2/v1/userinfo HTTP/1.1
+    Authorization: OAuth xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    Accept: application/json, text/json, text/x-json, text/javascript
+    Host: www.googleapis.com
+    Accept-Encoding: gzip, deflate
