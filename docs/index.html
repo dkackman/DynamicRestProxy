@@ -73,8 +73,7 @@ numerous static POCO types just to transfer basic DTO responses. </p>
 <pre><code>dynamic google = new DynamicRestClient(&quot;https://www.googleapis.com/&quot;);
 dynamic bucket = await google.storage.v1.b(&quot;uspto-pair&quot;).get();
 Console.WriteLine(bucket.location);
-</code></pre><p>Or if you insist on static DTO types, a type argument can be supplied (deserialization uses <a href="http://json.codeplex.com/">Json.Net</a> s
-o all its rules and patterns apply):</p>
+</code></pre><p>Or if you insist on static DTO types, a type argument can be supplied (deserialization uses <a href="http://json.codeplex.com/">Json.Net</a> so all its rules and patterns apply):</p>
 <pre><code>dynamic google = new DynamicRestClient(&quot;https://www.googleapis.com/&quot;);
 Bucket bucket = await google.storage.v1.b(&quot;uspto-pair&quot;).get(typeof(Bucket));
 Console.WriteLine(bucket.location);

@@ -51,16 +51,37 @@ content body. Subsequent unnamed arguments, [with the exception of some special 
 - Strings and primitive types will be passed as [StringContent](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.stringcontent.-ctor?view=netframework-4.7)
 - Byte arrays will be passed as [ByteArrayContent](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.bytearraycontent?view=netframework-4.7)
 - Any type of [stream](http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&l=EN-US&k=k(System.IO.Stream);k(DevLang-csharp)&rd=true) will be passed as [StreamContent](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.streamcontent.-ctor?view=netframework-4.7)
+- A `IEnumerable<object>` will be sent as multi-part content, with each constituent object being serialized by the above rules
 - All other types will be serialized to JSON
 
-#### Setting content headers
+`    dynamic google = new DynamicRestClient("https://www.googleapis.com/calendar/v3/");
+                
+    dynamic calendar = new ExpandoObject();
+    calendar.summary = "unit_testing";
+
+    var result = await google.calendars.post(calendar);
+[Figure 3]
+
+The resulting request shows the serialized content:
+
+    POST https://www.googleapis.com/calendar/v3/calendars HTTP/1.1
+    Authorization: OAuth xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    Accept: application/json, text/json, text/x-json, text/javascript
+    Content-Type: application/json; charset=utf-8
+    Host: www.googleapis.com
+    Expect: 100-continue
+    Accept-Encoding: gzip, deflate
+    Connection: Keep-Alive
+    Content-Length: 26
+
+    {"summary":"unit_testing"}
 
 ### Invoking the Http verb
 
 GET, PUT, POST, DELETE and PATCH are the http verbs supported by this REST client. Invocation of the verb method
 sends the appropraite http message to the endpoint, along with defaults, parameters and content. Verb methods are always
 lower case and return a `Task` object, so must be `await`-ed. Unless using a strongly typed response
-(see below), the return will be `Task&lt;object>` where the result type is a dynamic object.
+(see below), the return will be `Task<object>` where the result type is a dynamic object.
 
 ## Setting Defaults
 

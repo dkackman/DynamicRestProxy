@@ -1,7 +1,7 @@
 ﻿# Advanced Topics
 
 The thing about convetion based api's is that the conventions hide both the complexity but also flexiblity of the
-underlying mechanisms. Conventions favor simplicity over expressiveness making the simple things easy, but they also need
+underlying mechanisms. Conventions favor simplicity over expressiveness; making the simple things easy, but they also need
 to make the less simple possible.
 
 ## Escape Mechanisms
@@ -17,11 +17,26 @@ places where a it may conflict with the rules and syntax of C#.
 
 ### Calling a POST endpoint with url parameters
 
-## Bypassing content serialization conventions
+## Setting content headers
+
+It is common that the MIME type or other headers needs to be set when uploading content to a REST endpoint.
+To do so, content can be passed as [ContentInfo](xref:DynamicRestProxy.PortableHttpClient.ContentInfo) or [SteamInfo](xref:DynamicRestProxy.PortableHttpClient.StreamInfo) objects. 
+These types allow MIME type and other headers to be specified with the content.
+
+    using (var stream = new StreamInfo(File.OpenRead(@"D:\temp\test.png"), "image/png"))
+    {
+        dynamic google = new DynamicRestClient("https://www.googleapis.com/");
+        dynamic result = await google.upload.storage.v1.b.unit_tests.o.post(stream, name: new PostUrlParam("test_object"), uploadType: new PostUrlParam("media"));
+    }
+
+## Bypassing content conventions
 
 If you require fine grained control over the reqeust content any instance of an
 [HttpContent](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx) derived
 class passed to the verb invocation will be added to the reuqest as-is, overriding any content creation conventions.
+
+If, for instance, an endpoint does not accept Json, an object could be serialized as Xml
+and POSTed using this mechansim.
 
 ## Returning types other than dynamic
 
@@ -33,7 +48,7 @@ to control how response conent is deserialized or overriden.
 ### Other return types
 
 - Passing `typeof` `Stream`, `byte[]` or `string` will deserialize the request content to those respective types
-- Passing typeof [HttpResponseMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=netframework-4.7) allows you to receive the complete response message
+- Passing `typeof` [HttpResponseMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=netframework-4.7) allows you to receive the complete response message
 - Any other type instance is assumed to be intended for a strongly typed response as discussed above
 
 ## Special invocation argument types
@@ -42,5 +57,5 @@ The following types, when passed as unnamed arguments will be used during the cr
 
 - `JsonSerializerSettings` Serialization is done with [Json.Net](http://www.newtonsoft.com/json). An instance of this type can be passed to control serialization
 - [CancellationToken](http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&l=EN-US&k=k(System.Threading.CancellationToken);k(SolutionItemsProject);k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.6.1);k(DevLang-csharp)&rd=true)
-Because verb invocations are always async, a CancellationToken can be passed in order for client code to cancel the operation
+Because verb invocations are always `async`, a `CancellationToken` can be passed in order for client code to cancel the operation
 
