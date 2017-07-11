@@ -1,6 +1,6 @@
 ﻿# Advanced Topics
 
-The thing about convetion based api's is that the conventions hide both the complexity but also flexiblity of the
+The thing about convetion based api's is that the conventions both hide the complexity but also the flexiblity of the
 underlying mechanisms. Conventions favor simplicity over expressiveness; making the simple things easy, but they also need
 to make the less simple possible.
 
@@ -16,6 +16,8 @@ places where a it may conflict with the rules and syntax of C#.
 ### Request configuration callback
 
 ### Calling a POST endpoint with url parameters
+
+By default, Uri parameters on a POST request are url form encoded and sent in the request body. There are cases where a POST request has other data in the request body but also has parameters in the Uri. In this case the parameter can be based in a [PostUrlParam](xref:DynamicRestProxy.PortableHttpClient.PostUrlParam).
 
 ## Setting content headers
 
@@ -43,7 +45,7 @@ and POSTed using this mechansim.
 Pass a single [Type](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx) instance to a verb invocation in order
 to control how response conent is deserialized or overriden.
 
-### Strong typing the response
+### Strongly types response
 
 ### Other return types
 
@@ -58,4 +60,3 @@ The following types, when passed as unnamed arguments will be used during the cr
 - `JsonSerializerSettings` Serialization is done with [Json.Net](http://www.newtonsoft.com/json). An instance of this type can be passed to control serialization
 - [CancellationToken](http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&l=EN-US&k=k(System.Threading.CancellationToken);k(SolutionItemsProject);k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.6.1);k(DevLang-csharp)&rd=true)
 Because verb invocations are always `async`, a `CancellationToken` can be passed in order for client code to cancel the operation
-
