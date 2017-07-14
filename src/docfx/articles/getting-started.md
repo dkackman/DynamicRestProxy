@@ -49,7 +49,7 @@ http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&countryRegion=US
 
 Named parameters passed to a POST invocation will be [form url encoded](http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1) in the request body.
 
-### Passing Content
+### Passing content
 
 Request content is passed to the verb invocation as an unnamed argument. The first unnamed argument will be passed as the request
 content body. Subsequent unnamed arguments, [with the exception of some special types](advanced.md), will be ignored.
@@ -94,7 +94,7 @@ lower case and return a `Task` object, so must be `await`-ed. Unless using a str
 Setting defaults to be included in every request is accomplished by passing a 
 [DynamicRestClientDefaults](xref:DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults) to the client constructor.
 
-### Api Keys
+### Api keys
 
 Many REST apis require an api-key to use, typically as a paramter included on all requests. Setting it as a default parameter
 will ensure it is added to every request.
@@ -104,10 +104,10 @@ will ensure it is added to every request.
     defaults.DefaultParameters.Add("api_key", "my-api-key");
     defaults.DefaultParameters.Add("nojsoncallback", "1");
 
-    dynamic client = new DynamicRestClient("https://api.flickr.com/services/rest/");
-    dynamic result = await client.get(method: "flickr.people.findByUsername", username: "dkackman");
+    dynamic flickr = new DynamicRestClient("https://api.flickr.com/services/rest/");
+    dynamic user = await flickr.get(method: "flickr.people.findByUsername", username: "dkackman");
 
-### Authentication and Authorization
+### Authentication and authorization
 
 For services that require authentication and authorization, the defaults type can also be used to 
 manage passing auth data.
@@ -128,3 +128,10 @@ The auth data is added to every request.
     Accept: application/json, text/json, text/x-json, text/javascript
     Host: www.googleapis.com
     Accept-Encoding: gzip, deflate
+
+## Http Errors
+
+In the event that the response message's [IsSuccessStatusCode](xref:System.Net.Http.HttpResponseMessage) property
+is false the invocation method will throw a 
+[DynamicRestClientResponseException](xref:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException).
+This exception includes the response method so additional details of the falure can be inspected.

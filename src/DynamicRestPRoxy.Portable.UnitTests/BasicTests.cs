@@ -86,6 +86,26 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
         [TestMethod]
         [TestCategory("portable")]
         [TestCategory("integration")]
+        public async Task EscapeReservedWord()
+        {
+            using (var client = new HttpClient(MockInitialization.Handler, false))
+            {
+                client.BaseAddress = new Uri("http://openstates.org/api/v1/");
+                string key = CredentialStore.RetrieveObject("sunlight.key.json").Key;
+                client.DefaultRequestHeaders.Add("X-APIKEY", key);
+
+                using (dynamic proxy = new DynamicRestClient(client))
+                {
+                    var result = await proxy.legislators.geo.get(lat: 44.926868, @long: -93.214049);
+                    Assert.IsNotNull(result);
+                    Assert.IsTrue(result.Count > 0);
+                }
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("portable")]
+        [TestCategory("integration")]
         public async Task GetMethod1PathArg1Param()
         {
             using (var client = new HttpClient(MockInitialization.Handler, false))
@@ -119,10 +139,10 @@ namespace DynamicRestProxy.PortableHttpClient.UnitTests
                 {
                     // this is the mechanism by which parameter names that are not valid c# property names can be used
                     var parameters = new Dictionary<string, object>()
-                {
-                    { "chamber", "senate" },
-                    { "history.house_passage_result", "pass" }
-                };
+                    {
+                        { "chamber", "senate" },
+                        { "history.house_passage_result", "pass" }
+                    };
 
                     dynamic result = await proxy.bills.get(paramList: parameters);
 

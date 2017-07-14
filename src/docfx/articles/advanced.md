@@ -11,15 +11,66 @@ places where a it may conflict with the rules and syntax of C#.
 
 ### Path names
 
+There are times when a Uri path segment is not a valid C# identifier. In those cases, the path segment can be specified as a string
+chained to rest of the path specification. String escaped segment can appear anywhere in the path chain.
+
+    google.storage.v1.b("uspto-pair").get();
+    google.storage.("v1").b("uspto-pair").get();
+
+This is also useful when part of the path is a data point not known at compile time.
+
+    string name = "John Smith";
+    dynamic example = new DynamicRestClient("https://www.example.com/");
+    dynamic person = example.restapi.people(name).get();
+
 ### Reserved word parameter names
 
+In cases where a parameter name is a C# reserved word it can be escaped using `@`.
+
+    dynamic openstates = new DynamicRestClient("http://openstates.org/api/v1/");
+    var result = await openstates.legislators.geo.get(lat: 44.926868, @long: -93.214049);
+
+### Illegal identifier parameter names
+
+Rest paramters can also contain characters that make them illegal identifiers altogether in C#. In this case named paramter systac won't work but paramters can be passed as a Dictionary.
+
+    dynamic sunlight = new DynamicRestClient("http://congress.api.sunlightfoundation.com");
+    var parameters = new Dictionary<string, object>()
+    {
+        { "chamber", "senate" },
+        { "history.house_passage_result", "pass" }
+    };
+
+    dynamic result = await sunlight.bills.get(paramList: parameters);
+
+Since only named arguments are parsed as parameters, the dictionary must be passed as a named argument event though the name is irrelevent.
+Named and dictionary based parameters can be mixed in the same invocation.
+
 ### Request configuration callback
+
+For fine grained control of the 'HttpRequestMessage' a callback can be provided in the constructor of the dynamic client.
+This function will be called just prior to every REST invocation.
+
+The callback must have the signature of `Func<HttpRequestMessage, CancellationToken, Task>`. It will be `await`ed by the dyanmic client
+before it invokes the http communication. 
+
+    dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/",
+        configureRequest: (request, token) =>
+        {
+            Debug.WriteLine(request.RequestUri);
+            return Task.CompletedTask;
+        });
+
+    dynamic result = await client.Locations.get(postalCode: "55116", countryRegion: "US", key: "key");
+
+Other uses of the callback are checking or refreshing auth tokens etc, signaling the UI that communication is 
+happening, logging and debugging.
 
 ### Calling a POST endpoint with url parameters
 
 By default, Uri parameters on a POST request are url form encoded and sent in the request body. There are cases where a POST request has other data in the request body but also has parameters in the Uri. In this case the parameter can be based in a [PostUrlParam](xref:DynamicRestProxy.PortableHttpClient.PostUrlParam).
 
-## Setting content headers
+## Setting Content Headers
 
 It is common that the MIME type or other headers needs to be set when uploading content to a REST endpoint.
 To do so, content can be passed as [ContentInfo](xref:DynamicRestProxy.PortableHttpClient.ContentInfo) or [SteamInfo](xref:DynamicRestProxy.PortableHttpClient.StreamInfo) objects. 
@@ -31,7 +82,7 @@ These types allow MIME type and other headers to be specified with the content.
         dynamic result = await google.upload.storage.v1.b.unit_tests.o.post(stream, name: new PostUrlParam("test_object"), uploadType: new PostUrlParam("media"));
     }
 
-## Bypassing content conventions
+## Bypassing Content Conventions
 
 If you require fine grained control over the reqeust content any instance of an
 [HttpContent](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx) derived
@@ -40,12 +91,32 @@ class passed to the verb invocation will be added to the reuqest as-is, overridi
 If, for instance, an endpoint does not accept Json, an object could be serialized as Xml
 and POSTed using this mechansim.
 
-## Returning types other than dynamic
+## Returning Types Other Than Dynamic
 
 Pass a single [Type](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx) instance to a verb invocation in order
 to control how response conent is deserialized or overriden.
 
 ### Strongly types response
+
+If you have a POCO type that you would like the response deserialied to, pass the type of that class to the rest invocation.
+The response body, assuming it is Json, will be deserialized into that type using JSON.NET.
+
+    public class Bucket
+    {
+        public string kind { get; set; }
+        public string id { get; set; }
+        public string selfLink { get; set; }
+        public string name { get; set; }
+        public DateTime timeCreated { get; set; }
+        public int metageneration { get; set; }
+        public string location { get; set; }
+        public string storageClass { get; set; }
+        public string etag { get; set; }
+    }
+
+    dynamic google = new DynamicRestClient("https://www.googleapis.com/");
+    Bucket bucket = await google.storage.v1.b("uspto-pair").get(typeof(Bucket));
+    Console.WriteLine(bucket.location);
 
 ### Other return types
 
@@ -53,7 +124,7 @@ to control how response conent is deserialized or overriden.
 - Passing `typeof` [HttpResponseMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=netframework-4.7) allows you to receive the complete response message
 - Any other type instance is assumed to be intended for a strongly typed response as discussed above
 
-## Special invocation argument types
+## Special Unamed Argument Types
 
 The following types, when passed as unnamed arguments will be used during the creation and invocation of the request.
 

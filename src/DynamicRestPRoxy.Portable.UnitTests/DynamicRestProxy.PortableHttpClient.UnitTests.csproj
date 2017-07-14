@@ -131,6 +131,7 @@
   <ItemGroup>
     <Compile Include="BasicTests.cs" />
     <Compile Include="BingMapsTests.cs" />
+    <Compile Include="CallbackTEsts.cs" />
     <Compile Include="CancellationTests.cs" />
     <Compile Include="DynamicClientTests.cs" />
     <Compile Include="FlickrTests.cs" />

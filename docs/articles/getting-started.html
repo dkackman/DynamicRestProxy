@@ -8,7 +8,7 @@
     <title>DynamicRestProxy - Getting Started </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="DynamicRestProxy - Getting Started ">
-    <meta name="generator" content="docfx 2.19.2.0">
+    <meta name="generator" content="docfx 2.20.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -93,7 +93,7 @@ method. Both parameter names and values are <a href="https://docs.microsoft.com/
 <p>The GET request for the example in Figure 1 is:
 <a href="http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&amp;countryRegion=US&amp;key=api-key">http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&countryRegion=US&key=api-key</a></p>
 <p>Named parameters passed to a POST invocation will be <a href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">form url encoded</a> in the request body.</p>
-<h3 id="passing-content">Passing Content</h3>
+<h3 id="passing-content">Passing content</h3>
 <p>Request content is passed to the verb invocation as an unnamed argument. The first unnamed argument will be passed as the request
 content body. Subsequent unnamed arguments, <a href="advanced.html">with the exception of some special types</a>, will be ignored.</p>
 <ul>
@@ -129,7 +129,7 @@ lower case and return a <code>Task</code> object, so must be <code>await</code>-
 <h2 id="setting-defaults">Setting Defaults</h2>
 <p>Setting defaults to be included in every request is accomplished by passing a 
 <a class="xref" href="../api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a> to the client constructor.</p>
-<h3 id="api-keys">Api Keys</h3>
+<h3 id="api-keys">Api keys</h3>
 <p>Many REST apis require an api-key to use, typically as a paramter included on all requests. Setting it as a default parameter
 will ensure it is added to every request.</p>
 <pre><code>var defaults = new DynamicRestClientDefaults();
@@ -137,9 +137,9 @@ defaults.DefaultParameters.Add(&quot;format&quot;, &quot;json&quot;);
 defaults.DefaultParameters.Add(&quot;api_key&quot;, &quot;my-api-key&quot;);
 defaults.DefaultParameters.Add(&quot;nojsoncallback&quot;, &quot;1&quot;);
 
-dynamic client = new DynamicRestClient(&quot;https://api.flickr.com/services/rest/&quot;);
-dynamic result = await client.get(method: &quot;flickr.people.findByUsername&quot;, username: &quot;dkackman&quot;);
-</code></pre><h3 id="authentication-and-authorization">Authentication and Authorization</h3>
+dynamic flickr = new DynamicRestClient(&quot;https://api.flickr.com/services/rest/&quot;);
+dynamic user = await flickr.get(method: &quot;flickr.people.findByUsername&quot;, username: &quot;dkackman&quot;);
+</code></pre><h3 id="authentication-and-authorization">Authentication and authorization</h3>
 <p>For services that require authentication and authorization, the defaults type can also be used to 
 manage passing auth data.</p>
 <pre><code>var defaults = new DynamicRestClientDefaults()
@@ -156,7 +156,12 @@ Authorization: OAuth xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 Accept: application/json, text/json, text/x-json, text/javascript
 Host: www.googleapis.com
 Accept-Encoding: gzip, deflate
-</code></pre></article>
+</code></pre><h2 id="http-errors">Http Errors</h2>
+<p>In the event that the response message&#39;s <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpresponsemessage(v=vs.110).aspx">IsSuccessStatusCode</a> property
+is false the invocation method will throw a 
+<a class="xref" href="../api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html">DynamicRestClientResponseException</a>.
+This exception includes the response method so additional details of the falure can be inspected.</p>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
