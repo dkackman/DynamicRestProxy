@@ -92,11 +92,39 @@ var parameters = new Dictionary&lt;string, object&gt;()
 dynamic result = await sunlight.bills.get(paramList: parameters);
 </code></pre><p>Since only named arguments are parsed as parameters, the dictionary must be passed as a named argument event though the name is irrelevent.
 Named and dictionary based parameters can be mixed in the same invocation.</p>
-<h3 id="request-configuration-callback">Request configuration callback</h3>
+<h3 id="the-httpmessagehandler">The HttpMessageHandler</h3>
+<p>By default the dynamic client will use the <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclienthandler(v=vs.110).aspx">HttpClientHandler</a>
+when creating the internal <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.110).aspx">HttpClient</a>. If you need to use a different
+<a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpmessagehandler(v=vs.110).aspx">HttpMessageHandler</a> derived type an instance can be passed to the dynamic client construcutor.</p>
+<p>If fine grained configuraiton of the HttpClient is needed there is also a constructor overload that accepts an HttpClient instance.</p>
+<p>The unit tests use this extensively in order to use fake http responses rather than tightly coupling the tests to the endpoints.</p>
+<pre><code>public async Task CoordinateFromPostalCode()
+{
+    using (var client = new HttpClient(MockInitialization.Handler, false))
+    {
+        client.BaseAddress = new Uri(&quot;http://dev.virtualearth.net/REST/v1/&quot;);
+
+        string key = CredentialStore.RetrieveObject(&quot;bing.key.json&quot;).Key;
+
+        using (dynamic proxy = new DynamicRestClient(client))
+        {
+            var result = await proxy.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: key);
+
+            Assert.AreEqual(200, (int)result.statusCode);
+            Assert.IsTrue(result.resourceSets.Count &gt; 0);
+            Assert.IsTrue(result.resourceSets[0].resources.Count &gt; 0);
+
+            var r = result.resourceSets[0].resources[0].point.coordinates;
+            Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
+            Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
+        }
+    }
+}
+</code></pre><h3 id="request-configuration-callback">Request configuration callback</h3>
 <p>For fine grained control of the &#39;HttpRequestMessage&#39; a callback can be provided in the constructor of the dynamic client.
 This function will be called just prior to every REST invocation.</p>
 <p>The callback must have the signature of <code>Func&lt;HttpRequestMessage, CancellationToken, Task&gt;</code>. It will be <code>await</code>ed by the dyanmic client
-before it invokes the http communication. </p>
+before request message is sent. </p>
 <pre><code>dynamic client = new DynamicRestClient(&quot;http://dev.virtualearth.net/REST/v1/&quot;,
     configureRequest: (request, token) =&gt;
     {
@@ -127,7 +155,7 @@ and POSTed using this mechansim.</p>
 <h2 id="returning-types-other-than-dynamic">Returning Types Other Than Dynamic</h2>
 <p>Pass a single <a href="https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx">Type</a> instance to a verb invocation in order
 to control how response conent is deserialized or overriden.</p>
-<h3 id="strongly-types-response">Strongly types response</h3>
+<h3 id="strongly-typed-response">Strongly typed response</h3>
 <p>If you have a POCO type that you would like the response deserialied to, pass the type of that class to the rest invocation.
 The response body, assuming it is Json, will be deserialized into that type using JSON.NET.</p>
 <pre><code>public class Bucket
@@ -146,11 +174,11 @@ The response body, assuming it is Json, will be deserialized into that type usin
 dynamic google = new DynamicRestClient(&quot;https://www.googleapis.com/&quot;);
 Bucket bucket = await google.storage.v1.b(&quot;uspto-pair&quot;).get(typeof(Bucket));
 Console.WriteLine(bucket.location);
-</code></pre><h3 id="other-return-types">Other return types</h3>
+</code></pre><h3 id="specifying-other-return-types">Specifying other return types</h3>
 <ul>
 <li>Passing <code>typeof</code> <code>Stream</code>, <code>byte[]</code> or <code>string</code> will deserialize the request content to those respective types</li>
 <li>Passing <code>typeof</code> <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=netframework-4.7">HttpResponseMessage</a> allows you to receive the complete response message</li>
-<li>Any other type instance is assumed to be intended for a strongly typed response as discussed above</li>
+<li>Any other <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx">Type</a> instance is assumed to be intended for a strongly typed response as discussed above</li>
 </ul>
 <h2 id="special-unamed-argument-types">Special Unamed Argument Types</h2>
 <p>The following types, when passed as unnamed arguments will be used during the creation and invocation of the request.</p>

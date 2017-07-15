@@ -46,13 +46,46 @@ Rest paramters can also contain characters that make them illegal identifiers al
 Since only named arguments are parsed as parameters, the dictionary must be passed as a named argument event though the name is irrelevent.
 Named and dictionary based parameters can be mixed in the same invocation.
 
+### The HttpMessageHandler
+
+By default the dynamic client will use the [HttpClientHandler](xref:System.Net.Http.HttpClientHandler)
+when creating the internal [HttpClient](xref:System.Net.Http.HttpClient). If you need to use a different
+[HttpMessageHandler](xref:System.Net.Http.HttpMessageHandler) derived type an instance can be passed to the dynamic client construcutor.
+
+If fine grained configuraiton of the HttpClient is needed there is also a constructor overload that accepts an HttpClient instance.
+
+The unit tests use this extensively in order to use fake http responses rather than tightly coupling the tests to the endpoints.
+
+    public async Task CoordinateFromPostalCode()
+    {
+        using (var client = new HttpClient(MockInitialization.Handler, false))
+        {
+            client.BaseAddress = new Uri("http://dev.virtualearth.net/REST/v1/");
+
+            string key = CredentialStore.RetrieveObject("bing.key.json").Key;
+
+            using (dynamic proxy = new DynamicRestClient(client))
+            {
+                var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
+
+                Assert.AreEqual(200, (int)result.statusCode);
+                Assert.IsTrue(result.resourceSets.Count > 0);
+                Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
+
+                var r = result.resourceSets[0].resources[0].point.coordinates;
+                Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
+                Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
+            }
+        }
+    }
+
 ### Request configuration callback
 
 For fine grained control of the 'HttpRequestMessage' a callback can be provided in the constructor of the dynamic client.
 This function will be called just prior to every REST invocation.
 
 The callback must have the signature of `Func<HttpRequestMessage, CancellationToken, Task>`. It will be `await`ed by the dyanmic client
-before it invokes the http communication. 
+before request message is sent. 
 
     dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/",
         configureRequest: (request, token) =>
@@ -96,7 +129,7 @@ and POSTed using this mechansim.
 Pass a single [Type](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx) instance to a verb invocation in order
 to control how response conent is deserialized or overriden.
 
-### Strongly types response
+### Strongly typed response
 
 If you have a POCO type that you would like the response deserialied to, pass the type of that class to the rest invocation.
 The response body, assuming it is Json, will be deserialized into that type using JSON.NET.
@@ -118,11 +151,11 @@ The response body, assuming it is Json, will be deserialized into that type usin
     Bucket bucket = await google.storage.v1.b("uspto-pair").get(typeof(Bucket));
     Console.WriteLine(bucket.location);
 
-### Other return types
+### Specifying other return types
 
 - Passing `typeof` `Stream`, `byte[]` or `string` will deserialize the request content to those respective types
 - Passing `typeof` [HttpResponseMessage](https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpresponsemessage?view=netframework-4.7) allows you to receive the complete response message
-- Any other type instance is assumed to be intended for a strongly typed response as discussed above
+- Any other [Type](xref:System.Type) instance is assumed to be intended for a strongly typed response as discussed above
 
 ## Special Unamed Argument Types
 
