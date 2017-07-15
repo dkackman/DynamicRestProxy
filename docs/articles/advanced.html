@@ -92,7 +92,7 @@ var parameters = new Dictionary&lt;string, object&gt;()
 dynamic result = await sunlight.bills.get(paramList: parameters);
 </code></pre><p>Since only named arguments are parsed as parameters, the dictionary must be passed as a named argument event though the name is irrelevent.
 Named and dictionary based parameters can be mixed in the same invocation.</p>
-<h3 id="the-httpmessagehandler">The HttpMessageHandler</h3>
+<h3 id="the-httpmessagehandler-and-httpclient-instances">The HttpMessageHandler and HttpClient instances</h3>
 <p>By default the dynamic client will use the <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclienthandler(v=vs.110).aspx">HttpClientHandler</a>
 when creating the internal <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.110).aspx">HttpClient</a>. If you need to use a different
 <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpmessagehandler(v=vs.110).aspx">HttpMessageHandler</a> derived type an instance can be passed to the dynamic client construcutor.</p>
@@ -100,24 +100,22 @@ when creating the internal <a class="xref" href="https://msdn.microsoft.com/en-u
 <p>The unit tests use this extensively in order to use fake http responses rather than tightly coupling the tests to the endpoints.</p>
 <pre><code>public async Task CoordinateFromPostalCode()
 {
-    using (var client = new HttpClient(MockInitialization.Handler, false))
+    using (var client = new HttpClient(MockInitialization.Handler))
     {
         client.BaseAddress = new Uri(&quot;http://dev.virtualearth.net/REST/v1/&quot;);
 
         string key = CredentialStore.RetrieveObject(&quot;bing.key.json&quot;).Key;
 
-        using (dynamic proxy = new DynamicRestClient(client))
-        {
-            var result = await proxy.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: key);
+        dynamic virtualearth = new DynamicRestClient(client);
 
-            Assert.AreEqual(200, (int)result.statusCode);
-            Assert.IsTrue(result.resourceSets.Count &gt; 0);
-            Assert.IsTrue(result.resourceSets[0].resources.Count &gt; 0);
+        var result = await virtualearth.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: key);
 
-            var r = result.resourceSets[0].resources[0].point.coordinates;
-            Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
-            Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
-        }
+        Assert.IsTrue(result.resourceSets.Count &gt; 0);
+        Assert.IsTrue(result.resourceSets[0].resources.Count &gt; 0);
+
+        var r = result.resourceSets[0].resources[0].point.coordinates;
+        Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
+        Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));            
     }
 }
 </code></pre><h3 id="request-configuration-callback">Request configuration callback</h3>

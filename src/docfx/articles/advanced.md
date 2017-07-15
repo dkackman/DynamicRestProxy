@@ -46,7 +46,7 @@ Rest paramters can also contain characters that make them illegal identifiers al
 Since only named arguments are parsed as parameters, the dictionary must be passed as a named argument event though the name is irrelevent.
 Named and dictionary based parameters can be mixed in the same invocation.
 
-### The HttpMessageHandler
+### The HttpMessageHandler and HttpClient instances
 
 By default the dynamic client will use the [HttpClientHandler](xref:System.Net.Http.HttpClientHandler)
 when creating the internal [HttpClient](xref:System.Net.Http.HttpClient). If you need to use a different
@@ -58,24 +58,22 @@ The unit tests use this extensively in order to use fake http responses rather t
 
     public async Task CoordinateFromPostalCode()
     {
-        using (var client = new HttpClient(MockInitialization.Handler, false))
+        using (var client = new HttpClient(MockInitialization.Handler))
         {
             client.BaseAddress = new Uri("http://dev.virtualearth.net/REST/v1/");
 
             string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
-            using (dynamic proxy = new DynamicRestClient(client))
-            {
-                var result = await proxy.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
+            dynamic virtualearth = new DynamicRestClient(client);
+            
+            var result = await virtualearth.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
 
-                Assert.AreEqual(200, (int)result.statusCode);
-                Assert.IsTrue(result.resourceSets.Count > 0);
-                Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
+            Assert.IsTrue(result.resourceSets.Count > 0);
+            Assert.IsTrue(result.resourceSets[0].resources.Count > 0);
 
-                var r = result.resourceSets[0].resources[0].point.coordinates;
-                Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
-                Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
-            }
+            var r = result.resourceSets[0].resources[0].point.coordinates;
+            Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
+            Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));            
         }
     }
 
