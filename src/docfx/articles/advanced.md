@@ -65,7 +65,6 @@ The unit tests use this extensively in order to use fake http responses rather t
             string key = CredentialStore.RetrieveObject("bing.key.json").Key;
 
             dynamic virtualearth = new DynamicRestClient(client);
-            
             var result = await virtualearth.Locations.get(postalCode: "55116", countryRegion: "US", key: key);
 
             Assert.IsTrue(result.resourceSets.Count > 0);
@@ -73,7 +72,7 @@ The unit tests use this extensively in order to use fake http responses rather t
 
             var r = result.resourceSets[0].resources[0].point.coordinates;
             Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
-            Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));            
+            Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
         }
     }
 
@@ -83,7 +82,7 @@ For fine grained control of the 'HttpRequestMessage' a callback can be provided 
 This function will be called just prior to every REST invocation.
 
 The callback must have the signature of `Func<HttpRequestMessage, CancellationToken, Task>`. It will be `await`ed by the dyanmic client
-before request message is sent. 
+before request message is sent.
 
     dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/",
         configureRequest: (request, token) =>
@@ -94,8 +93,7 @@ before request message is sent.
 
     dynamic result = await client.Locations.get(postalCode: "55116", countryRegion: "US", key: "key");
 
-Other uses of the callback are checking or refreshing auth tokens etc, signaling the UI that communication is 
-happening, logging and debugging.
+Other uses of the callback are checking or refreshing auth tokens etc, signaling the UI that communication is happening, logging and debugging.
 
 ### Calling a POST endpoint with url parameters
 
@@ -160,5 +158,4 @@ The response body, assuming it is Json, will be deserialized into that type usin
 The following types, when passed as unnamed arguments will be used during the creation and invocation of the request.
 
 - `JsonSerializerSettings` Serialization is done with [Json.Net](http://www.newtonsoft.com/json). An instance of this type can be passed to control serialization
-- [CancellationToken](http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&l=EN-US&k=k(System.Threading.CancellationToken);k(SolutionItemsProject);k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.6.1);k(DevLang-csharp)&rd=true)
-Because verb invocations are always `async`, a `CancellationToken` can be passed in order for client code to cancel the operation
+- [CancellationToken](http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&l=EN-US&k=k(System.Threading.CancellationToken);k(SolutionItemsProject);k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.6.1);k(DevLang-csharp)&rd=true) Because verb invocations are always `async`, a `CancellationToken` can be passed in order for client code to cancel the operation
