@@ -1,5 +1,4 @@
-DynamicRestProxy
-================
+# Dynamic Rest
 
 A conventions based rest client using the .NET 
 [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
@@ -29,10 +28,10 @@ Supports the GET, POST, PUT, PATCH and DELETE verbs.
 
 Tested on dotnetcore on Linux.
 
-## Quick Start Notes:
+## Quick Start Notes
 
 1. [Getting Started](articles/getting-started.md)
-2. [Advanced Topics](articles/advanced.md)
-3. [NuGet Package](https://www.nuget.org/packages/DynamicRestProxy/)
-4. [GitHub Project](https://github.com/dkackman/DynamicRestProxy/)
-5. [Some Background](https://www.codeproject.com/Articles/762189/A-Dynamic-Rest-Client-Proxy-with-the-DLR)
+1. [Advanced Topics](articles/advanced.md)
+1. [NuGet Package](https://www.nuget.org/packages/DynamicRestProxy/)
+1. [GitHub Project](https://github.com/dkackman/DynamicRestProxy/)
+1. [Some Background](https://www.codeproject.com/Articles/762189/A-Dynamic-Rest-Client-Proxy-with-the-DLR)
