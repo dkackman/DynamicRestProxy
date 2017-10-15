@@ -1,4 +1,4 @@
-DynamicRestProxy
+Dynamic Rest
 ================
 [NuGet package](https://www.nuget.org/packages/DynamicRestClient/)
 
