@@ -7,7 +7,7 @@ namespace DynamicRestProxy.PortableHttpClient
     /// Exception thrown when response status does not indicate success (<see cref="HttpResponseMessage.IsSuccessStatusCode"/>)
     /// Allows response content and headers to be inspected on failure
     /// </summary>
-    public class DynamicRestClientResponseException : Exception
+    public class DynamicRestClientResponseException : HttpRequestException
     {
         /// <summary>
         /// The response
