@@ -1,6 +1,6 @@
 # Dynamic Rest
 
-A conventions based rest client using the .NET 
+A conventions based rest client using the .NET
 [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx).
 
 This is a set of classes that wrap a concrete implementation of http client communication with a
@@ -32,6 +32,7 @@ Tested on dotnetcore on Linux.
 
 1. [Getting Started](articles/getting-started.md)
 1. [Advanced Topics](articles/advanced.md)
+1. [Api Documentation](api/index.md)
 1. [NuGet Package](https://www.nuget.org/packages/DynamicRestProxy/)
 1. [GitHub Project](https://github.com/dkackman/DynamicRestProxy/)
 1. [Some Background](https://www.codeproject.com/Articles/762189/A-Dynamic-Rest-Client-Proxy-with-the-DLR)

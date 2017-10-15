@@ -8,7 +8,7 @@
     <title>DynamicRestProxy - Getting Started </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="DynamicRestProxy - Getting Started ">
-    <meta name="generator" content="docfx 2.20.0.0">
+    <meta name="generator" content="docfx 2.25.2.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../styles/main.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="../toc.html">
+    
     
     
   </head>
@@ -64,7 +65,7 @@
 <p>This article describes the basic conventions of the DynamicRextProxy api.
 See <a href="advanced.html">advanced topics</a> for mechanisms to bypass these conventions.</p>
 <h2 id="basic-usage">Basic Usage</h2>
-<p>Using the dynamic rest client start with instantiating an instance, accessing an endpoint path and invoking a REST verb, awaiting the result. Always declare the <code>DynamicRestClient</code> as
+<p>Using the dynamic rest client starts with instantiating an instance, accessing an endpoint path, invoking a REST verb, and <code>await</code>ing the result. Always declare the <code>DynamicRestClient</code> as
 a <code>dynamic</code>.</p>
 <pre><code>dynamic client = new DynamicRestClient(&quot;http://dev.virtualearth.net/REST/v1/&quot;);
 dynamic result = await proxy.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: &quot;api-key&quot;);
@@ -86,8 +87,8 @@ dynamic bucket = await google.storage.v1.b(&quot;uspto-pair&quot;).get();
 path element that is not a valid idenifier in C#. The resulting Uri is:</p>
 <p><a href="https://www.googleapis.com/storage/v1/b/uspto-pair/">https://www.googleapis.com/storage/v1/b/uspto-pair/</a></p>
 <h3 id="passing-parameters">Passing parameters</h3>
-<p>Parameters are based to the verb method invocation using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments">C#&#39;s named parameter syntax</a>.</p>
-<p>Any type of object can be passed as a parameter value which are serialized via the value object&#39;s
+<p>Parameters are based to the verb&#39;s invocation using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments">C#&#39;s named parameter syntax</a>.</p>
+<p>Any type of object can be passed as a parameter value and will be serialized via the value object&#39;s
 <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object.tostring?view=netframework-4.7">ToString</a>
 method. Both parameter names and values are <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webutility.urlencode?view=netframework-4.7">Url encoded</a></p>
 <p>The GET request for the example in Figure 1 is:
@@ -103,8 +104,10 @@ content body. Subsequent unnamed arguments, <a href="advanced.html">with the exc
 <li>A <code>IEnumerable&lt;object&gt;</code> will be sent as multi-part content, with each constituent object being serialized by the above rules</li>
 <li>All other types will be serialized to JSON</li>
 </ul>
-<p>`    dynamic google = new DynamicRestClient(&quot;<a href="https://www.googleapis.com/calendar/v3/">https://www.googleapis.com/calendar/v3/</a>&quot;);</p>
-<pre><code>dynamic calendar = new ExpandoObject();
+<p>For example:</p>
+<pre><code>dynamic google = new DynamicRestClient(&quot;https://www.googleapis.com/calendar/v3/&quot;);
+
+dynamic calendar = new ExpandoObject();
 calendar.summary = &quot;unit_testing&quot;;
 
 var result = await google.calendars.post(calendar);
@@ -130,7 +133,7 @@ lower case and return a <code>Task</code> object, so must be <code>await</code>-
 <p>Setting defaults to be included in every request is accomplished by passing a 
 <a class="xref" href="../api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a> to the client constructor.</p>
 <h3 id="api-keys">Api keys</h3>
-<p>Many REST apis require an api-key to use, typically as a paramter included on all requests. Setting it as a default parameter
+<p>Many REST apis require an api-key, often as a parameter included on all requests. Setting it as a default parameter
 will ensure it is added to every request.</p>
 <pre><code>var defaults = new DynamicRestClientDefaults();
 defaults.DefaultParameters.Add(&quot;format&quot;, &quot;json&quot;);
@@ -140,8 +143,8 @@ defaults.DefaultParameters.Add(&quot;nojsoncallback&quot;, &quot;1&quot;);
 dynamic flickr = new DynamicRestClient(&quot;https://api.flickr.com/services/rest/&quot;);
 dynamic user = await flickr.get(method: &quot;flickr.people.findByUsername&quot;, username: &quot;dkackman&quot;);
 </code></pre><h3 id="authentication-and-authorization">Authentication and authorization</h3>
-<p>For services that require authentication and authorization, the defaults type can also be used to 
-manage passing auth data.</p>
+<p>For services that require authentication and authorization, the <code>DynamicRestClientDefaults</code> type can also be used to 
+pass auth data.</p>
 <pre><code>var defaults = new DynamicRestClientDefaults()
 {
     AuthScheme = &quot;OAuth&quot;,
@@ -158,9 +161,9 @@ Host: www.googleapis.com
 Accept-Encoding: gzip, deflate
 </code></pre><h2 id="http-errors">Http Errors</h2>
 <p>In the event that the response message&#39;s <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpresponsemessage(v=vs.110).aspx">IsSuccessStatusCode</a> property
-is false the invocation method will throw a 
+is <code>false</code>, the invocation method will throw a 
 <a class="xref" href="../api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html">DynamicRestClientResponseException</a>.
-This exception includes the response method so additional details of the falure can be inspected.</p>
+This exception includes the response message so that additional details of the falure can be inspected.</p>
 </article>
           </div>
           

@@ -5,7 +5,7 @@ See [advanced topics](advanced.md) for mechanisms to bypass these conventions.
 
 ## Basic Usage
 
-Using the dynamic rest client start with instantiating an instance, accessing an endpoint path and invoking a REST verb, awaiting the result. Always declare the `DynamicRestClient` as
+Using the dynamic rest client starts with instantiating an instance, accessing an endpoint path, invoking a REST verb, and `await`ing the result. Always declare the `DynamicRestClient` as
 a `dynamic`.
 
     dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/");
@@ -38,9 +38,9 @@ https://www.googleapis.com/storage/v1/b/uspto-pair/
 
 ### Passing parameters
 
-Parameters are based to the verb method invocation using [C#'s named parameter syntax](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments).
+Parameters are based to the verb's invocation using [C#'s named parameter syntax](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments).
 
-Any type of object can be passed as a parameter value which are serialized via the value object's
+Any type of object can be passed as a parameter value and will be serialized via the value object's
 [ToString](https://docs.microsoft.com/en-us/dotnet/api/system.object.tostring?view=netframework-4.7)
 method. Both parameter names and values are [Url encoded](https://docs.microsoft.com/en-us/dotnet/api/system.net.webutility.urlencode?view=netframework-4.7)
 
@@ -60,7 +60,9 @@ content body. Subsequent unnamed arguments, [with the exception of some special 
 - A `IEnumerable<object>` will be sent as multi-part content, with each constituent object being serialized by the above rules
 - All other types will be serialized to JSON
 
-`    dynamic google = new DynamicRestClient("https://www.googleapis.com/calendar/v3/");
+For example:
+
+    dynamic google = new DynamicRestClient("https://www.googleapis.com/calendar/v3/");
                 
     dynamic calendar = new ExpandoObject();
     calendar.summary = "unit_testing";
@@ -96,7 +98,7 @@ Setting defaults to be included in every request is accomplished by passing a
 
 ### Api keys
 
-Many REST apis require an api-key to use, typically as a paramter included on all requests. Setting it as a default parameter
+Many REST apis require an api-key, often as a parameter included on all requests. Setting it as a default parameter
 will ensure it is added to every request.
 
     var defaults = new DynamicRestClientDefaults();
@@ -109,8 +111,8 @@ will ensure it is added to every request.
 
 ### Authentication and authorization
 
-For services that require authentication and authorization, the defaults type can also be used to 
-manage passing auth data.
+For services that require authentication and authorization, the `DynamicRestClientDefaults` type can also be used to 
+pass auth data.
 
     var defaults = new DynamicRestClientDefaults()
     {
@@ -132,6 +134,6 @@ The auth data is added to every request.
 ## Http Errors
 
 In the event that the response message's [IsSuccessStatusCode](xref:System.Net.Http.HttpResponseMessage) property
-is false the invocation method will throw a 
+is `false`, the invocation method will throw a 
 [DynamicRestClientResponseException](xref:DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException).
-This exception includes the response method so additional details of the falure can be inspected.
+This exception includes the response message so that additional details of the falure can be inspected.

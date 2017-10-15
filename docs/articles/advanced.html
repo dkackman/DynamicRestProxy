@@ -8,7 +8,7 @@
     <title>Advanced Topics </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Advanced Topics ">
-    <meta name="generator" content="docfx 2.20.0.0">
+    <meta name="generator" content="docfx 2.25.2.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../styles/main.css">
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="../toc.html">
+    
     
     
   </head>
@@ -81,7 +82,7 @@ dynamic person = example.restapi.people(name).get();
 <pre><code>dynamic openstates = new DynamicRestClient(&quot;http://openstates.org/api/v1/&quot;);
 var result = await openstates.legislators.geo.get(lat: 44.926868, @long: -93.214049);
 </code></pre><h3 id="illegal-identifier-parameter-names">Illegal identifier parameter names</h3>
-<p>Rest paramters can also contain characters that make them illegal identifiers altogether in C#. In this case named paramter systac won&#39;t work but paramters can be passed as a Dictionary.</p>
+<p>Rest parameters can also contain characters that make them illegal identifiers altogether in C#. In this case named parameter systac won&#39;t work but paramters can be passed as a Dictionary.</p>
 <pre><code>dynamic sunlight = new DynamicRestClient(&quot;http://congress.api.sunlightfoundation.com&quot;);
 var parameters = new Dictionary&lt;string, object&gt;()
 {
@@ -95,8 +96,8 @@ Named and dictionary based parameters can be mixed in the same invocation.</p>
 <h3 id="the-httpmessagehandler-and-httpclient-instances">The HttpMessageHandler and HttpClient instances</h3>
 <p>By default the dynamic client will use the <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclienthandler(v=vs.110).aspx">HttpClientHandler</a>
 when creating the internal <a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpclient(v=vs.110).aspx">HttpClient</a>. If you need to use a different
-<a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpmessagehandler(v=vs.110).aspx">HttpMessageHandler</a> derived type an instance can be passed to the dynamic client construcutor.</p>
-<p>If fine grained configuraiton of the HttpClient is needed there is also a constructor overload that accepts an HttpClient instance.</p>
+<a class="xref" href="https://msdn.microsoft.com/en-us/library/system.net.http.httpmessagehandler(v=vs.110).aspx">HttpMessageHandler</a> derived type, an instance can be passed to the dynamic client construcutor.</p>
+<p>If fine grained configuraiton of the <code>HttpClient</code> is needed, there is also a constructor overload that accepts an HttpClient instance.</p>
 <p>The unit tests use this extensively in order to use fake http responses rather than tightly coupling the tests to the endpoints.</p>
 <pre><code>public async Task CoordinateFromPostalCode()
 {
@@ -107,7 +108,6 @@ when creating the internal <a class="xref" href="https://msdn.microsoft.com/en-u
         string key = CredentialStore.RetrieveObject(&quot;bing.key.json&quot;).Key;
 
         dynamic virtualearth = new DynamicRestClient(client);
-
         var result = await virtualearth.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: key);
 
         Assert.IsTrue(result.resourceSets.Count &gt; 0);
@@ -115,14 +115,14 @@ when creating the internal <a class="xref" href="https://msdn.microsoft.com/en-u
 
         var r = result.resourceSets[0].resources[0].point.coordinates;
         Assert.IsTrue((44.9108238220215).AboutEqual((double)r[0]));
-        Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));            
+        Assert.IsTrue((-93.1702041625977).AboutEqual((double)r[1]));
     }
 }
 </code></pre><h3 id="request-configuration-callback">Request configuration callback</h3>
-<p>For fine grained control of the &#39;HttpRequestMessage&#39; a callback can be provided in the constructor of the dynamic client.
+<p>For fine grained control of the <code>HttpRequestMessage</code> a callback can be provided in the constructor of the dynamic client.
 This function will be called just prior to every REST invocation.</p>
 <p>The callback must have the signature of <code>Func&lt;HttpRequestMessage, CancellationToken, Task&gt;</code>. It will be <code>await</code>ed by the dyanmic client
-before request message is sent. </p>
+before the request message is sent.</p>
 <pre><code>dynamic client = new DynamicRestClient(&quot;http://dev.virtualearth.net/REST/v1/&quot;,
     configureRequest: (request, token) =&gt;
     {
@@ -131,8 +131,7 @@ before request message is sent. </p>
     });
 
 dynamic result = await client.Locations.get(postalCode: &quot;55116&quot;, countryRegion: &quot;US&quot;, key: &quot;key&quot;);
-</code></pre><p>Other uses of the callback are checking or refreshing auth tokens etc, signaling the UI that communication is 
-happening, logging and debugging.</p>
+</code></pre><p>Other uses of the callback are checking or refreshing auth tokens etc, signaling the UI that communication is happening, logging and debugging.</p>
 <h3 id="calling-a-post-endpoint-with-url-parameters">Calling a POST endpoint with url parameters</h3>
 <p>By default, Uri parameters on a POST request are url form encoded and sent in the request body. There are cases where a POST request has other data in the request body but also has parameters in the Uri. In this case the parameter can be based in a <a class="xref" href="../api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html">PostUrlParam</a>.</p>
 <h2 id="setting-content-headers">Setting Content Headers</h2>
@@ -182,8 +181,7 @@ Console.WriteLine(bucket.location);
 <p>The following types, when passed as unnamed arguments will be used during the creation and invocation of the request.</p>
 <ul>
 <li><code>JsonSerializerSettings</code> Serialization is done with <a href="http://www.newtonsoft.com/json">Json.Net</a>. An instance of this type can be passed to control serialization</li>
-<li><a href="http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&amp;l=EN-US&amp;k=k(System.Threading.CancellationToken);k(SolutionItemsProject);k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.6.1);k(DevLang-csharp)&amp;rd=true">CancellationToken</a>
-Because verb invocations are always <code>async</code>, a <code>CancellationToken</code> can be passed in order for client code to cancel the operation</li>
+<li><a href="http://msdn.microsoft.com/query/dev15.query?appId=Dev15IDEF1&amp;l=EN-US&amp;k=k(System.Threading.CancellationToken);k(SolutionItemsProject);k(TargetFrameworkMoniker-.NETFramework,Version%3Dv4.6.1);k(DevLang-csharp)&amp;rd=true">CancellationToken</a> Because verb invocations are always <code>async</code>, a <code>CancellationToken</code> can be passed in order for client code to cancel the operation</li>
 </ul>
 </article>
           </div>

@@ -32,7 +32,7 @@ In cases where a parameter name is a C# reserved word it can be escaped using `@
 
 ### Illegal identifier parameter names
 
-Rest paramters can also contain characters that make them illegal identifiers altogether in C#. In this case named paramter systac won't work but paramters can be passed as a Dictionary.
+Rest parameters can also contain characters that make them illegal identifiers altogether in C#. In this case named parameter systac won't work but paramters can be passed as a Dictionary.
 
     dynamic sunlight = new DynamicRestClient("http://congress.api.sunlightfoundation.com");
     var parameters = new Dictionary<string, object>()
@@ -50,9 +50,9 @@ Named and dictionary based parameters can be mixed in the same invocation.
 
 By default the dynamic client will use the [HttpClientHandler](xref:System.Net.Http.HttpClientHandler)
 when creating the internal [HttpClient](xref:System.Net.Http.HttpClient). If you need to use a different
-[HttpMessageHandler](xref:System.Net.Http.HttpMessageHandler) derived type an instance can be passed to the dynamic client construcutor.
+[HttpMessageHandler](xref:System.Net.Http.HttpMessageHandler) derived type, an instance can be passed to the dynamic client construcutor.
 
-If fine grained configuraiton of the HttpClient is needed there is also a constructor overload that accepts an HttpClient instance.
+If fine grained configuraiton of the `HttpClient` is needed, there is also a constructor overload that accepts an HttpClient instance.
 
 The unit tests use this extensively in order to use fake http responses rather than tightly coupling the tests to the endpoints.
 
@@ -78,11 +78,11 @@ The unit tests use this extensively in order to use fake http responses rather t
 
 ### Request configuration callback
 
-For fine grained control of the 'HttpRequestMessage' a callback can be provided in the constructor of the dynamic client.
+For fine grained control of the `HttpRequestMessage` a callback can be provided in the constructor of the dynamic client.
 This function will be called just prior to every REST invocation.
 
 The callback must have the signature of `Func<HttpRequestMessage, CancellationToken, Task>`. It will be `await`ed by the dyanmic client
-before request message is sent.
+before the request message is sent.
 
     dynamic client = new DynamicRestClient("http://dev.virtualearth.net/REST/v1/",
         configureRequest: (request, token) =>
