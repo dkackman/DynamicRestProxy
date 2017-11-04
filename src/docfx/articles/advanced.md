@@ -12,7 +12,7 @@ places where a it may conflict with the rules and syntax of C#.
 ### Path names
 
 There are times when a Uri path segment is not a valid C# identifier. In those cases, the path segment can be specified as a string
-chained to rest of the path specification. String escaped segment can appear anywhere in the path chain.
+chained to rest of the path specification as a string. String escaped segments can appear anywhere in the path chain.
 
     google.storage.v1.b("uspto-pair").get();
     google.storage.("v1").b("uspto-pair").get();
@@ -32,7 +32,7 @@ In cases where a parameter name is a C# reserved word it can be escaped using `@
 
 ### Illegal identifier parameter names
 
-Rest parameters can also contain characters that make them illegal identifiers altogether in C#. In this case named parameter systac won't work but paramters can be passed as a Dictionary.
+Rest parameters can also contain characters that make them illegal identifiers altogether in C#. In this case named parameter syntax won't work but paramters can be passed as a Dictionary.
 
     dynamic sunlight = new DynamicRestClient("http://congress.api.sunlightfoundation.com");
     var parameters = new Dictionary<string, object>()
@@ -113,7 +113,7 @@ These types allow MIME type and other headers to be specified with the content.
 
 ## Bypassing Content Conventions
 
-If you require fine grained control over the reqeust content any instance of an
+If you require fine grained control over the reqeust content, any instance of an
 [HttpContent](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx) derived
 class passed to the verb invocation will be added to the reuqest as-is, overriding any content creation conventions.
 
@@ -128,7 +128,7 @@ to control how response conent is deserialized or overriden.
 ### Strongly typed response
 
 If you have a POCO type that you would like the response deserialied to, pass the type of that class to the rest invocation.
-The response body, assuming it is Json, will be deserialized into that type using JSON.NET.
+The response body, assuming it is Json, will be deserialized into that type using [JSON.NET](https://www.newtonsoft.com/json).
 
     public class Bucket
     {

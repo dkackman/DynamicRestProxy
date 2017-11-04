@@ -38,9 +38,9 @@ https://www.googleapis.com/storage/v1/b/uspto-pair/
 
 ### Passing parameters
 
-Parameters are based to the verb's invocation using [C#'s named parameter syntax](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments).
+Parameters are passed to the verb's invocation using [C#'s named parameter syntax](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments).
 
-Any type of object can be passed as a parameter value and will be serialized via the value object's
+Any type of object can be passed as a parameter and will be serialized via the value object's
 [ToString](https://docs.microsoft.com/en-us/dotnet/api/system.object.tostring?view=netframework-4.7)
 method. Both parameter names and values are [Url encoded](https://docs.microsoft.com/en-us/dotnet/api/system.net.webutility.urlencode?view=netframework-4.7)
 

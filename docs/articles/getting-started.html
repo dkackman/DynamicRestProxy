@@ -8,7 +8,7 @@
     <title>DynamicRestProxy - Getting Started </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="DynamicRestProxy - Getting Started ">
-    <meta name="generator" content="docfx 2.25.2.0">
+    <meta name="generator" content="docfx 2.26.4.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -87,8 +87,8 @@ dynamic bucket = await google.storage.v1.b(&quot;uspto-pair&quot;).get();
 path element that is not a valid idenifier in C#. The resulting Uri is:</p>
 <p><a href="https://www.googleapis.com/storage/v1/b/uspto-pair/">https://www.googleapis.com/storage/v1/b/uspto-pair/</a></p>
 <h3 id="passing-parameters">Passing parameters</h3>
-<p>Parameters are based to the verb&#39;s invocation using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments">C#&#39;s named parameter syntax</a>.</p>
-<p>Any type of object can be passed as a parameter value and will be serialized via the value object&#39;s
+<p>Parameters are passed to the verb&#39;s invocation using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments">C#&#39;s named parameter syntax</a>.</p>
+<p>Any type of object can be passed as a parameter and will be serialized via the value object&#39;s
 <a href="https://docs.microsoft.com/en-us/dotnet/api/system.object.tostring?view=netframework-4.7">ToString</a>
 method. Both parameter names and values are <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.webutility.urlencode?view=netframework-4.7">Url encoded</a></p>
 <p>The GET request for the example in Figure 1 is:

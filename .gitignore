@@ -228,3 +228,7 @@ NuGet.DynamicRestClient/lib/DynamicRestProxy.PortableHttpClient.dll
 NuGet.DynamicRestClient/lib/DynamicRestProxy.xml
 /packages
 /Microsoft.Practices.ServiceLocation.dll
+/src/.vs/DynamicRestProxy/v15/Server/sqlite3
+/src/.vs/DynamicRestProxy/v15/sqlite3/db.lock
+/src/.vs/DynamicRestProxy/v15/sqlite3/storage.ide-shm
+/src/.vs/DynamicRestProxy/v15/sqlite3/storage.ide-wal
