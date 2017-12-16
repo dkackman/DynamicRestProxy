@@ -18,21 +18,15 @@ namespace DynamicRestProxy.PortableHttpClient
         /// ctor
         /// </summary>
         /// <param name="response">The response</param>
-        public DynamicRestClientResponseException(HttpResponseMessage response) 
-            : base(response?.ReasonPhrase)
-        {
-            Response = response;
-        }
+        public DynamicRestClientResponseException(HttpResponseMessage response)
+            : base(response?.ReasonPhrase) => Response = response;
 
         /// <summary>
         /// ctore
         /// </summary>
         /// <param name="response">The response</param>
         /// <param name="inner">An inner exception</param>
-        public DynamicRestClientResponseException(HttpResponseMessage response, Exception inner) 
-            : base(response?.ReasonPhrase, inner)
-        {
-            Response = response;
-        }
+        public DynamicRestClientResponseException(HttpResponseMessage response, Exception inner)
+            : base(response?.ReasonPhrase, inner) => Response = response;
     }
 }

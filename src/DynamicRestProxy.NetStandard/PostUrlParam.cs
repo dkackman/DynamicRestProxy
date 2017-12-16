@@ -16,28 +16,19 @@ namespace DynamicRestProxy.PortableHttpClient
         /// ctor
         /// </summary>
         /// <param name="v">The param value</param>
-        public PostUrlParam(object v)
-        {
-            Value = v;
-        }
+        public PostUrlParam(object v) => Value = v;
 
         /// <summary>
         /// <see cref="System.Object.ToString"/>
         /// </summary>
         /// <returns>string representation of Value</returns>
-        public override string ToString()
-        {
-            return Value != null ? Value.ToString() : "";
-        }
+        public override string ToString() => Value != null ? Value.ToString() : "";
 
         /// <summary>
         /// <see cref="System.Object.GetHashCode"/>
         /// </summary>
         /// <returns>the hashcode of Value</returns>
-        public override int GetHashCode()
-        {
-            return Value != null ? Value.GetHashCode() : 0;
-        }
+        public override int GetHashCode() => Value != null ? Value.GetHashCode() : 0;
 
         /// <summary>
         /// <see cref="System.Object.Equals(object)"/>

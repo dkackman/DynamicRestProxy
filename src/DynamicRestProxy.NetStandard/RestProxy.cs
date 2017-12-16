@@ -200,10 +200,7 @@ namespace DynamicRestProxy
         /// <see cref="System.Object.GetHashCode"/>
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return this.ToString().GetHashCode();
-        }
+        public override int GetHashCode() => ToString().GetHashCode();
 
         /// <summary>
         /// <see cref="System.Object.Equals(System.Object)"/>
@@ -230,19 +227,13 @@ namespace DynamicRestProxy
         /// </summary>
         /// <param name="proxy"></param>
         /// <returns></returns>
-        public static implicit operator string(RestProxy proxy)
-        {
-            return proxy != null ? proxy.ToString() : null;
-        }
+        public static implicit operator string(RestProxy proxy) => proxy?.ToString();
 
         /// <summary>
         /// Returns an Uri represtation of the full Url
         /// </summary>
         /// <param name="proxy"></param>
         /// <returns></returns>
-        public static explicit operator Uri(RestProxy proxy)
-        {
-            return proxy != null ? new Uri(proxy.ToString(), UriKind.Absolute) : null;
-        }
+        public static explicit operator Uri(RestProxy proxy) => proxy != null ? new Uri(proxy.ToString(), UriKind.Absolute) : null;
     }
 }
