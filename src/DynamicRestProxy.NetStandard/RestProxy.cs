@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Net;
 
 using Newtonsoft.Json;
 
@@ -167,7 +168,7 @@ namespace DynamicRestProxy
                 Parent.GetEndPointPath(builder); // go all the way up to the root and then back down
             }
 
-            builder.Append(Name).Append("/");
+            builder.Append(WebUtility.UrlEncode(Name)).Append("/");
         }
 
         /// <summary>
