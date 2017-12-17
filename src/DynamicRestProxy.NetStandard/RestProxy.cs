@@ -30,8 +30,8 @@ namespace DynamicRestProxy
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="parent"><see cref="DynamicRestProxy.RestProxy.Parent"/></param>
-        /// <param name="name"><see cref="DynamicRestProxy.RestProxy.Name"/></param>
+        /// <param name="parent"><see cref="Parent"/></param>
+        /// <param name="name"><see cref="Name"/></param>
         protected RestProxy(RestProxy parent, string name)
         {
             Parent = parent;
@@ -62,7 +62,7 @@ namespace DynamicRestProxy
         protected abstract RestProxy CreateProxyNode(RestProxy parent, string name);
 
         /// <summary>
-        /// <see cref="System.Dynamic.DynamicObject.TryInvoke(InvokeBinder, object[], out object)"/>
+        /// <see cref="DynamicObject.TryInvoke(InvokeBinder, object[], out object)"/>
         /// </summary>
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
@@ -91,7 +91,7 @@ namespace DynamicRestProxy
         protected abstract Task<T> CreateVerbAsyncTask<T>(string verb, IEnumerable<object> unnamedArgs, IEnumerable<KeyValuePair<string, object>> namedArgs, CancellationToken cancelToken, JsonSerializerSettings serializationSettings);
 
         /// <summary>
-        /// <see cref="System.Dynamic.DynamicObject.TryInvokeMember(InvokeMemberBinder, object[], out object)"/>
+        /// <see cref="DynamicObject.TryInvokeMember(InvokeMemberBinder, object[], out object)"/>
         /// </summary>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
@@ -145,7 +145,7 @@ namespace DynamicRestProxy
         }
 
         /// <summary>
-        /// <see cref="System.Dynamic.DynamicObject.TryGetMember(GetMemberBinder, out object)"/>
+        /// <see cref="DynamicObject.TryGetMember(GetMemberBinder, out object)"/>
         /// </summary>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
@@ -174,7 +174,7 @@ namespace DynamicRestProxy
         /// <summary>
         /// The relative Url (minus parameters) for this endpoint
         /// </summary>
-        /// <returns>The relative part of the url (relative to <see cref="DynamicRestProxy.RestProxy.BaseUri"/>)</returns>
+        /// <returns>The relative part of the url (relative to <see cref="BaseUri"/>)</returns>
         public string GetEndPointPath()
         {
             var builder = new StringBuilder();

@@ -93,10 +93,7 @@ namespace DynamicRestProxy.PortableHttpClient
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.BaseUri"/>
         /// </summary>
-        protected override Uri BaseUri
-        {
-            get { return _httpClient.BaseAddress; }
-        }
+        protected override Uri BaseUri  => _httpClient.BaseAddress; 
 
         /// <summary>
         /// <see cref="DynamicRestProxy.RestProxy.CreateProxyNode(RestProxy, string)"/>
