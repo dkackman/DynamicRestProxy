@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.ContentInfo.html",
-          "hash": "F0ZS0NdUW5VhdVLayhu2vg=="
+          "hash": "YeEf2WHIjidoxfruZ8VqgA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.DynamicRestClient.html",
-          "hash": "g13kEUrY5OM4oAGSjiU6VA=="
+          "hash": "24TuopLHS72XHhWgjOaCtw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html",
-          "hash": "CRMbUdp5tKfxrP/pKZuCsw=="
+          "hash": "+EIuV25Ce51Ry5AoOhi26w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.DynamicRestClientResponseException.html",
-          "hash": "K6qMMiE9RugTlSwQxL9mWg=="
+          "hash": "y28pmWCSjAIPbZ5aCWRuSg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -57,10 +57,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.HttpClientExtensions.html",
-          "hash": "SZhDUkxYJ2dsjbyGFbse1Q=="
+          "hash": "GP66qCqs0CSZ3nJQYOq4+g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.PostUrlParam.html",
-          "hash": "B7sUk2MW2DTtzioGdqhx/A=="
+          "hash": "DidoYQ3T4ETEsbk19D02Rw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -81,10 +81,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.StreamInfo.html",
-          "hash": "/2bsQmqDFHuYS3O8pCc5Rw=="
+          "hash": "czayWPFi7lJoTT8mKFQOWg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -93,10 +93,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.PortableHttpClient.html",
-          "hash": "d3n/95GxqqY/XNd+ExrW3A=="
+          "hash": "upuFyNCKu2VhS3xm+uyrZg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -105,10 +105,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.RestProxy.html",
-          "hash": "K76+eQiMdjMGtWcYMlP59Q=="
+          "hash": "yZt0ZRazQJ04NAhvs/W1dA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -117,10 +117,10 @@
       "output": {
         ".html": {
           "relative_path": "api/DynamicRestProxy.html",
-          "hash": "Lw/geNqMgQpKcTNISz4DNA=="
+          "hash": "4WB1Rj7NEYWyWA+hv6tUOQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -129,10 +129,10 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "j6YwEVeRDR+UyPBfusi69g=="
+          "hash": "pPQIMWz/pxt7cBo6BdrlAw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -153,10 +153,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/advanced.html",
-          "hash": "YoLNYsaXPAxO2irAo3c+ag=="
+          "hash": "Ymq4CmdoyVFd2WUSjxWgGw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -165,10 +165,10 @@
       "output": {
         ".html": {
           "relative_path": "articles/getting-started.html",
-          "hash": "937At8Ji4oZ2qDhUQt5wUQ=="
+          "hash": "sWa49Pm30Xl9mx3lYo5dxg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -177,10 +177,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "KH1e0V2vNDX0znGkF92vEg=="
+          "hash": "QMF399QHYlc+vgnEoywlMQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -199,7 +199,8 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": true,
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
         "incrementalPhase": "build"
       },
       "processors": {
@@ -208,30 +209,20 @@
           "details": "Processor TocDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build"
-        },
         "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build"
-        },
-        "RestApiDocumentProcessor": {
           "can_incremental": false,
-          "details": "Processor RestApiDocumentProcessor cannot suppport incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build"
         }
       }
     },
     {
       "status": {
-        "can_incremental": true,
-        "details": "Can support incremental post processing.",
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
         "incrementalPhase": "postProcessing"
       },
       "processors": {}

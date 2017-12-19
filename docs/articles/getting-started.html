@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>DynamicRestProxy - Getting Started </title>
+    <title>DynamicRest - Getting Started </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="DynamicRestProxy - Getting Started ">
-    <meta name="generator" content="docfx 2.26.4.0">
+    <meta name="title" content="DynamicRest - Getting Started ">
+    <meta name="generator" content="docfx 2.28.3.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -60,10 +60,19 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="dynamicrestproxy---getting-started">DynamicRestProxy - Getting Started</h1>
+<h1 id="dynamicrest---getting-started">DynamicRest - Getting Started</h1>
 
-<p>This article describes the basic conventions of the DynamicRextProxy api.
+<p>This article describes the basic conventions of the DynamicRest api.
 See <a href="advanced.html">advanced topics</a> for mechanisms to bypass these conventions.</p>
+<h2 id="conventions">Conventions</h2>
+<ol>
+<li>There are five Http verbs: <code>get</code>, <code>put</code>, <code>post</code>, <code>patch</code> and <code>delete</code>, which are invoked as a normal method call</li>
+<li>Http verb invocations are always <code>async</code> and return a <code>Task&lt;T&gt;</code>, where <code>T</code> is a dynamic object</li>
+<li>Named arguments passed to a verb invocation are Uri parameters</li>
+<li>Unnamed arguments passed to a verb invocation are request content </li>
+<li>Data Transfer Objects are serialized as JSON in both requests and responses</li>
+<li>Http status codes that do not indicate success throw a <code>DynamicRestClientException</code></li>
+</ol>
 <h2 id="basic-usage">Basic Usage</h2>
 <p>Using the dynamic rest client starts with instantiating an instance, accessing an endpoint path, invoking a REST verb, and <code>await</code>ing the result. Always declare the <code>DynamicRestClient</code> as
 a <code>dynamic</code>.</p>
@@ -86,6 +95,7 @@ dynamic bucket = await google.storage.v1.b(&quot;uspto-pair&quot;).get();
 <p>The code in Figure 2 chains multiple elements together to build a longer path. It also uses an escape mechanism in order to specify a
 path element that is not a valid idenifier in C#. The resulting Uri is:</p>
 <p><a href="https://www.googleapis.com/storage/v1/b/uspto-pair/">https://www.googleapis.com/storage/v1/b/uspto-pair/</a></p>
+<p>note: Uri path segments are <code>UrlEncoded</code> internally, so there is no need to escape them.</p>
 <h3 id="passing-parameters">Passing parameters</h3>
 <p>Parameters are passed to the verb&#39;s invocation using <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments">C#&#39;s named parameter syntax</a>.</p>
 <p>Any type of object can be passed as a parameter and will be serialized via the value object&#39;s
@@ -94,6 +104,7 @@ method. Both parameter names and values are <a href="https://docs.microsoft.com/
 <p>The GET request for the example in Figure 1 is:
 <a href="http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&amp;countryRegion=US&amp;key=api-key">http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&countryRegion=US&key=api-key</a></p>
 <p>Named parameters passed to a POST invocation will be <a href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">form url encoded</a> in the request body.</p>
+<p>note: Both parameter names and values are <code>UrlEncoded</code> internally, so there is no need to escape them.</p>
 <h3 id="passing-content">Passing content</h3>
 <p>Request content is passed to the verb invocation as an unnamed argument. The first unnamed argument will be passed as the request
 content body. Subsequent unnamed arguments, <a href="advanced.html">with the exception of some special types</a>, will be ignored.</p>
@@ -125,10 +136,10 @@ Content-Length: 26
 
 {&quot;summary&quot;:&quot;unit_testing&quot;}
 </code></pre><h3 id="invoking-the-http-verb">Invoking the Http verb</h3>
-<p>GET, PUT, POST, DELETE and PATCH are the http verbs supported by this REST client. Invocation of the verb method
-sends the appropraite http message to the endpoint, along with defaults, parameters and content. Verb methods are always
+<p><code>get</code>, <code>put</code>, <code>post</code>, <code>patch</code> and <code>delete</code> are the http verbs supported by this REST client. Invocation of the verb method
+sends the appropriate http message to the endpoint, along with defaults, parameters and content. Verb methods are always
 lower case and return a <code>Task</code> object, so must be <code>await</code>-ed. Unless using a strongly typed response
-(see below), the return will be <code>Task&lt;object&gt;</code> where the result type is a dynamic object.</p>
+(see <a href="advanced.html">Advanced Topics</a>), the return will be <code>Task&lt;object&gt;</code> where the result type is a dynamic object.</p>
 <h2 id="setting-defaults">Setting Defaults</h2>
 <p>Setting defaults to be included in every request is accomplished by passing a 
 <a class="xref" href="../api/DynamicRestProxy.PortableHttpClient.DynamicRestClientDefaults.html">DynamicRestClientDefaults</a> to the client constructor.</p>

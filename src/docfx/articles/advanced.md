@@ -1,8 +1,8 @@
 ﻿# Advanced Topics
 
 The thing about convetion based api's is that the conventions both hide the complexity but also the flexiblity of the
-underlying mechanisms. Conventions favor simplicity over expressiveness; making the simple things easy, but they also need
-to make the less simple possible.
+underlying mechanisms. Conventions favor simplicity over expressiveness; making the common things easy, but they must also 
+make the less common possible.
 
 ## Escape Mechanisms
 
@@ -52,7 +52,7 @@ By default the dynamic client will use the [HttpClientHandler](xref:System.Net.H
 when creating the internal [HttpClient](xref:System.Net.Http.HttpClient). If you need to use a different
 [HttpMessageHandler](xref:System.Net.Http.HttpMessageHandler) derived type, an instance can be passed to the dynamic client construcutor.
 
-If fine grained configuraiton of the `HttpClient` is needed, there is also a constructor overload that accepts an HttpClient instance.
+If fine grained configuraiton of the `HttpClient` is needed, there is also a constructor overload that accepts an 'HttpClient' instance.
 
 The unit tests use this extensively in order to use fake http responses rather than tightly coupling the tests to the endpoints.
 
@@ -113,7 +113,7 @@ These types allow MIME type and other headers to be specified with the content.
 
 ## Bypassing Content Conventions
 
-If you require fine grained control over the reqeust content, any instance of an
+If you require fine grained control over the request content, any instance of an
 [HttpContent](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx) derived
 class passed to the verb invocation will be added to the reuqest as-is, overriding any content creation conventions.
 

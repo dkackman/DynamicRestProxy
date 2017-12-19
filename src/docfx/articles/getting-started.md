@@ -1,7 +1,15 @@
-﻿# DynamicRestProxy - Getting Started
+﻿# DynamicRest - Getting Started
 
-This article describes the basic conventions of the DynamicRextProxy api.
+This article describes the basic conventions of the DynamicRest api.
 See [advanced topics](advanced.md) for mechanisms to bypass these conventions.
+
+## Conventions
+1. There are five Http verbs: `get`, `put`, `post`, `patch` and `delete`, which are invoked as a normal method call
+1. Http verb invocations are always `async` and return a `Task<T>`, where `T` is a dynamic object
+1. Named arguments passed to a verb invocation are Uri parameters
+1. Unnamed arguments passed to a verb invocation are request content 
+1. Data Transfer Objects are serialized as JSON in both requests and responses
+1. Http status codes that do not indicate success throw a `DynamicRestClientException`
 
 ## Basic Usage
 
@@ -36,6 +44,8 @@ path element that is not a valid idenifier in C#. The resulting Uri is:
 
 https://www.googleapis.com/storage/v1/b/uspto-pair/
 
+note: Uri path segments are `UrlEncoded` internally, so there is no need to escape them.
+
 ### Passing parameters
 
 Parameters are passed to the verb's invocation using [C#'s named parameter syntax](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments#named-arguments).
@@ -48,6 +58,8 @@ The GET request for the example in Figure 1 is:
 http://dev.virtualearth.net/REST/v1/Locations/?postalCode=55116&countryRegion=US&key=api-key
 
 Named parameters passed to a POST invocation will be [form url encoded](http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1) in the request body.
+
+note: Both parameter names and values are `UrlEncoded` internally, so there is no need to escape them.
 
 ### Passing content
 
@@ -86,10 +98,10 @@ The resulting request shows the serialized content:
 
 ### Invoking the Http verb
 
-GET, PUT, POST, DELETE and PATCH are the http verbs supported by this REST client. Invocation of the verb method
-sends the appropraite http message to the endpoint, along with defaults, parameters and content. Verb methods are always
+`get`, `put`, `post`, `patch` and `delete` are the http verbs supported by this REST client. Invocation of the verb method
+sends the appropriate http message to the endpoint, along with defaults, parameters and content. Verb methods are always
 lower case and return a `Task` object, so must be `await`-ed. Unless using a strongly typed response
-(see below), the return will be `Task<object>` where the result type is a dynamic object.
+(see [Advanced Topics](advanced.md)), the return will be `Task<object>` where the result type is a dynamic object.
 
 ## Setting Defaults
 
