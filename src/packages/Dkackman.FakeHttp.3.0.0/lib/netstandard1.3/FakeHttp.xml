@@ -1,0 +1,914 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FakeHttp</name>
+    </assembly>
+    <members>
+        <member name="T:FakeHttp.AutomaticHttpClientHandler">
+            <summary>
+            A <see cref="T:System.Net.Http.HttpMessageHandler"/> that retrieves http response messages from
+            from local storage if they exist or if they do not, from the http endpoint and then stores them for future retrieval
+            </summary>
+        </member>
+        <member name="M:FakeHttp.AutomaticHttpClientHandler.#ctor(FakeHttp.IResources)">
+            <summary>
+            
+            </summary>
+            <param name="resources">An object that can access stored response</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.AutomaticHttpClientHandler.#ctor(FakeHttp.IResponseStore)">
+            <summary>
+            ctor
+            </summary>
+            <param name="store">The storage mechanism for responses</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.AutomaticHttpClientHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Override the base class to capture and store the response message
+            if it doesn't already exist in storage
+            </summary>
+            <param name="request">The <see cref="T:System.Net.Http.HttpRequestMessage"/> to find or retreive from the endpoint</param>
+            <param name="cancellationToken"></param>
+            <returns>The response message</returns>
+        </member>
+        <member name="T:FakeHttp.CapturingHttpClientHandler">
+            <summary>
+            A <see cref="T:System.Net.Http.HttpMessageHandler"/> that retrieves http response messages from
+            from the http endpoint and then stores them for future retrieval
+            </summary>
+        </member>
+        <member name="M:FakeHttp.CapturingHttpClientHandler.#ctor(FakeHttp.IResources)">
+            <summary>
+            
+            </summary>
+            <param name="resources">An object that can access stored response</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.CapturingHttpClientHandler.#ctor(FakeHttp.IResponseStore)">
+            <summary>
+            ctor
+            </summary>
+            <param name="store">The storage mechanism for responses</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.CapturingHttpClientHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Override the base class to capture and store the response message
+            </summary>
+            <param name="request">The <see cref="T:System.Net.Http.HttpRequestMessage"/> to capture and store</param>
+            <param name="cancellationToken"></param>
+            <returns>The stored response message</returns>
+        </member>
+        <member name="M:FakeHttp.Extensions.NormalizeQuery(System.Uri,System.Func{System.String,System.String,System.Boolean})">
+            <summary>
+            The normalization algorthm is logically as follows
+            - ToLowerInvariant the query string
+            - split out each name value pair
+            - filter out unwanted paramaters
+            - order the remaining parameters alphabetically
+            - reassemble them into a query string (without leading '?')
+            </summary>
+            <param name="uri">The <see cref="T:System.Uri"/></param>
+            <param name="filter"></param>
+            <returns>The normalized query string</returns>
+        </member>
+        <member name="T:FakeHttp.FakeHttpMessageHandler">
+            <summary>
+            A <see cref="T:System.Net.Http.HttpMessageHandler"/> that retrieves http response messages from
+            an alternate storage rather than from a given http endpoint
+            </summary>
+        </member>
+        <member name="M:FakeHttp.FakeHttpMessageHandler.#ctor(FakeHttp.IReadOnlyResources)">
+            <summary>
+            ctor
+            </summary>
+            <param name="resources">An object that can access stored response</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.FakeHttpMessageHandler.#ctor(FakeHttp.IReadOnlyResponseStore)">
+            <summary>
+            ctor
+            </summary>
+            <param name="store">The storage mechanism for responses</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.FakeHttpMessageHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Override the base class to skip http and retrieve message from storage
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns>The stored response message</returns>
+        </member>
+        <member name="T:FakeHttp.GlobalFilters">
+            <summary>
+            Sets of header and parameter names to filter out of response hashing and serialization.
+            Used to prevent ephemeral values types from changing the hashed name of a response and
+            to prevent sensitive information like api keys or auth tokens from being stored.
+            </summary>
+        </member>
+        <member name="P:FakeHttp.GlobalFilters.SensitiveHeaderNames">
+            <summary>
+            A list of names that represent senstive data and will prevent specific headers from being serialized
+            </summary>
+        </member>
+        <member name="P:FakeHttp.GlobalFilters.HeaderNames">
+            <summary>
+            A list of names that will prevent specific headers from being serialized
+            </summary>
+        </member>
+        <member name="P:FakeHttp.GlobalFilters.SensitiveParameterNames">
+            <summary>
+            A list of parameter names that represent senstive data and will prevent them from being 
+            being serialized or included as part of responses' hashed names 
+            </summary>
+        </member>
+        <member name="P:FakeHttp.GlobalFilters.ParameterNames">
+            <summary>
+            A list of parameter names that will prevent them from being 
+            being serialized or included as part of responses' hashed names
+            </summary>
+        </member>
+        <member name="T:FakeHttp.IReadOnlyResources">
+            <summary>
+            Interface to retrieve named resources that exist in a named container.
+            </summary>
+        </member>
+        <member name="M:FakeHttp.IReadOnlyResources.Exists(System.String,System.String)">
+            <summary>
+            Checks whether the specified file exists
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>Flag indicating whether file exists</returns>
+        </member>
+        <member name="M:FakeHttp.IReadOnlyResources.LoadAsString(System.String,System.String)">
+            <summary>
+            Loads a given file as a string
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>The file's contents as a string</returns>
+        </member>
+        <member name="M:FakeHttp.IReadOnlyResources.LoadAsStream(System.String,System.String)">
+            <summary>
+            Loads a given file as a stream
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>File's contents as a stream</returns>
+        </member>
+        <member name="T:FakeHttp.IReadOnlyResponseStore">
+            <summary>
+            Interface to abstract retrieval of <see cref="T:System.Net.Http.HttpResponseMessage"/> instances
+            </summary>
+        </member>
+        <member name="M:FakeHttp.IReadOnlyResponseStore.FindResponse(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Find a response in the store
+            </summary>
+            <param name="request">A <see cref="T:System.Net.Http.HttpRequestMessage"/> that describes the desired response</param>
+            <returns>A <see cref="T:System.Net.Http.HttpResponseMessage"/>. Will return a 404 message if no response is found</returns>
+        </member>
+        <member name="M:FakeHttp.IReadOnlyResponseStore.ResponseExists(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Determines if a <see cref="T:System.Net.Http.HttpResponseMessage"/> exists for the 
+            <see cref="T:System.Net.Http.HttpRequestMessage"/>
+            </summary>
+            <param name="request">The <see cref="T:System.Net.Http.HttpRequestMessage"/></param>
+            <returns>True if a response exists for the request. Otherwise false</returns>
+        </member>
+        <member name="T:FakeHttp.IResources">
+            <summary>
+            A reource type that can store new response messages at runtime
+            </summary>
+        </member>
+        <member name="M:FakeHttp.IResources.Store(System.String,System.String,System.String)">
+            <summary>
+            Stores the data string in the corresponding folder and file 
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <param name="data">The data to store</param>
+        </member>
+        <member name="M:FakeHttp.IResources.Store(System.String,System.String,System.IO.Stream)">
+            <summary>
+            Stores the data stream in the corresponding folder and file 
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <param name="data">The data to store</param>
+        </member>
+        <member name="T:FakeHttp.IResponseCallbacks">
+            <summary>
+            Callback interface to allow tests to supply runtime logic for responses 
+            </summary>
+        </member>
+        <member name="M:FakeHttp.IResponseCallbacks.Deserialized(FakeHttp.ResponseInfo,System.IO.Stream)">
+            <summary>
+            Called just before the response is returned. Update deserialized values as necessary
+            Primarily for cases where time based header values (like content expiration) need up to date values
+            </summary>
+            <param name="info">Deserialized response data. Header collections can be modified. Might be null if content file but no response file is present</param>
+            <param name="content">The deserialized content stream. Might be null if response has no content</param>
+            <returns>The original content or a modified content stream to attach to the <see cref="T:System.Net.Http.HttpResponseMessage"/></returns>
+        </member>
+        <member name="M:FakeHttp.IResponseCallbacks.Serializing(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Called after content is retrieved from the actual service during capturing and before it is saved to disk.
+            Primarily allows for response content to mask sensitive data (ex SSN or other PII) before it is saved to storage
+            </summary>
+            <param name="response">The service response</param>
+            <returns>The original content or a modified content stream to save to storage</returns>
+        </member>
+        <member name="M:FakeHttp.IResponseCallbacks.FilterParameter(System.String,System.String)">
+            <summary>
+            Determines if a given query parameter should be excluded from serialization
+            </summary>
+            <param name="name">The name of the Uri query parameter</param>
+            <param name="value">The value of the uri query parameter</param>
+            <returns>True to filter the parameter. False to include in serialization and hashing</returns>
+        </member>
+        <member name="P:FakeHttp.IResponseCallbacks.SetHeaderDate">
+            <summary>
+            Flag indicating whether to automatically set the Date header to the current date/time on deserialization
+            </summary>
+        </member>
+        <member name="P:FakeHttp.IResponseCallbacks.FilterCommonSensitiveValues">
+            <summary>
+            Flag indicating whether to automatically filter commonly used header
+            and query parameter names such as X-API-KEY, api-key, key, etc from being serialized
+            </summary>
+        </member>
+        <member name="P:FakeHttp.IResponseCallbacks.FilteredHeaderNames">
+            <summary>
+            A list of header names that will not be serialized. For
+            example x-api-key may not be something to store
+            </summary>
+        </member>
+        <member name="P:FakeHttp.IResponseCallbacks.FilteredParameterNames">
+            <summary>
+            A list of query parameter names that will not be serialized
+            </summary>
+        </member>
+        <member name="T:FakeHttp.IResponseStore">
+            <summary>
+            Interface to abstract storage and retrieval of <see cref="T:System.Net.Http.HttpResponseMessage"/> instances
+            </summary>
+        </member>
+        <member name="M:FakeHttp.IResponseStore.StoreResponse(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Store a <see cref="T:System.Net.Http.HttpResponseMessage"/> 
+            </summary>
+            <param name="response">The <see cref="T:System.Net.Http.HttpResponseMessage"/> to store</param>
+            <returns>A Task</returns>
+        </member>
+        <member name="T:FakeHttp.MessageFormatter">
+            <summary>
+            Class that formats http request and response message data prior for serialization and deserialization.
+            </summary>
+        </member>
+        <member name="F:FakeHttp.MessageFormatter._callbacks">
+            <summary>
+            object used to allow client code to modify responses during load and storage
+            </summary>
+        </member>
+        <member name="M:FakeHttp.MessageFormatter.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:FakeHttp.MessageFormatter.#ctor(FakeHttp.IResponseCallbacks)">
+            <summary>
+            ctor
+            </summary>
+            <param name="callbacks">object used to allow client code to modify responses during load and storage</param>
+        </member>
+        <member name="P:FakeHttp.MessageFormatter.Callbacks">
+            <summary>
+            object used to allow client code to modify responses during load and storage
+            </summary>
+        </member>
+        <member name="M:FakeHttp.MessageFormatter.PackageResponse(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Convert the <see cref="T:System.Net.Http.HttpResponseMessage"/> into an object that is more serialization friendly
+            </summary>
+            <param name="response">The <see cref="T:System.Net.Http.HttpResponseMessage"/></param>
+            <returns>A serializable object</returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.MessageFormatter.ToResourcePath(System.Uri)">
+            <summary>
+            Retrieve folder friendly representation of a Uri
+            </summary>
+            <param name="uri">The uri</param>
+            <returns>Resource path</returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.MessageFormatter.ToName(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Deterministically generated file name for a request message
+            </summary>
+            <param name="request">The request</param>
+            <returns>Filename</returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.MessageFormatter.ToShortName(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Deterministically generated file name for a request message
+            </summary>
+            <param name="request">The request</param>
+            <returns>Filename</returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:FakeHttp.MessageHandlerMode">
+            <summary>
+            Flag indicating what type of <see cref="T:System.Net.Http.HttpMessageHandler"/> the 
+            <see cref="T:FakeHttp.MessageHandlerFactory"/> will create by default
+            </summary>
+        </member>
+        <member name="F:FakeHttp.MessageHandlerMode.Capture">
+            <summary>
+            Create a handler that will retrieve messages from endpoint and store for future use
+            (Always calls the endpoint)
+            </summary>
+        </member>
+        <member name="F:FakeHttp.MessageHandlerMode.Fake">
+            <summary>
+            Create a handler that will retrieve message from faking storage
+            </summary>
+        </member>
+        <member name="F:FakeHttp.MessageHandlerMode.Online">
+            <summary>
+            Create a <see cref="T:System.Net.Http.HttpClientHandler"/>
+            </summary>
+        </member>
+        <member name="F:FakeHttp.MessageHandlerMode.Automatic">
+            <summary>
+            Create a handler that will use stored responses if they exist. 
+            If they do not exist the handler will retrieve them from the online endpoint and store for future use
+            (Calls the endpoint only if no local response is found)
+            </summary>                
+        </member>
+        <member name="T:FakeHttp.MessageHandlerFactory">
+            <summary>
+            Static factory class that creates <see cref="T:System.Net.Http.HttpMessageHandler"/> instances for unit tests
+            </summary>
+        </member>
+        <member name="P:FakeHttp.MessageHandlerFactory.Mode">
+            <summary>
+            Controls what type of <see cref="T:System.Net.Http.HttpMessageHandler"/> to create by default
+            </summary>
+        </member>
+        <member name="M:FakeHttp.MessageHandlerFactory.CreateMessageHandler(FakeHttp.IReadOnlyResources)">
+            <summary>
+            Create an <see cref="T:System.Net.Http.HttpMessageHandler"/>.
+            </summary>
+            <param name="resources">Instance where faked responses are stored</param>
+            <returns>A <see cref="T:System.Net.Http.HttpMessageHandler"/></returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.MessageHandlerFactory.CreateMessageHandler(FakeHttp.IReadOnlyResources,FakeHttp.IResponseCallbacks)">
+            <summary>
+            Create an <see cref="T:System.Net.Http.HttpMessageHandler"/>.
+            </summary>
+            <param name="resources">Instance where faked responses are stored</param>
+            <param name="callbacks"></param>
+            <returns>A <see cref="T:System.Net.Http.HttpMessageHandler"/> appropriate for the current <see cref="P:FakeHttp.MessageHandlerFactory.Mode"/></returns>
+            <exception cref="T:System.InvalidOperationException">If <see cref="P:FakeHttp.MessageHandlerFactory.Mode"/> is <see cref="F:FakeHttp.MessageHandlerMode.Capture"/> 
+            or <see cref="F:FakeHttp.MessageHandlerMode.Automatic"/></exception>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.MessageHandlerFactory.CreateMessageHandler(FakeHttp.IResources)">
+            <summary>
+            Create an <see cref="T:System.Net.Http.HttpMessageHandler"/>.
+            </summary>
+            <param name="resources">Instance where faked responses are stored</param>
+            <returns>A <see cref="T:System.Net.Http.HttpMessageHandler"/> appropriate for the current <see cref="P:FakeHttp.MessageHandlerFactory.Mode"/></returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.MessageHandlerFactory.CreateMessageHandler(FakeHttp.IResources,FakeHttp.IResponseCallbacks)">
+            <summary>
+            Create an <see cref="T:System.Net.Http.HttpMessageHandler"/>.
+            </summary>
+            <param name="resources">Instance where faked responses are stored</param>
+            <param name="callbacks"></param>
+            <returns>A <see cref="T:System.Net.Http.HttpMessageHandler"/> appropriate for the current <see cref="P:FakeHttp.MessageHandlerFactory.Mode"/></returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:FakeHttp.ReadOnlyResponseStore">
+            <summary>
+            A store that can serve responses from an <see cref="T:FakeHttp.IReadOnlyResources"/> instance
+            </summary>
+        </member>
+        <member name="F:FakeHttp.ReadOnlyResponseStore._formatter">
+            <summary>
+            Object used to format folder and file names for storage
+            </summary>
+        </member>
+        <member name="M:FakeHttp.ReadOnlyResponseStore.#ctor(FakeHttp.IReadOnlyResources)">
+            <summary>
+            
+            </summary>
+            <param name="resources">An instance that manages the underlying storage of response resources</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.ReadOnlyResponseStore.#ctor(FakeHttp.IReadOnlyResources,FakeHttp.IResponseCallbacks)">
+            <summary>
+            
+            </summary>
+            <param name="resources">An instance that manages the underlying storage of response resources</param>
+            <param name="callbacks">Object used to allow client code to modify responses during load and storage</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.ReadOnlyResponseStore.ResponseExists(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Determines if a <see cref="T:System.Net.Http.HttpResponseMessage"/> exists for the <see cref="T:System.Net.Http.HttpRequestMessage"/>
+            </summary>
+            <param name="request">The <see cref="T:System.Net.Http.HttpRequestMessage"/></param>
+            <returns>True if a response exists for the request. Otherwise false</returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.ReadOnlyResponseStore.FindResponse(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Retrieve response message from storage based on a request message
+            </summary>
+            <param name="request">The request message</param>
+            <returns>The response messsage assoicated with the request. Returns a 404 message if none is found.</returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:FakeHttp.Resources.AssemblyResources">
+            <summary>
+            Resources that reside as embedded resources in a <see cref="T:System.Reflection.Assembly"/> 
+            </summary>
+        </member>
+        <member name="M:FakeHttp.Resources.AssemblyResources.#ctor(System.Reflection.Assembly)">
+            <summary>
+            ctor
+            </summary>
+            <param name="assembly"><see cref="T:System.Reflection.Assembly"/> with response files stored as embedded resources</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.Resources.AssemblyResources.Exists(System.String,System.String)">
+            <summary>
+            Checks whether the specified file exists
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>Flag indicating whether file exists</returns>
+        </member>
+        <member name="M:FakeHttp.Resources.AssemblyResources.LoadAsStream(System.String,System.String)">
+            <summary>
+            Loads a given file as a stream
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>File's contents as a stream</returns>
+            <exception cref="T:System.IO.FileLoadException"/>
+        </member>
+        <member name="M:FakeHttp.Resources.AssemblyResources.LoadAsString(System.String,System.String)">
+            <summary>
+            Loads a given file as a string
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>The file's contents as a string</returns>
+            <exception cref="T:System.IO.FileLoadException"/>
+        </member>
+        <member name="T:FakeHttp.Resources.FileSystemResources">
+            <summary>
+            Resources stores on the file system and accesible via <see cref="T:System.IO.File"/>
+            </summary>
+        </member>
+        <member name="M:FakeHttp.Resources.FileSystemResources.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="storeFolder">The root folder where resources reside</param>
+            <exception cref="T:System.ArgumentException">If storeFolder is null or empty</exception>
+        </member>
+        <member name="M:FakeHttp.Resources.FileSystemResources.Exists(System.String,System.String)">
+            <summary>
+            Checks whether the specified file exists
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>Flag indicating whether file exists</returns>
+        </member>
+        <member name="M:FakeHttp.Resources.FileSystemResources.LoadAsString(System.String,System.String)">
+            <summary>
+            Loads a given file as a string
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>The file's contents as a <see cref="T:System.String"/></returns>
+            <exception cref="T:System.IO.FileLoadException"/>
+        </member>
+        <member name="M:FakeHttp.Resources.FileSystemResources.LoadAsStream(System.String,System.String)">
+            <summary>
+            Loads a given file as a stream
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>The file's contents as a <see cref="T:System.IO.Stream"/></returns>
+            <exception cref="T:System.IO.FileLoadException"/>
+        </member>
+        <member name="M:FakeHttp.Resources.FileSystemResources.Store(System.String,System.String,System.IO.Stream)">
+            <summary>
+            Stores a data stream in the corresponding folder and file 
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <param name="data">The data to store</param>
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+        <member name="M:FakeHttp.Resources.FileSystemResources.Store(System.String,System.String,System.String)">
+            <summary>
+            Stores a data string in the corresponding folder and file 
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <param name="data">The data to store</param>
+            <exception cref="T:System.IO.IOException"/>
+        </member>
+        <member name="T:FakeHttp.Resources.ZipResources">
+            <summary>
+            Resources stored in a <see cref="T:System.IO.Compression.ZipArchive"/>
+            </summary>
+        </member>
+        <member name="M:FakeHttp.Resources.ZipResources.#ctor(System.String)">
+            <summary>
+            Opens the <see cref="T:System.IO.Compression.ZipArchive"/> located at archiveFilePath.
+            The archive will remain opened until <see cref="M:FakeHttp.Resources.ZipResources.Dispose"/> is called
+            </summary>
+            <param name="archiveFilePath">full or relative path to the zip archive file</param>
+            <exception cref="T:System.ArgumentException">archiveFilePath is null or empty</exception>
+            <exception cref="T:System.IO.FileLoadException">archiveFilePath cannot be opened as a <see cref="T:System.IO.Compression.ZipArchive"/></exception>
+        </member>
+        <member name="M:FakeHttp.Resources.ZipResources.Dispose">
+            <summary>
+            <see cref="M:System.IDisposable.Dispose"/>
+            Disposes the underlying <see cref="T:System.IO.Compression.ZipArchive"/>
+            </summary>
+        </member>
+        <member name="M:FakeHttp.Resources.ZipResources.Exists(System.String,System.String)">
+            <summary>
+            Checks whether the specified file exists
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>Flag indicating whether file exists</returns>
+        </member>
+        <member name="M:FakeHttp.Resources.ZipResources.LoadAsString(System.String,System.String)">
+            <summary>
+            Loads a given file as a string
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>The file's contents as a string</returns>
+            <exception cref="T:System.IO.FileLoadException"/>
+        </member>
+        <member name="M:FakeHttp.Resources.ZipResources.LoadAsStream(System.String,System.String)">
+            <summary>
+            Loads a given file as a stream
+            </summary>
+            <param name="folder">The folder name</param>
+            <param name="fileName">The file name</param>
+            <returns>File's contents as a stream</returns>
+            <exception cref="T:System.IO.FileLoadException"/>
+        </member>
+        <member name="T:FakeHttp.ResponseCallbacks">
+            <summary>
+            Default implementation of the <see cref="T:FakeHttp.IResponseCallbacks"/> interface
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseCallbacks.SetHeaderDate">
+            <summary>
+            Flag indicating whether to automatically set the Date header to the current date/time on deserialization
+            </summary>
+            <value>True</value>
+        </member>
+        <member name="P:FakeHttp.ResponseCallbacks.FilterCommonSensitiveValues">
+            <summary>
+            Flag indicating whether to automatically filter commonly used header
+            and query parameter name such as X-API-KEY, api-key, key, etc from being serialized
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseCallbacks.FilteredHeaderNames">
+            <summary>
+            A list of header names that will not be serialized. For
+            example x-api-key may not be something to store
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseCallbacks.FilteredParameterNames">
+            <summary>
+            A list of query parameter names that will not be serialized
+            </summary>
+        </member>
+        <member name="M:FakeHttp.ResponseCallbacks.Deserialized(FakeHttp.ResponseInfo,System.IO.Stream)">
+            <summary>
+            Called just before the response is returned in order to update deserialized values as necessary.
+            Primarily for cases where time based header values (like content expiration) need up to date values
+            </summary>
+            <param name="info">Deserialized response data. Header collections can be modified. Might be null if content file but no response file is present</param>
+            <param name="content">The deserialized content stream. Might be null if response has no content</param>
+            <returns>The original content or a modified content stream to attach to the <see cref="T:System.Net.Http.HttpResponseMessage"/></returns>
+        </member>
+        <member name="M:FakeHttp.ResponseCallbacks.FilterParameter(System.String,System.String)">
+            <summary>
+            Determines if a given query parameter should be excluded from serialization
+            </summary>
+            <param name="name">The name of the Uri query parameter</param>
+            <param name="value">The value of the uri query parameter</param>
+            <returns>True if the parameter should be filtered from serialization</returns>
+        </member>
+        <member name="M:FakeHttp.ResponseCallbacks.Serializing(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Called after content is retrieved from the actual service and before it is is saved to disk.
+            Primarily allows for response content to mask sensitive data (ex. SSN or other PII) before it is saved to storage
+            </summary>
+            <param name="response">The response</param>
+            <returns>The original content stream or a modified content stream</returns>
+        </member>
+        <member name="T:FakeHttp.ResponseInfo">
+            <summary>
+            A serialization friendly wrapper around <see cref="T:System.Net.Http.HttpResponseMessage"/>
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseInfo.HttpVersion">
+            <summary>
+            <see cref="P:System.Net.Http.HttpResponseMessage.Version"/>
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseInfo.StatusCode">
+            <summary>
+            The response status code
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseInfo.BaseUri">
+            <summary>
+            The host and path of the request that originally created this response
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseInfo.Query">
+            <summary>
+            The query string from the request that generated the response (used to key the response for future reference)
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseInfo.ContentFileName">
+            <summary>
+            The name of the associated serialized content file
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseInfo.ResponseHeaders">
+            <summary>
+            The response headers
+            </summary>
+        </member>
+        <member name="P:FakeHttp.ResponseInfo.ContentHeaders">
+            <summary>
+            The content headers
+            </summary>
+        </member>
+        <member name="T:FakeHttp.ResponseStore">
+            <summary>
+            Class that can store and retrieve response messages using an <see cref="T:FakeHttp.IResources"/> instance
+            </summary>
+        </member>
+        <member name="M:FakeHttp.ResponseStore.#ctor(FakeHttp.IResources)">
+            <summary>
+            ctor
+            </summary>
+            <param name="resources">An instance that can read and write to the underlying storage of response resources</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.ResponseStore.#ctor(FakeHttp.IResources,FakeHttp.IResponseCallbacks)">
+            <summary>
+            
+            </summary>
+            <param name="resources">An instance that can read and write to the underlying storage of response resources</param>
+            <param name="callbacks">Object to manage and modify responses at runtime</param>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:FakeHttp.ResponseStore.StoreResponse(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Stores a response message for later retrieval
+            </summary>
+            <param name="response">The response message to store</param>
+            <returns>Task</returns>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:FakeHttp.VersionConverter">
+            <summary>
+            A custom <see cref="T:Newtonsoft.Json.JsonConverter"/> for <see cref="T:System.Version"/> that only writes the <see cref="P:System.Version.Major"/>
+            and <see cref="P:System.Version.Minor"/> values. HTTP specifies only a two field version. <see cref="T:System.Version"/> defaults 
+            build, revision etc to -1 when not set, and these values break deserialization.
+            </summary>
+        </member>
+        <member name="M:FakeHttp.VersionConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            <see cref="M:Newtonsoft.Json.JsonConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)"/>
+            </summary>
+            <param name="writer"></param>
+            <param name="value"></param>
+            <param name="serializer"></param>
+        </member>
+        <member name="M:FakeHttp.VersionConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>
+            deserialize Version
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="existingValue"></param>
+            <param name="serializer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FakeHttp.VersionConverter.CanConvert(System.Type)">
+            <summary>
+            <see cref="M:Newtonsoft.Json.JsonConverter.CanConvert(System.Type)"/>
+            </summary>
+            <param name="objectType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.QueryStringDotNET.QueryStringParameter">
+            <summary>
+            A single query string parameter (name and value pair).
+            </summary>
+        </member>
+        <member name="P:Microsoft.QueryStringDotNET.QueryStringParameter.Name">
+            <summary>
+            The name of the parameter. Cannot be null.
+            </summary>
+        </member>
+        <member name="P:Microsoft.QueryStringDotNET.QueryStringParameter.Value">
+            <summary>
+            The value of the parameter (or null if there's no value).
+            </summary>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryStringParameter.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new query string parameter with the specified name and optional value.
+            </summary>
+            <param name="name">The name of the parameter. Cannot be null.</param>
+            <param name="value">The optional value of the parameter.</param>
+        </member>
+        <member name="T:Microsoft.QueryStringDotNET.QueryStringSeparator">
+            <summary>
+            Specifies the separator to be used between query string parameters.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Microsoft.QueryStringDotNET.QueryStringSeparator.Ampersand" -->
+        <member name="F:Microsoft.QueryStringDotNET.QueryStringSeparator.Semicolon">
+            <summary>
+            An alternative separator for query string parameters. Generated query string is like "a=1;b=5".
+            </summary>
+        </member>
+        <member name="T:Microsoft.QueryStringDotNET.QueryString">
+            <summary>
+            A portable string serializer/deserializer for .NET.
+            </summary>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.#ctor">
+            <summary>
+            Constructs a new empty query string.
+            </summary>
+        </member>
+        <member name="P:Microsoft.QueryStringDotNET.QueryString.Item(System.String)">
+            <summary>
+            Gets the first value of the first parameter with the matching name. Throws <see cref="T:System.Collections.Generic.KeyNotFoundException"/> if a parameter with a matching name could not be found. O(n) where n = Count of the current object.
+            </summary>
+            <param name="name">The parameter name to find.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.TryGetValue(System.String,System.String@)">
+            <summary>
+            Gets the first value of the first parameter with the matching name. If no parameter with a matching name exists, returns false.
+            </summary>
+            <param name="name">The parameter name to find.</param>
+            <param name="value">The parameter's value will be written here once found.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.TryGetValues(System.String,System.String[]@)">
+            <summary>
+            Gets the values of the parameter with the matching name. If no parameter with a matching name exists, sets <paramref name="values"/> to null and returns false.
+            </summary>
+            <param name="name">The parameter name to find.</param>
+            <param name="values">The parameter's values will be written here once found.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Count">
+            <summary>
+            Returns the count of parameters in the current query string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Add(System.String,System.String)">
+            <summary>
+            Adds a query string parameter to the query string.
+            </summary>
+            <param name="name">The name of the parameter.</param>
+            <param name="value">The optional value of the parameter.</param>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Set(System.String,System.String)">
+            <summary>
+            Sets a query string parameter. If there are existing parameters with the same name, they are removed.
+            </summary>
+            <param name="name">The name of the parameter.</param>
+            <param name="value">The optional value of the parameter.</param>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Contains(System.String)">
+            <summary>
+            Determines if the query string contains at least one parameter with the specified name.
+            </summary>
+            <param name="name">The parameter name to look for.</param>
+            <returns>True if the query string contains at least one parameter with the specified name, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Contains(System.String,System.String)">
+            <summary>
+            Determines if the query string contains a parameter with the specified name and value.
+            </summary>
+            <param name="name">The parameter name to look for.</param>
+            <param name="value">The value to look for when the name has been matched.</param>
+            <returns>True if the query string contains a parameter with the specified name and value, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Remove(System.String)">
+            <summary>
+            Removes the first parameter with the specified name.
+            </summary>
+            <param name="name">The name of parameter to remove.</param>
+            <returns>True if the parameters were removed, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.RemoveAll(System.String)">
+            <summary>
+            Removes all parameters with the specified name.
+            </summary>
+            <param name="name">The name of parameters to remove.</param>
+            <returns>True if the parameters were removed, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Remove(System.String,System.String)">
+            <summary>
+            Removes the first parameter with the specified name and value.
+            </summary>
+            <param name="name">The name of the parameter to remove.</param>
+            <param name="value"></param>
+            <returns>True if parameter was removed, else false.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.RemoveAll(System.String,System.String)">
+            <summary>
+            Removes all parameters with the specified name and value.
+            </summary>
+            <param name="name">The name of parameters to remove.</param>
+            <param name="value">The value to match when deciding whether to remove.</param>
+            <returns>The count of parameters removed.</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Parse(System.String)">
+            <summary>
+            Parses a query string into a <see cref="T:Microsoft.QueryStringDotNET.QueryString"/> object. Keys/values are automatically URL decoded.
+            </summary>
+            <param name="queryString">The query string to deserialize. This should NOT have a leading ? character. Valid input would be something like "a=1&amp;b=5". URL decoding of keys/values is automatically performed. Also supports query strings that are serialized using ; instead of &amp;, like "a=1;b=5"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.ToString">
+            <summary>
+            Serializes the key-value pairs into a query string, using the default &amp; separator. Produces something like "a=1&amp;b=5". URL encoding of keys/values is automatically performed. Null values are not written (only their key is written).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.ToString(Microsoft.QueryStringDotNET.QueryStringSeparator)">
+            <summary>
+            Serializes the key-value pairs into a query string, using the specified separator. URL encoding of keys/values is automatically performed. Null values are not written (only their key is written). If there are no parameters, an empty string will be returned.
+            </summary>
+            <param name="separator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.GetEnumerator">
+            <summary>
+            Gets an enumerator to enumerate the query string parameters. Note that order of the parameters is NOT preserved.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Gets an enumerator to enumerate the query string parameters.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Equals(Microsoft.QueryStringDotNET.QueryString)">
+            <summary>
+            Determines whether the current query string is equivalent to the provided query string.
+            </summary>
+            <param name="other">The query string to compare to.</param>
+            <returns>Returns true if the query string has the exact same parameters as the current query string (order is irrelevant).</returns>
+        </member>
+        <member name="M:Microsoft.QueryStringDotNET.QueryString.Equals(Microsoft.QueryStringDotNET.QueryString,System.StringComparison,System.StringComparison)">
+            <summary>
+            
+            </summary>
+            <param name="other"></param>
+            <param name="nameComparisonType"></param>
+            <param name="valueComparisonType"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
