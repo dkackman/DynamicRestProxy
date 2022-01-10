@@ -1,6 +1,7 @@
 Dynamic Rest
 ================
-- [NuGet package](https://www.nuget.org/packages/DynamicRestClient/)
+[![NuGet](https://img.shields.io/nuget/dt/DynamicRestClient)](https://www.nuget.org/packages/DynamicRestClient/)
+
 - [Documentation](https://dkackman.github.io/DynamicRestProxy)
 
 A conventions based rest client using the .NET [Dynamic Language Runtime](http://msdn.microsoft.com/en-us/library/dd233052(v=vs.110).aspx). 
